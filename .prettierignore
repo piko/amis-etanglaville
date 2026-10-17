@@ -1,0 +1,9 @@
+dist/
+.astro/
+node_modules/
+package-lock.json
+public/
+_import/
+# Contenu et données édités par Pages CMS : on ne reformate pas ce que le CMS écrit
+src/content/
+src/data/
