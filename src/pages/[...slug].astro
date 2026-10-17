@@ -1,0 +1,24 @@
+---
+// Pages fixes : une route /<slug>/ par fichier de src/content/pages (hors brouillons et accueil).
+import { getCollection, render } from 'astro:content';
+import Page from '../layouts/Page.astro';
+
+export async function getStaticPaths() {
+  const pages = await getCollection(
+    'pages',
+    ({ id, data }) => !data.draft && id !== 'accueil',
+  );
+  return pages.map((page) => ({ params: { slug: page.id }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+
+<Page
+  title={page.data.title}
+  description={page.data.description}
+  image={page.data.image}
+>
+  <Content />
+</Page>

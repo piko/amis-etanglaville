@@ -1,0 +1,32 @@
+---
+// Menu principal, alimenté par src/data/menu.yml.
+// Sous-menus : <details> (accessibles au clavier, sans JS). Mobile : bouton d'ouverture.
+import MenuList from './MenuList.astro';
+import { menu } from '../lib/data';
+---
+
+<nav aria-label="Menu principal" class="w-full md:w-auto">
+  <button
+    type="button"
+    class="rounded border border-foret px-3 py-1 text-foret md:hidden"
+    aria-expanded="false"
+    aria-controls="menu-principal"
+    data-menu-toggle
+  >
+    Menu
+  </button>
+  <div id="menu-principal" class="hidden md:block" data-menu>
+    <MenuList items={menu} />
+  </div>
+</nav>
+
+<script>
+  const bouton =
+    document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+  bouton?.addEventListener('click', () => {
+    const ouvert = bouton.getAttribute('aria-expanded') === 'true';
+    bouton.setAttribute('aria-expanded', String(!ouvert));
+    menu?.classList.toggle('hidden', ouvert);
+  });
+</script>

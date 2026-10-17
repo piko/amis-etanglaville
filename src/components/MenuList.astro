@@ -1,0 +1,53 @@
+---
+// Liste récursive des entrées du menu (jusqu'à 3 niveaux dans menu.yml).
+// Une entrée avec sous-menu s'ouvre dans un <details> : panneau flottant sur bureau,
+// dépliage en place sur mobile et dans les niveaux inférieurs.
+import { hrefFor, type MenuItem } from '../lib/data';
+
+interface Props {
+  items: MenuItem[];
+  niveau?: number;
+}
+
+const { items, niveau = 0 } = Astro.props;
+const courant = Astro.url.pathname;
+---
+
+<ul
+  class:list={[
+    'flex flex-col gap-2',
+    niveau === 0 && 'mt-3 md:mt-0 md:flex-row md:gap-6',
+  ]}
+>
+  {items.map((item) => {
+    const href = hrefFor(item.link);
+    const actif = href === courant ? 'page' : undefined;
+    return (
+      <li class="relative">
+        {item.children?.length ? (
+          <details>
+            <summary class="cursor-pointer hover:text-foret">
+              {item.title}
+            </summary>
+            <div
+              class:list={[
+                'mt-2 flex flex-col gap-2 pl-4',
+                niveau === 0 &&
+                  'md:absolute md:z-10 md:w-64 md:border md:border-pierre md:bg-white md:p-3 md:shadow',
+              ]}
+            >
+              <a href={href} aria-current={actif} class="hover:text-foret">
+                {item.title} (présentation)
+              </a>
+              <Astro.self items={item.children} niveau={niveau + 1} />
+            </div>
+          </details>
+        ) : (
+          <a href={href} aria-current={actif} class="hover:text-foret">
+            {item.title}
+          </a>
+        )}
+      </li>
+    );
+  })}
+</ul>

@@ -1,0 +1,35 @@
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+
+/*
+ * Design system : tous les choix visuels du site sont ici (voir ARCHITECTURE.md §8).
+ * Valeurs PROVISOIRES, en attente du canevas de design. Les polices ne sont pas
+ * encore chargées : les piles de repli s'appliquent.
+ */
+@theme {
+  /* Couleurs */
+  --color-foret: #2f5d3a;
+  --color-mousse: #7a9a5b;
+  --color-pierre: #e8e2d6;
+  --color-encre: #1f2421;
+
+  /* Typographies */
+  --font-titre: 'Fraunces', Georgia, serif;
+  --font-texte: 'Inter', system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    @apply bg-white font-texte text-encre;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-titre;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-foret;
+  }
+}

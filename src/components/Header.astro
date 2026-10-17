@@ -1,0 +1,13 @@
+---
+import Menu from './Menu.astro';
+import { site } from '../lib/data';
+---
+
+<header class="border-b border-pierre bg-white">
+  <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-4 py-4">
+    <a href="/" class="font-titre text-xl font-bold text-foret">
+      {site.nom}
+    </a>
+    <Menu />
+  </div>
+</header>
