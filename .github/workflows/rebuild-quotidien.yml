@@ -1,0 +1,25 @@
+# Rebuild nocturne de la production : le statut « à venir » / « passé » des actualités
+# est calculé au build, ce redéploiement quotidien le tient à jour (24 h de décalage au plus).
+# Prérequis : Deploy Hook Vercel sur `main` (Settings > Git > Deploy Hooks), dont l'URL
+# est enregistrée dans le secret GitHub VERCEL_DEPLOY_HOOK. Sans ce secret, le job ne fait rien.
+name: Rebuild quotidien
+
+on:
+  schedule:
+    - cron: '15 3 * * *' # 3 h 15 UTC, soit 4 h 15 (hiver) ou 5 h 15 (été) à Paris
+  workflow_dispatch:
+
+jobs:
+  deployer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Déclencher le Deploy Hook Vercel
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::warning::Secret VERCEL_DEPLOY_HOOK absent : aucun redéploiement."
+            exit 0
+          fi
+          curl -fsS -X POST "$HOOK"

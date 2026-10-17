@@ -351,7 +351,8 @@ Configuration Vercel :
 - framework « Astro », commande `npm run build`, dossier `dist` ;
 - **Deployment Protection** : par défaut, les préproductions demandent une connexion Vercel. Pour que le bureau relise sans compte, désactiver la protection des previews (le contenu est public de toute façon) ;
 - protéger `main` dans GitHub (merge par PR uniquement, CI et build Vercel verts requis). Possible seulement une fois le dépôt public (ou avec GitHub Pro). D'ici là, le hook `pre-push` fait office de garde-fou (voir §4) ;
-- tant que le domaine n'a pas basculé, toutes les pages portent `noindex`. À la bascule, définir `PUBLIC_INDEXABLE=true` dans les variables d'environnement Vercel (Production).
+- tant que le domaine n'a pas basculé, toutes les pages portent `noindex`. À la bascule, définir `PUBLIC_INDEXABLE=true` dans les variables d'environnement Vercel (Production) ;
+- **rebuild quotidien** : le statut « à venir » / « passé » des actualités (accueil, liste, fiches) est calculé au build. Le workflow `.github/workflows/rebuild-quotidien.yml` redéploie la production chaque nuit (3 h 15 UTC) via un Deploy Hook Vercel, pour qu'un événement terminé ne reste pas plus de 24 h à la une. Configuration : créer le hook sur `main` (Settings > Git > Deploy Hooks) et enregistrer son URL dans le secret GitHub `VERCEL_DEPLOY_HOOK`. Lancement manuel possible depuis l'onglet Actions. Sur un dépôt public, GitHub suspend les workflows programmés après 60 jours sans commit : le réactiver si besoin.
 
 Redirections : `npm run redirects` régénère `vercel.json` à partir des `wp_id` du front matter de `src/content/pages`. À relancer après tout renommage ou déplacement de page.
 
