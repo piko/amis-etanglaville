@@ -70,3 +70,9 @@ vercel.json               Redirections 301
 
 Branche puis PR. Vercel publie une préproduction (lien dans la PR). Le bureau relit, puis la PR est fusionnée dans `main` et la production est mise à jour.
 Les bénévoles modifient le contenu sur la branche `recette` via Pages CMS. Une PR `recette` → `main` regroupe leurs modifications.
+
+Règles de fusion :
+
+- PR d'une branche de travail (`feat/…`, `claude/…`…) → `main` : **Squash and merge**, puis supprimer la branche.
+- PR `recette` → `main` : **Create a merge commit** (jamais de squash, pour que `recette` et `main` ne divergent pas) et **ne pas supprimer `recette`**.
+- Après une fusion dans `main`, resynchroniser la recette : `git switch recette && git pull && git merge main && git push`.
