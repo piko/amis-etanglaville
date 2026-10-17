@@ -1,0 +1,51 @@
+---
+interface Props {
+  /** Page courante (à partir de 1) et nombre de pages. */
+  page: number;
+  total: number;
+  /** URL de la page n (la page 1 est la racine). */
+  urlPage: (n: number) => string;
+}
+
+const { page, total, urlPage } = Astro.props;
+const pages = Array.from({ length: total }, (_, i) => i + 1);
+const bouton =
+  'inline-flex items-center justify-center border border-encre hover:bg-encre hover:text-papier';
+---
+
+{total > 1 && (
+  <nav
+    aria-label="Pages des événements passés"
+    class="mt-12 flex justify-center"
+    data-pagefind-ignore
+  >
+    <ul class="flex flex-wrap justify-center gap-2 font-bold">
+      {page > 1 && (
+        <li>
+          <a href={urlPage(page - 1)} class={`${bouton} min-h-12 px-4`}>
+            ← Plus récents
+          </a>
+        </li>
+      )}
+      {pages.map((n) => (
+        <li>
+          <a
+            href={urlPage(n)}
+            aria-current={n === page ? 'page' : undefined}
+            aria-label={`Page ${n}`}
+            class={`${bouton} size-12 aria-[current=page]:bg-encre aria-[current=page]:text-papier`}
+          >
+            {n}
+          </a>
+        </li>
+      ))}
+      {page < total && (
+        <li>
+          <a href={urlPage(page + 1)} class={`${bouton} min-h-12 px-4`}>
+            Plus anciens →
+          </a>
+        </li>
+      )}
+    </ul>
+  </nav>
+)}

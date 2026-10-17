@@ -1,0 +1,80 @@
+---
+import type { Rubrique } from '../lib/data';
+
+interface Props {
+  variante: 'liste' | 'precedent-suivant';
+  rubrique: Rubrique;
+  /** href de la page courante */
+  actif: string;
+}
+
+const { variante, rubrique, actif } = Astro.props;
+const position = rubrique.pages.findIndex((p) => p.href === actif);
+const precedent = position > 0 ? rubrique.pages[position - 1] : undefined;
+const suivant =
+  position >= 0 && position < rubrique.pages.length - 1
+    ? rubrique.pages[position + 1]
+    : undefined;
+const idTitre = 'titre-rubrique';
+---
+
+{variante === 'liste' ? (
+  <nav aria-labelledby={idTitre} class="hidden lg:block" data-pagefind-ignore>
+    <h2
+      id={idTitre}
+      class="font-texte text-xs font-bold tracking-surtitre text-ocre-fonce uppercase"
+    >
+      {rubrique.titre}
+    </h2>
+    <ul class="mt-2 flex flex-col text-base">
+      {rubrique.pages.map((p) => (
+        <li>
+          <a
+            href={p.href}
+            aria-current={p.href === actif ? 'page' : undefined}
+            class="flex min-h-10 items-center border-l-3 border-transparent py-1 pl-3 hover:border-foret hover:text-foret aria-[current=page]:border-foret aria-[current=page]:font-bold"
+          >
+            {p.titre}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+) : (
+  (precedent || suivant) && (
+    <nav
+      aria-label={`Pages de la rubrique ${rubrique.titre}`}
+      class="mt-14 grid max-w-texte grid-cols-2 gap-4 text-base"
+      data-pagefind-ignore
+    >
+      {precedent ? (
+        <a
+          href={precedent.href}
+          class="group border-t-3 border-encre pt-3 hover:border-foret"
+        >
+          <span class="block text-xs font-bold tracking-surtitre text-ocre-fonce uppercase">
+            ← Précédent
+          </span>
+          <span class="font-titre text-xl font-semibold group-hover:text-foret group-hover:underline md:text-2xl">
+            {precedent.titre}
+          </span>
+        </a>
+      ) : (
+        <span />
+      )}
+      {suivant && (
+        <a
+          href={suivant.href}
+          class="group border-t-3 border-encre pt-3 text-right hover:border-foret"
+        >
+          <span class="block text-xs font-bold tracking-surtitre text-ocre-fonce uppercase">
+            Suivant →
+          </span>
+          <span class="font-titre text-xl font-semibold group-hover:text-foret group-hover:underline md:text-2xl">
+            {suivant.titre}
+          </span>
+        </a>
+      )}
+    </nav>
+  )
+)}

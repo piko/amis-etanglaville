@@ -20,6 +20,7 @@ Référence complète : [ARCHITECTURE.md](ARCHITECTURE.md). Ce fichier en est le
 | `npm run build`                   | Build de production dans `dist/`. Valide tout le contenu                                                                     |
 | `npm run format` / `format:check` | Prettier (code uniquement : `src/content` et `src/data` sont exclus)                                                         |
 | `npm run redirects`               | Régénère les redirections de `vercel.json` (`?page_id=N` vers le slug)                                                       |
+| `npm run medias:optimiser`        | Recompresse les médias lourds de `public/medias` (images, PDF via Ghostscript)                                               |
 | `npm run import:pages`            | Import initial des pages WordPress (`_import/` vers `src/content/pages`). Déjà fait, ne pas relancer sans `--force` réfléchi |
 
 ## Arborescence utile
@@ -28,12 +29,13 @@ Référence complète : [ARCHITECTURE.md](ARCHITECTURE.md). Ce fichier en est le
 src/content.config.ts     Schémas des collections (pages, bulletins, actualites, galeries)
 src/content/pages/*.md    Pages fixes : <slug>.md donne l'URL /<slug>/
 src/data/menu.yml         Menu principal (title, link, children)
-src/data/site.yml         Nom, adresse, e-mail, liens PayAsso, Facebook
+src/data/site.yml         Nom, adresse, e-mail, liens PayAsso, Facebook, partenaires
+src/data/accueil.yml      Textes de la page d'accueil (bandeau, missions, succès)
 src/lib/data.ts           Lecture et validation de menu.yml et site.yml
 src/styles/global.css     Design system : tokens @theme (couleurs, polices)
 src/layouts/              Base.astro (head, SEO, en-tête, pied), Page.astro (page de texte)
 src/components/           Header, Menu, MenuList, Footer…
-src/pages/                Routes : index, [...slug] (pages fixes), 404
+src/pages/                Routes : index, [...slug] (pages fixes), bulletins, actualites, cartes-postales-historiques, recherche, plan-du-site, 404
 public/medias/AAAA/MM/    Images et PDF (mêmes chemins que WordPress), servis en /medias/…
 scripts/                  Import WordPress, génération des redirections
 _import/                  Export brut de l'ancien site (source de la migration, ne pas modifier)
@@ -56,15 +58,16 @@ vercel.json               Redirections 301
 
 ## État du projet (17/10/2026)
 
-- Socle en place. Les 21 pages WordPress sont importées telles quelles : slugs conservés, médias encore pointés vers l'ancien site en URL absolues.
-- **Design et structure des pages : en cours de réflexion dans un canevas Claude** (lien à renseigner : _à compléter_). Le thème actuel (`global.css`) et l'accueil sont **provisoires**.
-- Reste à faire après le canevas (voir ARCHITECTURE.md §14) :
-  - éclater les bulletins en fichiers ;
-  - convertir les cartes postales en galerie ;
-  - télécharger les médias ;
-  - réaliser l'accueil sur mesure ;
-  - créer les pages Bulletins et Actualités.
-- Commentaires `<!-- … -->` dans le contenu importé : points à vérifier relevés à l'export.
+- Design du canevas (piste A « La Gazette du village », `design/canevas.html`) appliqué à tous les gabarits : accueil, page de texte, bulletins, actualités, galerie, 404, plus recherche, plan du site et mentions légales.
+- Contenu migré : 17 pages remises en forme (titres, typographie, textes alternatifs), 35 bulletins (`src/content/bulletins/`), 29 actualités (`src/content/actualites/`), galerie de 184 cartes postales (`src/content/galeries/cartes-postales.yml`), accueil (`src/data/accueil.yml`).
+- Médias rapatriés dans `public/medias/` (305 fichiers, compressés), couvertures de bulletins dans `public/medias/bulletins/`. Les vignettes responsives (`public/vignettes/`) sont générées avant `dev` et `build`, et ne sont pas versionnées.
+- Reste à faire : faire valider par le bureau les points relevés dans la PR de migration (faits douteux, noms) ; renseigner l'URL du groupe Facebook ; supprimer `_import/` après validation.
+
+## Médias et images
+
+- Ajouter un média : le déposer dans `public/medias/AAAA/MM/` (ou via Pages CMS), puis `npm run medias:optimiser` pour les fichiers lourds (images > 2000 px, PDF > 2 Mo ; Ghostscript requis pour les PDF).
+- Dans le Markdown : `![texte alternatif](/medias/…)` suivi, à la ligne suivante sans ligne vide, de `*Légende*`. Le plugin `src/lib/rehype-contenu.mjs` en fait une `<figure>` ; plusieurs figures à la suite forment une grille. Il ajoute aussi dimensions, `srcset` et espaces insécables.
+- Le Markdown passe par le processeur `unified` (`@astrojs/markdown-remark`), configuré dans `astro.config.mjs`.
 
 ## Circuit de publication
 

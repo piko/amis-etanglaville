@@ -1,7 +1,6 @@
 # Configuration Pages CMS (https://pagescms.org/docs/configuration/)
 # Les noms techniques (`name`) doivent rester alignés avec src/content.config.ts et src/lib/data.ts.
 # Les bénévoles travaillent sur la branche « recette », jamais sur « main ».
-# Bulletins, actualités et galeries seront ajoutés avec leurs gabarits (après le canevas de design).
 
 media:
   input: public/medias
@@ -51,6 +50,201 @@ content:
         type: rich-text
         options:
           format: markdown
+
+  - name: bulletins
+    label: Bulletins
+    type: collection
+    path: src/content/bulletins
+    filename: '{fields.numero}.md'
+    format: yaml-frontmatter
+    view:
+      fields: [title, date, disponible]
+      primary: title
+      sort: [numero]
+    fields:
+      - name: numero
+        label: Numéro
+        type: number
+        required: true
+      - name: title
+        label: Titre (ex. Bulletin n°135)
+        type: string
+      - name: date
+        label: Mois de parution (choisir le 1er du mois)
+        type: date
+        options:
+          format: yyyy-MM-dd
+      - name: pdf
+        label: Fichier PDF
+        type: file
+      - name: cover
+        label: Couverture (image de la première page, facultative)
+        type: image
+      - name: type
+        label: Type
+        type: select
+        default: bulletin
+        options:
+          values:
+            - { value: bulletin, label: Bulletin }
+            - { value: flash-info, label: Flash info }
+      - name: disponible
+        label: Disponible en ligne (décocher si le PDF manque)
+        type: boolean
+        default: true
+      - name: body
+        label: Sommaire (liste des articles, affichée pour le dernier numéro)
+        type: rich-text
+        options:
+          format: markdown
+
+  - name: actualites
+    label: Actualités
+    type: collection
+    path: src/content/actualites
+    filename: '{fields.date}-{primary}.md'
+    format: yaml-frontmatter
+    view:
+      fields: [title, date, categorie]
+      primary: title
+      sort: [date]
+    fields:
+      - name: title
+        label: Titre
+        type: string
+        required: true
+      - name: date
+        label: Date (ou début de l’événement)
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: dateFin
+        label: Date de fin (événement sur plusieurs jours)
+        type: date
+        options:
+          format: yyyy-MM-dd
+      - name: datePrecision
+        label: Précision de la date
+        type: select
+        default: jour
+        options:
+          values:
+            - { value: jour, label: 'Jour connu (6 nov. 2026)' }
+            - { value: mois, label: 'Mois seulement (Nov. 2026)' }
+            - { value: annee, label: 'Année seulement (2026)' }
+      - name: lieu
+        label: Lieu
+        type: string
+      - name: categorie
+        label: Catégorie
+        type: select
+        default: autre
+        options:
+          values:
+            - { value: salon, label: Salon }
+            - { value: portes-ouvertes, label: Portes ouvertes }
+            - { value: ag, label: Assemblée générale }
+            - { value: environnement, label: Environnement }
+            - { value: autre, label: Vie de l’association }
+      - name: image
+        label: Affiche ou photo
+        type: image
+      - name: imageAlt
+        label: Description de l’image (pour les malvoyants)
+        type: string
+      - name: resume
+        label: Résumé (une ou deux phrases pour la liste)
+        type: text
+      - name: annule
+        label: Annulé (pas d’édition cette année)
+        type: boolean
+        default: false
+      - name: draft
+        label: Brouillon (non publié)
+        type: boolean
+      - name: body
+        label: Texte
+        type: rich-text
+        options:
+          format: markdown
+
+  - name: galeries
+    label: Cartes postales
+    type: file
+    path: src/content/galeries/cartes-postales.yml
+    format: yaml
+    fields:
+      - name: title
+        label: Titre de la page
+        type: string
+        required: true
+      - name: sections
+        label: Thèmes
+        type: object
+        list: true
+        fields:
+          - name: titre
+            label: Titre du thème
+            type: string
+            required: true
+          - name: images
+            label: Cartes
+            type: object
+            list: true
+            fields:
+              - name: src
+                label: Image (le nom de fichier commence par le numéro de référence)
+                type: image
+                required: true
+              - name: legende
+                label: Légende
+                type: string
+
+  - name: accueil
+    label: Page d’accueil
+    type: file
+    path: src/data/accueil.yml
+    format: yaml
+    fields:
+      - name: hero
+        label: Bandeau principal
+        type: object
+        fields:
+          - { name: surtitre, label: Surtitre, type: string, required: true }
+          - { name: titre, label: Titre, type: string, required: true }
+          - { name: texte, label: Texte, type: text, required: true }
+          - { name: image, label: Image, type: image, required: true }
+          - {
+              name: alt,
+              label: Description de l’image,
+              type: string,
+              required: true,
+            }
+          - { name: legende, label: Légende, type: string }
+      - name: missions
+        label: Missions
+        type: object
+        list: true
+        fields:
+          - { name: titre, label: Titre, type: string, required: true }
+          - { name: texte, label: Texte, type: text, required: true }
+      - name: memoire
+        label: Texte « Mémoire du village » (suite de « 184 cartes postales anciennes, … »)
+        type: text
+        required: true
+      - name: succes
+        label: Nos succès
+        type: object
+        list: true
+        fields:
+          - { name: titre, label: Mot en gras, type: string, required: true }
+          - {
+              name: texte,
+              label: Suite de la phrase,
+              type: string,
+              required: true,
+            }
 
   - name: menu
     label: Menu
@@ -131,3 +325,16 @@ content:
       - name: facebook
         label: Lien Facebook
         type: string
+      - name: formulaire
+        label: Bulletin d’adhésion à imprimer (PDF)
+        type: file
+      - name: formulaireLibelle
+        label: Libellé du lien vers le bulletin d’adhésion
+        type: string
+      - name: partenaires
+        label: Associations partenaires
+        type: object
+        list: true
+        fields:
+          - { name: nom, label: Sigle, type: string, required: true }
+          - { name: url, label: Site internet, type: string }

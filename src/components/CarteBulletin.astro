@@ -1,0 +1,86 @@
+---
+import { infosImage } from '../lib/medias.mjs';
+import { moisEtAnnee } from '../lib/dates';
+import { site } from '../lib/data';
+
+interface Props {
+  numero: number;
+  date?: Date;
+  pdf?: string;
+  cover?: string;
+  dernier?: boolean;
+  /** Taille de la couverture typographique (grand pour le dernier numéro de la page Bulletins). */
+  taille?: 'normal' | 'grand';
+  /** Niveau du titre de la carte. */
+  niveau?: 'h2' | 'h3';
+}
+
+const {
+  numero,
+  date,
+  pdf,
+  cover,
+  dernier = false,
+  taille = 'normal',
+  niveau: Titre = 'h3',
+} = Astro.props;
+const libelleDate = date ? moisEtAnnee(date) : undefined;
+const couverture = cover ? await infosImage(cover) : null;
+---
+
+<article class="group relative flex flex-col gap-3">
+  {couverture ? (
+    <div
+      class="aspect-3/4 overflow-hidden border border-encre bg-creme shadow-carte transition group-hover:-translate-y-1 group-hover:shadow-carte-survol"
+      aria-hidden="true"
+    >
+      <img
+        src={couverture.src}
+        srcset={couverture.srcset}
+        sizes="(min-width: 768px) 15rem, 50vw"
+        width={couverture.width}
+        height={couverture.height}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        class="size-full bg-sepia object-cover object-top"
+      />
+    </div>
+  ) : (
+    <div
+      class="flex aspect-3/4 flex-col border border-encre bg-creme p-3 shadow-carte transition group-hover:-translate-y-1 group-hover:shadow-carte-survol"
+      aria-hidden="true"
+    >
+      <span class="border-b border-encre pb-1 text-center font-titre text-xs leading-tight">
+        {site.nom}
+      </span>
+      <span
+        class:list={[
+          'flex flex-1 items-center justify-center font-titre font-semibold text-foret',
+          taille === 'grand' ? 'text-6xl' : 'text-5xl',
+        ]}
+      >
+        {numero}
+      </span>
+      <span class="border-t-4 border-double border-encre pt-1 text-center text-[0.625rem] tracking-wider uppercase">
+        {libelleDate}
+      </span>
+    </div>
+  )}
+  {dernier && (
+    <span class="absolute -top-2 -right-2 bg-foret px-2 py-0.5 text-xs font-bold text-papier">
+      Dernier paru
+    </span>
+  )}
+  <Titre class="text-xl leading-tight font-semibold">
+    <a
+      href={pdf}
+      class="after:absolute after:inset-0 group-hover:underline focus-visible:outline-none focus-visible:after:outline-3 focus-visible:after:outline-offset-4 focus-visible:after:outline-foret"
+    >
+      Bulletin n°{numero}
+    </a>
+  </Titre>
+  <p class="-mt-2 text-sm text-gris">
+    {libelleDate ? `${libelleDate} · PDF` : 'PDF'}
+  </p>
+</article>

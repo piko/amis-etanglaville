@@ -1,24 +1,38 @@
 ---
-// Pages fixes : une route /<slug>/ par fichier de src/content/pages (hors brouillons et accueil).
-import { getCollection, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import Page from '../layouts/Page.astro';
+import { hrefFor, rubriqueDe } from '../lib/data';
 
 export async function getStaticPaths() {
-  const pages = await getCollection(
-    'pages',
-    ({ id, data }) => !data.draft && id !== 'accueil',
-  );
+  const pages = await getCollection('pages', ({ data }) => !data.draft);
   return pages.map((page) => ({ params: { slug: page.id }, props: { page } }));
 }
 
 const { page } = Astro.props;
-const { Content } = await render(page);
+const { Content, headings } = await render(page);
+const rubrique = rubriqueDe(page.id);
+// Page hors menu : la page parente (champ `parent`) sert de fil d'Ariane.
+const pageParente =
+  !rubrique && page.data.parent
+    ? await getEntry('pages', page.data.parent)
+    : undefined;
+const rubriqueParente =
+  !rubrique && page.data.parent ? rubriqueDe(page.data.parent) : undefined;
+// Lien vers la page parente dans le fil d'Ariane, sauf si c'est déjà la rubrique.
+const parent =
+  pageParente && rubriqueParente?.href !== hrefFor(pageParente.id)
+    ? { titre: pageParente.data.title, href: hrefFor(pageParente.id) }
+    : undefined;
 ---
 
 <Page
   title={page.data.title}
   description={page.data.description}
   image={page.data.image}
+  updated={page.data.updated}
+  headings={headings}
+  rubrique={rubrique ?? rubriqueParente}
+  parent={parent}
 >
   <Content />
 </Page>

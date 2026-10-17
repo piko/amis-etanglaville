@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import EnTetePage from '../components/EnTetePage.astro';
+import FilAriane from '../components/FilAriane.astro';
+import { hrefFor, menu } from '../lib/data';
+
+// Pages publiées absentes du menu (mentions légales, archives…).
+const pages = await getCollection('pages', ({ data }) => !data.draft);
+const dansMenu = new Set(
+  menu.flatMap((i) => [i.link, ...(i.children ?? []).map((c) => c.link)]),
+);
+const autres = pages
+  .filter((p) => !dansMenu.has(p.id))
+  .sort((a, b) => a.data.title.localeCompare(b.data.title, 'fr'));
+const lien =
+  'inline-flex min-h-10 items-center text-foret underline-offset-4 hover:underline';
+---
+
+<Base
+  title="Plan du site"
+  description="Toutes les pages du site des Amis de L’Étang-la-Ville."
+  indexer={false}
+>
+  <div class="mx-auto max-w-site px-4 pt-6 md:px-6">
+    <FilAriane items={[{ titre: 'Plan du site' }]} />
+    <EnTetePage title="Plan du site" />
+  </div>
+  <div class="mx-auto max-w-site px-4 py-10 md:px-6">
+    <ul class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+      {menu.map((item) => (
+        <li>
+          <h2 class="text-2xl font-semibold">
+            <a
+              href={hrefFor(item.link)}
+              class="underline-offset-4 hover:text-foret hover:underline"
+            >
+              {item.title}
+            </a>
+          </h2>
+          {item.children && (
+            <ul class="mt-2 border-t border-encre pt-2">
+              {item.children.map((c) => (
+                <li>
+                  <a href={hrefFor(c.link)} class={lien}>
+                    {c.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))}
+      <li>
+        <h2 class="text-2xl font-semibold">Autres pages</h2>
+        <ul class="mt-2 border-t border-encre pt-2">
+          {autres.map((p) => (
+            <li>
+              <a href={hrefFor(p.id)} class={lien}>
+                {p.data.title}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a href="/recherche/" class={lien}>
+              Rechercher
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</Base>

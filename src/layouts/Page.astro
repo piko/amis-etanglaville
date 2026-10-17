@@ -1,21 +1,83 @@
 ---
-// Gabarit d'une page de texte (contenu Markdown mis en forme par « prose »).
+// Gabarit « page de texte » : fil d'Ariane, en-tête, sommaire, navigation de rubrique, contenu.
+import type { MarkdownHeading } from 'astro';
 import Base from './Base.astro';
+import Contenu from '../components/Contenu.astro';
+import EnTetePage from '../components/EnTetePage.astro';
+import FilAriane from '../components/FilAriane.astro';
+import NavRubrique from '../components/NavRubrique.astro';
+import Sommaire from '../components/Sommaire.astro';
+import type { Rubrique } from '../lib/data';
 
 interface Props {
   title: string;
   description?: string;
   image?: string;
+  updated?: Date;
+  headings?: MarkdownHeading[];
+  /** Rubrique du menu (surtitre, fil d'Ariane, navigation). */
+  rubrique?: Rubrique;
+  /** Page parente hors menu (ex. Archives 2023 → Archives). */
+  parent?: { titre: string; href: string };
 }
 
-const { title, description, image } = Astro.props;
+const {
+  title,
+  description,
+  image,
+  updated,
+  headings = [],
+  rubrique,
+  parent,
+} = Astro.props;
+const actif = Astro.url.pathname;
+const estRacine = rubrique?.href === actif;
+const ariane = [
+  ...(rubrique && !estRacine
+    ? [{ titre: rubrique.titre, href: rubrique.href }]
+    : []),
+  ...(parent ? [parent] : []),
+  { titre: title },
+];
+const avecSommaire = headings.filter((h) => h.depth === 2).length > 3;
+const aside = avecSommaire || rubrique;
 ---
 
 <Base title={title} description={description} image={image}>
-  <article>
-    <h1 class="mb-6 text-3xl font-bold text-foret">{title}</h1>
-    <div class="prose max-w-none prose-a:text-foret">
-      <slot />
+  <div class="mx-auto max-w-site px-4 pt-6 md:px-6">
+    <FilAriane items={ariane} />
+    <EnTetePage
+      surtitre={rubrique?.titre ?? parent?.titre}
+      title={title}
+      description={description}
+      updated={updated}
+    />
+  </div>
+  <div
+    class:list={[
+      'mx-auto grid max-w-site gap-10 px-4 py-10 md:px-6 lg:gap-16',
+      aside && 'lg:grid-cols-[16rem_minmax(0,1fr)]',
+    ]}
+  >
+    {aside && (
+      <aside class="flex flex-col gap-10 lg:sticky lg:top-6 lg:self-start">
+        <Sommaire headings={headings} />
+        {rubrique && (
+          <NavRubrique variante="liste" rubrique={rubrique} actif={actif} />
+        )}
+      </aside>
+    )}
+    <div class="min-w-0">
+      <Contenu>
+        <slot />
+      </Contenu>
+      {rubrique && (
+        <NavRubrique
+          variante="precedent-suivant"
+          rubrique={rubrique}
+          actif={actif}
+        />
+      )}
     </div>
-  </article>
+  </div>
 </Base>

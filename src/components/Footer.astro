@@ -1,41 +1,117 @@
 ---
+import Embleme from './Embleme.astro';
 import { site } from '../lib/data';
+
+const [rue, ville] = site.adresse.split(/,\s*/);
+const explorer = [
+  { titre: 'Un peu d’histoire', href: '/un-peu-dhistoire/' },
+  { titre: 'Les peintres', href: '/les-artistes/' },
+  {
+    titre: 'Cartes postales historiques',
+    href: '/cartes-postales-historiques/',
+  },
+  { titre: 'La forêt et les arbres', href: '/la-foret/' },
+  { titre: 'Statuts', href: '/statuts/' },
+];
+const titreColonne =
+  'font-texte text-xs font-bold tracking-surtitre text-ocre-fonce uppercase';
 ---
 
-<footer class="mt-12 bg-pierre">
-  <div class="mx-auto grid max-w-5xl gap-6 px-4 py-8 text-sm sm:grid-cols-2 md:grid-cols-3">
-    <div>
-      <p class="font-titre font-bold text-foret">{site.nom}</p>
-      <p>{site.nomCourt}, association depuis 1960</p>
-      <p>{site.adresse}</p>
-    </div>
-    <div>
-      <p class="font-bold">Contact</p>
-      <p>
-        <a href={`mailto:${site.email}`} class="underline">
-          {site.email}
-        </a>
-      </p>
-      {site.facebook && (
-        <p>
-          <a href={site.facebook} class="underline">
-            Facebook
-          </a>
+<footer class="mt-auto bg-papier" data-pagefind-ignore>
+  <div class="mx-auto max-w-site px-4 md:px-6">
+    <div class="grid gap-8 border-t-4 border-double border-encre py-10 md:grid-cols-2 lg:grid-cols-4">
+      <div>
+        <p class="flex items-center gap-3">
+          <Embleme class="h-10 w-8 shrink-0 text-foret" />
+          <span class="font-titre text-xl leading-tight font-semibold">
+            {site.nom}
+          </span>
         </p>
-      )}
+        <p class="mt-3">
+          Comité de Défense et de Protection Stagnovillois ({site.nomCourt}),
+          association loi 1901 fondée en 1960, non partisane.
+        </p>
+      </div>
+      <div>
+        <h2 class={titreColonne}>Nous joindre</h2>
+        <address class="mt-2 not-italic">
+          {rue}
+          <br />
+          {ville}
+          <br />
+          <a
+            href={`mailto:${site.email}`}
+            class="font-bold break-words text-foret underline underline-offset-4 hover:text-foret-fonce"
+          >
+            {site.email}
+          </a>
+        </address>
+        {site.facebook && (
+          <p class="mt-2">
+            <a
+              href={site.facebook}
+              class="text-foret underline underline-offset-4 hover:text-foret-fonce"
+            >
+              Groupe Facebook « Les arbres de l’Étang-la-Ville »
+            </a>
+          </p>
+        )}
+      </div>
+      <nav aria-labelledby="titre-explorer">
+        <h2 id="titre-explorer" class={titreColonne}>
+          Explorer
+        </h2>
+        <ul class="mt-2">
+          {explorer.map((lien) => (
+            <li>
+              <a
+                href={lien.href}
+                class="inline-flex min-h-10 items-center underline-offset-4 hover:text-foret hover:underline"
+              >
+                {lien.titre}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <div>
+        <h2 class={titreColonne}>Nos partenaires</h2>
+        <p class="mt-2">
+          {site.partenaires.map((p, i) => (
+            <>
+              {i > 0 && ' · '}
+              {p.url ? (
+                <a
+                  href={p.url}
+                  class="underline-offset-4 hover:text-foret hover:underline"
+                >
+                  {p.nom}
+                </a>
+              ) : (
+                p.nom
+              )}
+            </>
+          ))}
+          , et des échanges réguliers avec l’ONF.
+        </p>
+      </div>
     </div>
-    <div>
-      <p class="font-bold">Soutenir l’association</p>
-      <p>
-        <a href={site.adhesion} class="underline">
-          Adhérer
-        </a>
-      </p>
-      <p>
-        <a href={site.don} class="underline">
-          Faire un don
-        </a>
-      </p>
+    <div class="flex flex-wrap justify-between gap-2 border-t border-filet py-4 text-sm text-gris">
+      <p>© {site.nom} · depuis 1960</p>
+      <ul class="flex flex-wrap gap-x-2">
+        {[
+          { titre: 'Rechercher', href: '/recherche/' },
+          { titre: 'Plan du site', href: '/plan-du-site/' },
+          { titre: 'Mentions légales', href: '/mentions-legales/' },
+        ].map((l, i) => (
+          <li class="flex gap-x-2">
+            {i > 0 && <span aria-hidden="true">·</span>}
+            <a href={l.href} class="underline-offset-4 hover:underline">
+              {l.titre}
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   </div>
 </footer>

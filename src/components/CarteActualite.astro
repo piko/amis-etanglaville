@@ -1,0 +1,107 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { finEvenement, isoSelon, paveDate } from '../lib/dates';
+import { categories } from '../lib/actualites';
+import { typo } from '../lib/texte';
+
+interface Props {
+  actualite: CollectionEntry<'actualites'>;
+  /** Niveau du titre de la carte. */
+  niveau?: 'h2' | 'h3';
+}
+
+const { actualite, niveau: Titre = 'h3' } = Astro.props;
+const { title, date, dateFin, datePrecision, lieu, categorie, annule } =
+  actualite.data;
+const aVenir =
+  finEvenement(date, dateFin, datePrecision) > new Date() && !annule;
+const pave = paveDate(date, dateFin, datePrecision);
+const resume = typo(actualite.data.resume ?? extrait(actualite.body ?? ''));
+const href = `/actualites/${actualite.id}/`;
+
+/** Premier paragraphe du corps, sans Markdown, coupé vers 180 caractères. */
+function extrait(corps: string) {
+  const paragraphe =
+    corps
+      .split(/\n\s*\n/)
+      .map((p) => p.trim())
+      .find((p) => p && !/^(#|!\[|>|-|\*\s)/.test(p)) ?? '';
+  const texte = paragraphe
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/[*_`]/g, '')
+    .replace(/\s+/g, ' ');
+  return texte.length > 180
+    ? `${texte.slice(0, 180).replace(/\s+\S*$/, '')}…`
+    : texte;
+}
+---
+
+<article
+  class:list={[
+    'group relative flex flex-col gap-3 border-t-3 pt-4',
+    aVenir ? 'border-foret' : 'border-encre',
+  ]}
+>
+  <p class="flex items-center justify-between gap-3 text-xs font-bold tracking-surtitre uppercase">
+    <span class="text-ocre-fonce">{categories[categorie]}</span>
+    {annule ? (
+      <span class="border border-encre px-2 py-0.5">
+        Pas d’édition en {date.getUTCFullYear()}
+      </span>
+    ) : aVenir ? (
+      <span class="bg-foret px-2 py-0.5 text-papier">À venir</span>
+    ) : (
+      <span class="text-gris">Passé</span>
+    )}
+  </p>
+  <div class="flex items-start gap-4">
+    <time
+      datetime={isoSelon(date, datePrecision)}
+      class:list={[
+        'flex min-w-21 shrink-0 flex-col items-center border border-encre p-2 text-center',
+        aVenir ? 'bg-creme' : 'bg-pierre',
+      ]}
+    >
+      <span class="font-titre text-3xl leading-none font-semibold">
+        {pave.grand}
+      </span>
+      {pave.petit && <span class="mt-1 text-sm font-bold">{pave.petit}</span>}
+    </time>
+    <div class="min-w-0">
+      <Titre class="text-2xl leading-tight font-semibold text-balance">
+        <a
+          href={href}
+          class="after:absolute after:inset-0 group-hover:underline focus-visible:outline-none focus-visible:after:outline-3 focus-visible:after:outline-offset-4 focus-visible:after:outline-foret"
+        >
+          {typo(title)}
+        </a>
+      </Titre>
+      {lieu && (
+        <p class="mt-1 flex items-center gap-1.5 text-base text-gris">
+          <svg
+            viewBox="0 0 24 24"
+            class="size-4 shrink-0"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z" />
+            <circle cx="12" cy="9.5" r="2.5" />
+          </svg>
+          {lieu}
+        </p>
+      )}
+    </div>
+  </div>
+  {resume && <p class="text-base">{resume}</p>}
+  <p
+    class="text-base font-bold text-foret group-hover:text-foret-fonce"
+    aria-hidden="true"
+  >
+    Lire la suite →
+  </p>
+</article>

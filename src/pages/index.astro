@@ -1,49 +1,176 @@
 ---
-// Page d'accueil PROVISOIRE : accroche de src/content/pages/accueil.md et rubriques du menu.
-// La version sur mesure (Hero, chiffres clés, dernier bulletin…) viendra du canevas de design.
-import { getEntry, render } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import { hrefFor, menu, site } from '../lib/data';
+import CarteActualite from '../components/CarteActualite.astro';
+import CarteBulletin from '../components/CarteBulletin.astro';
+import CartePostale from '../components/CartePostale.astro';
+import Hero from '../components/Hero.astro';
+import { actualites } from '../lib/actualites';
+import { accueil } from '../lib/data';
+import { slugifier, typo } from '../lib/texte';
 
-const accueil = await getEntry('pages', 'accueil');
-const { Content } = accueil ? await render(accueil) : { Content: null };
-const rubriques = menu.filter((item) => item.link !== 'accueil');
+// À la une : les événements à venir, complétés par les plus récents (deux cartes au plus).
+const { aVenir, passees } = await actualites();
+const aLaUne = [...aVenir, ...passees].slice(0, 2);
+
+const bulletins = await getCollection(
+  'bulletins',
+  ({ data }) => data.type === 'bulletin' && data.disponible,
+);
+const dernier = bulletins.sort((a, b) => b.data.numero - a.data.numero)[0];
+
+// Mémoire du village : quatre thèmes de la galerie, illustrés par leur première carte.
+const galerie = await getEntry('galeries', 'cartes-postales');
+const sections = galerie?.data.sections ?? [];
+const totalCartes = sections.reduce((n, s) => n + s.images.length, 0);
+const themes = sections.slice(0, 4).map((s) => ({
+  titre: s.titre,
+  image: s.images[0]?.src,
+  nombre: s.images.length,
+  href: `/cartes-postales-historiques/#${slugifier(s.titre)}`,
+}));
+const chiffresRomains = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+const lienFleche = 'font-bold text-foret underline-offset-4 hover:underline';
 ---
 
-<Base description={accueil?.data.description} variante="accueil">
-  <section class="prose max-w-none prose-h1:text-foret">
-    {Content && <Content />}
+<Base variante="accueil">
+  <Hero />
+
+  <section
+    aria-labelledby="titre-une"
+    class="mx-auto max-w-site px-4 pt-4 pb-14 md:px-6"
+  >
+    <div class="mb-7 flex flex-wrap items-center gap-x-5 gap-y-2">
+      <h2 id="titre-une" class="text-3xl font-semibold md:text-4xl">
+        À la une
+      </h2>
+      <span class="hidden flex-1 border-t border-encre md:block"></span>
+      <a href="/actualites/" class={lienFleche}>
+        Toutes les actualités
+      </a>
+    </div>
+    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+      {aLaUne.map((a) => (
+        <CarteActualite actualite={a} />
+      ))}
+      {dernier && (
+        <div class="flex gap-5 border-t-3 border-encre pt-4 md:col-span-2 lg:col-span-1">
+          <div class="w-36 shrink-0">
+            <CarteBulletin
+              numero={dernier.data.numero}
+              date={dernier.data.date}
+              pdf={dernier.data.pdf}
+              cover={dernier.data.cover}
+              dernier
+            />
+          </div>
+          <div>
+            <p class="text-xs font-bold tracking-surtitre text-ocre-fonce uppercase">
+              Le bulletin
+            </p>
+            <p class="mt-2 text-base">
+              Le principal lien avec les Stagnovillois, environ deux numéros par
+              an. Un exemplaire de chaque bulletin est déposé à la BnF.
+            </p>
+            <a
+              href="/bulletins/"
+              class="mt-3 inline-flex min-h-11 items-center font-bold text-foret underline-offset-4 hover:underline"
+            >
+              Tous les bulletins
+            </a>
+          </div>
+        </div>
+      )}
+    </div>
   </section>
 
-  <section class="mt-10">
-    <h2 class="mb-4 text-2xl font-bold text-foret">Découvrir</h2>
-    <ul class="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
-      {rubriques.map((item) => (
-        <li>
-          <a
-            href={hrefFor(item.link)}
-            class="block rounded border border-pierre p-4 hover:border-foret"
-          >
-            {item.title}
+  <section aria-labelledby="titre-missions" class="border-y border-encre">
+    <div class="mx-auto max-w-site px-4 py-14 md:px-6">
+      <h2
+        id="titre-missions"
+        class="text-center text-3xl font-semibold md:text-4xl"
+      >
+        Nos {accueil.missions.length === 3 ? 'trois' : ''} missions
+      </h2>
+      <ol class="mt-9 grid gap-10 md:grid-cols-3">
+        {accueil.missions.map((m, i) => (
+          <li>
+            <p
+              class="font-titre text-5xl leading-none text-foret"
+              aria-hidden="true"
+            >
+              {chiffresRomains[i]}
+            </p>
+            <h3 class="mt-3 text-2xl leading-snug font-semibold">
+              {typo(m.titre)}
+            </h3>
+            <p class="mt-2 text-lg">{typo(m.texte)}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {themes.length > 0 && (
+    <section aria-labelledby="titre-memoire" class="bg-pierre">
+      <div class="mx-auto max-w-site px-4 py-14 md:px-6">
+        <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div class="max-w-texte">
+            <h2 id="titre-memoire" class="text-3xl font-semibold md:text-4xl">
+              Mémoire du village
+            </h2>
+            <p class="mt-2 text-lg">
+              {totalCartes} cartes postales anciennes, {typo(accueil.memoire)}
+            </p>
+          </div>
+          <a href="/cartes-postales-historiques/" class={lienFleche}>
+            Parcourir les cartes postales
           </a>
+        </div>
+        <ul class="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 lg:grid-cols-4 lg:gap-x-8">
+          {themes.map((t) => (
+            <li>
+              {t.image && (
+                <CartePostale
+                  src={t.image}
+                  legende={t.titre}
+                  reference={
+                    t.nombre > 1
+                      ? `${t.nombre} cartes postales`
+                      : '1 carte postale'
+                  }
+                  href={t.href}
+                  sizes="(min-width: 1024px) 17rem, 50vw"
+                />
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <section
+    aria-labelledby="titre-succes"
+    class="mx-auto max-w-site px-4 py-14 md:px-6"
+  >
+    <h2 id="titre-succes" class="text-3xl font-semibold md:text-4xl">
+      Nos succès
+    </h2>
+    <ul class="mt-7 grid text-lg md:grid-cols-2 md:gap-x-12">
+      {accueil.succes.map((s) => (
+        <li class="border-t border-filet py-4">
+          <strong>{typo(s.titre)}</strong>
+          {s.texte.startsWith(':') ? ' ' : ' '}
+          {typo(s.texte)}
         </li>
       ))}
     </ul>
-  </section>
-
-  <section class="mt-10 rounded bg-pierre p-6">
-    <h2 class="text-2xl font-bold text-foret">Soutenir l’association</h2>
-    <p class="mt-2">En ligne, via PayAsso :</p>
-    <p class="mt-3 flex flex-wrap gap-3">
-      <a href={site.adhesion} class="rounded bg-foret px-4 py-2 text-white">
-        Adhérer
-      </a>
-      <a
-        href={site.don}
-        class="rounded border border-foret px-4 py-2 text-foret"
-      >
-        Faire un don
-      </a>
-    </p>
+    <a
+      href="/lassociation/"
+      class="mt-4 inline-flex min-h-11 items-center font-bold text-foret underline-offset-4 hover:underline"
+    >
+      L’histoire de l’association
+    </a>
   </section>
 </Base>

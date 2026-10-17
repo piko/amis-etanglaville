@@ -1,0 +1,79 @@
+---
+// Recherche plein texte : index Pagefind généré après le build (`pagefind --site dist`).
+import Base from '../layouts/Base.astro';
+import EnTetePage from '../components/EnTetePage.astro';
+import FilAriane from '../components/FilAriane.astro';
+import Recherche from '../components/Recherche.astro';
+---
+
+<Base
+  title="Rechercher"
+  description="Rechercher dans les pages, les actualités et les bulletins du site des Amis de L’Étang-la-Ville."
+  indexer={false}
+>
+  <div class="mx-auto max-w-site px-4 pt-6 md:px-6">
+    <FilAriane items={[{ titre: 'Rechercher' }]} />
+    <EnTetePage title="Rechercher sur le site" />
+  </div>
+  <div class="mx-auto max-w-site px-4 pb-16 md:px-6">
+    <Recherche class="mt-8 max-w-texte" />
+    <p class="mt-8 text-lg" role="status" aria-live="polite" data-statut></p>
+    <ol class="mt-4 max-w-texte" data-resultats></ol>
+  </div>
+</Base>
+
+<script>
+  const champ = document.querySelector<HTMLInputElement>('#recherche')!;
+  const statut = document.querySelector<HTMLElement>('[data-statut]')!;
+  const liste = document.querySelector<HTMLOListElement>('[data-resultats]')!;
+  const requete = new URLSearchParams(location.search).get('q')?.trim() ?? '';
+  champ.value = requete;
+
+  interface Resultat {
+    url: string;
+    excerpt: string;
+    meta: { title?: string };
+  }
+
+  async function chercher() {
+    if (!requete) {
+      statut.textContent = 'Saisissez un ou plusieurs mots.';
+      return;
+    }
+    statut.textContent = 'Recherche en cours…';
+    try {
+      const chemin = '/pagefind/pagefind.js';
+      const pagefind = await import(/* @vite-ignore */ chemin);
+      const { results } = await pagefind.search(requete);
+      const donnees: Resultat[] = await Promise.all(
+        results
+          .slice(0, 30)
+          .map((r: { data: () => Promise<Resultat> }) => r.data()),
+      );
+      statut.textContent = donnees.length
+        ? `${results.length} résultat${results.length > 1 ? 's' : ''} pour « ${requete} »`
+        : `Aucun résultat pour « ${requete} ». Essayez un autre mot.`;
+      liste.replaceChildren(
+        ...donnees.map((d) => {
+          const li = document.createElement('li');
+          li.className = 'border-t border-filet py-5';
+          const a = document.createElement('a');
+          a.href = d.url;
+          a.className =
+            'font-titre text-2xl font-semibold text-foret underline-offset-4 hover:underline';
+          a.textContent = d.meta.title ?? d.url;
+          const p = document.createElement('p');
+          p.className = 'mt-2 text-base [&_mark]:bg-mousse [&_mark]:px-0.5';
+          // L'extrait de Pagefind est du texte échappé, avec des <mark> autour des mots trouvés.
+          p.innerHTML = d.excerpt;
+          li.append(a, p);
+          return li;
+        }),
+      );
+    } catch {
+      statut.textContent =
+        'La recherche est indisponible sur cette version du site (index non généré).';
+    }
+  }
+  chercher();
+</script>

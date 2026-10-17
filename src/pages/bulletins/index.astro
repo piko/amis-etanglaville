@@ -1,0 +1,264 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Bouton from '../../components/Bouton.astro';
+import CarteBulletin from '../../components/CarteBulletin.astro';
+import Contenu from '../../components/Contenu.astro';
+import EnTetePage from '../../components/EnTetePage.astro';
+import FilAriane from '../../components/FilAriane.astro';
+import { moisEtAnnee } from '../../lib/dates';
+
+type Bulletin = CollectionEntry<'bulletins'>;
+
+const tous = (await getCollection('bulletins')).sort(
+  (a, b) => b.data.numero - a.data.numero,
+);
+const annee = (b: Bulletin) => b.data.date?.getUTCFullYear();
+const bulletins = tous.filter((b) => b.data.type === 'bulletin');
+const flashs = tous.filter((b) => b.data.type === 'flash-info');
+
+const dernier = bulletins.find((b) => b.data.disponible);
+const sommaire = dernier ? await render(dernier) : undefined;
+
+// Numéros récents (depuis 2020) : en cartes. Les plus anciens : en pastilles,
+// regroupés par séries de numéros consécutifs ; les n°1 et 2 forment « Les origines ».
+const DEBUT_RECENTS = 2020;
+const recents = bulletins.filter(
+  (b) => b !== dernier && (annee(b) ?? 0) >= DEBUT_RECENTS,
+);
+const anciens = bulletins.filter((b) => (annee(b) ?? 0) < DEBUT_RECENTS);
+const origines = anciens.filter((b) => b.data.numero <= 2);
+const series: Bulletin[][] = [];
+for (const b of anciens.filter((b) => b.data.numero > 2)) {
+  const serie = series.at(-1);
+  if (serie && serie.at(-1)!.data.numero - b.data.numero <= 3) serie.push(b);
+  else series.push([b]);
+}
+const periodes = series.map((serie) => {
+  const annees = serie.map(annee).filter((a): a is number => !!a);
+  const min = Math.min(...annees);
+  const max = Math.max(...annees);
+  const flashsSerie = flashs.filter((f) => {
+    const a = annee(f);
+    return a && a >= min && a <= max;
+  });
+  return {
+    ancre: `periode-${min}`,
+    libelle: `${min} – ${max}`,
+    numeros: [...serie].reverse(),
+    flashs: flashsSerie,
+    premier: serie.at(-1)!.data.numero,
+    dernierNumero: serie[0].data.numero,
+  };
+});
+// Flash infos non datés ou récents : liens sous les numéros récents.
+const flashsRecents = flashs.filter(
+  (f) => !periodes.some((p) => p.flashs.includes(f)),
+);
+
+const anneeCourante = new Date().getFullYear();
+const navPeriodes = [
+  {
+    ancre: `periode-${DEBUT_RECENTS}`,
+    libelle: `${DEBUT_RECENTS} – ${anneeCourante}`,
+  },
+  ...periodes.map((p) => ({ ancre: p.ancre, libelle: p.libelle })),
+  ...(origines.length
+    ? [{ ancre: 'periode-origines', libelle: 'N°1 et 2' }]
+    : []),
+];
+const numerosRecents = recents.map((b) => b.data.numero);
+const pastille =
+  'inline-flex min-h-12 min-w-13 items-center justify-center border px-3 font-titre text-xl';
+const lienPdf =
+  'mt-8 inline-flex min-h-11 items-center font-bold text-foret underline underline-offset-4 hover:text-foret-fonce';
+const titreFlash = (f: Bulletin) => `Flash info ${f.data.numero}`;
+---
+
+<Base
+  title="Les bulletins"
+  description="Le principal lien entre l’association et les Stagnovillois, publié environ deux fois par an. Tous les bulletins numérisés, à lire en PDF."
+  image={dernier?.data.cover}
+>
+  <div class="mx-auto max-w-site px-4 pt-6 md:px-6">
+    <FilAriane items={[{ titre: 'Bulletins' }]} />
+    <EnTetePage
+      surtitre="Informer les habitants"
+      title="Les bulletins"
+      description="Le principal lien entre l’association et les Stagnovillois, publié environ deux fois par an. Un exemplaire de chaque numéro est déposé à la BnF."
+    >
+      <nav aria-label="Aller à une période" data-pagefind-ignore>
+        <ul class="flex flex-wrap gap-2 text-sm font-bold lg:max-w-sm lg:justify-end">
+          {navPeriodes.map((p, i) => (
+            <li>
+              <a
+                href={`#${p.ancre}`}
+                aria-current={i === 0 ? 'true' : undefined}
+                class="inline-flex min-h-11 items-center border border-encre px-4 hover:bg-encre hover:text-papier aria-[current=true]:bg-encre aria-[current=true]:text-papier"
+              >
+                {p.libelle}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </EnTetePage>
+  </div>
+
+  {dernier && (
+    <section
+      aria-labelledby="titre-dernier"
+      class="mx-auto grid max-w-site items-center gap-8 px-4 py-10 md:grid-cols-[15rem_minmax(0,1fr)] md:gap-14 md:px-6 md:py-12"
+    >
+      <div class="w-48 md:w-60">
+        <CarteBulletin
+          numero={dernier.data.numero}
+          date={dernier.data.date}
+          pdf={dernier.data.pdf}
+          cover={dernier.data.cover}
+          taille="grand"
+          dernier
+        />
+      </div>
+      <div>
+        <p class="text-sm font-bold tracking-surtitre text-ocre-fonce uppercase">
+          Dernier numéro paru
+        </p>
+        <h2
+          id="titre-dernier"
+          class="mt-2 text-3xl leading-tight font-semibold text-balance md:text-5xl"
+        >
+          Bulletin n°{dernier.data.numero}
+          {dernier.data.date &&
+            `, ${moisEtAnnee(dernier.data.date).toLowerCase()}`}
+        </h2>
+        {sommaire && dernier.body?.trim() && (
+          <Contenu class="mt-4 text-lg">
+            <sommaire.Content />
+          </Contenu>
+        )}
+        <p class="mt-6 flex flex-wrap gap-3">
+          {dernier.data.pdf && (
+            <Bouton
+              variante="primaire"
+              href={dernier.data.pdf}
+              libelle="Lire le bulletin (PDF)"
+            />
+          )}
+          <Bouton
+            variante="secondaire"
+            href="/contact/"
+            libelle="Le recevoir : adhérer"
+          />
+        </p>
+      </div>
+    </section>
+  )}
+
+  <section
+    id={`periode-${DEBUT_RECENTS}`}
+    aria-labelledby="titre-recents"
+    class="mx-auto max-w-site scroll-mt-6 px-4 pb-14 md:px-6"
+  >
+    <div class="mb-8 flex flex-wrap items-baseline gap-x-5 gap-y-1">
+      <h2 id="titre-recents" class="text-3xl font-semibold md:text-4xl">
+        {DEBUT_RECENTS} – {anneeCourante}
+      </h2>
+      <span class="hidden flex-1 border-t border-encre md:block"></span>
+      {numerosRecents.length > 0 && (
+        <p class="text-base text-gris">
+          N°{Math.min(...numerosRecents)} à {Math.max(...numerosRecents)}
+          {flashsRecents.length > 0 &&
+            ` et ${flashsRecents.map(titreFlash).join(', ')}`}
+        </p>
+      )}
+    </div>
+    <ul class="grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 lg:grid-cols-5 lg:gap-x-8">
+      {recents.map((b) => (
+        <li>
+          <CarteBulletin
+            numero={b.data.numero}
+            date={b.data.date}
+            pdf={b.data.pdf}
+            cover={b.data.cover}
+          />
+        </li>
+      ))}
+    </ul>
+    {flashsRecents.map((f) => (
+      <a href={f.data.pdf} class={lienPdf}>
+        {titreFlash(f)} (PDF)
+      </a>
+    ))}
+  </section>
+
+  <section aria-label="Numéros plus anciens" class="bg-pierre">
+    <div class="mx-auto grid max-w-site gap-10 px-4 py-12 md:px-6 lg:grid-cols-3">
+      {periodes.map((p) => (
+        <div id={p.ancre} class="scroll-mt-6">
+          <h2 class="text-2xl font-semibold md:text-3xl">{p.libelle}</h2>
+          <p class="mt-1 text-base">
+            N°{p.premier} à {p.dernierNumero}
+            {p.flashs.length > 0 &&
+              ` et ${p.flashs.map(titreFlash).join(', ')}`}
+            .
+            {p.numeros.some((b) => !b.data.disponible) &&
+              ' Les numéros en pointillés ne sont pas encore numérisés.'}
+          </p>
+          <ul class="mt-4 flex flex-wrap gap-2">
+            {[...p.numeros, ...p.flashs].map((b) => (
+              <li>
+                {b.data.disponible && b.data.pdf ? (
+                  <a
+                    href={b.data.pdf}
+                    aria-label={`${b.data.type === 'flash-info' ? titreFlash(b) : `Bulletin ${b.data.numero}`} (PDF${b.data.date ? `, ${moisEtAnnee(b.data.date).toLowerCase()}` : ''})`}
+                    title={b.data.date ? moisEtAnnee(b.data.date) : undefined}
+                    class={`${pastille} border-encre bg-creme font-semibold hover:bg-encre hover:text-papier`}
+                  >
+                    {b.data.type === 'flash-info'
+                      ? `Flash ${b.data.numero}`
+                      : b.data.numero}
+                  </a>
+                ) : (
+                  <span
+                    class={`${pastille} border-dashed border-gris text-gris`}
+                  >
+                    {b.data.numero}
+                    <span class="sr-only"> : pas encore numérisé</span>
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      {origines.length > 0 && (
+        <div id="periode-origines" class="scroll-mt-6">
+          <h2 class="text-2xl font-semibold md:text-3xl">Les origines</h2>
+          <p class="mt-1 text-base">
+            Les deux premiers bulletins de la Société des Amis de L’Étang, à
+            partir de 1960.
+          </p>
+          <ul class="mt-4 flex flex-wrap gap-2">
+            {[...origines].reverse().map((b) => (
+              <li>
+                <a
+                  href={b.data.pdf}
+                  class="inline-flex min-h-12 items-center border border-encre bg-creme px-4 font-bold hover:bg-encre hover:text-papier"
+                >
+                  Bulletin n°{b.data.numero}
+                  {b.data.numero === 1 && b.data.date && ` (${annee(b)})`}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p class="mt-4 text-base">
+            Un exemplaire papier de presque chaque bulletin est conservé à
+            l’association.
+          </p>
+        </div>
+      )}
+    </div>
+  </section>
+  <div class="h-14"></div>
+</Base>

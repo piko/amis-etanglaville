@@ -1,0 +1,281 @@
+---
+// Galerie par thèmes (NavThemes, sections, Visionneuse).
+// Un seul thème est visible à la fois, choisi par l'ancre de l'URL (#la-foret) :
+// sans JavaScript, la page reste navigable par ancres et les liens ouvrent l'image.
+import CartePostale from './CartePostale.astro';
+import { cheminVignette, infosImage } from '../lib/medias.mjs';
+import { pluriel, referenceCarte, slugifier, typo } from '../lib/texte';
+
+interface Props {
+  sections: { titre: string; images: { src: string; legende?: string }[] }[];
+}
+
+const sections = Astro.props.sections.map((s) => ({
+  ...s,
+  titre: typo(s.titre),
+  ancre: slugifier(s.titre),
+}));
+
+/** Image affichée dans la visionneuse : la vignette de 1600 px si elle existe. */
+async function grande(src: string) {
+  const infos = await infosImage(src);
+  return infos?.srcset?.includes(cheminVignette(src, 1600))
+    ? cheminVignette(src, 1600)
+    : src;
+}
+const grandes = new Map(
+  await Promise.all(
+    sections
+      .flatMap((s) => s.images)
+      .map(async (i) => [i.src, await grande(i.src)] as const),
+  ),
+);
+const pastille =
+  'inline-flex min-h-11 items-center gap-1.5 border border-encre px-4 hover:bg-encre hover:text-papier aria-[current=true]:bg-encre aria-[current=true]:text-papier';
+---
+
+<div class="mx-auto max-w-site px-4 md:px-6">
+  <nav
+    aria-label="Thèmes de la galerie"
+    class="border-t-4 border-b border-double border-encre py-3"
+    data-pagefind-ignore
+  >
+    <ul class="flex gap-2 overflow-x-auto pb-1 text-sm font-bold lg:flex-wrap lg:overflow-visible lg:pb-0">
+      {sections.map((s, i) => (
+        <li class="shrink-0">
+          <a
+            href={`#${s.ancre}`}
+            aria-current={i === 0 ? 'true' : undefined}
+            class={pastille}
+            data-theme-lien
+          >
+            {s.titre} <span class="font-normal">{s.images.length}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</div>
+
+<div class="[&:has(>section:target)>section:not(:target)]:hidden [&:not(:has(>section:target))>section:not(:first-of-type)]:hidden">
+  {sections.map((s, i) => {
+    const suivant = sections[i + 1];
+    return (
+      <section
+        id={s.ancre}
+        aria-labelledby={`titre-${s.ancre}`}
+        class="mx-auto max-w-site scroll-mt-6 px-4 py-10 md:px-6 md:py-12"
+      >
+        <div class="mb-8 flex items-baseline gap-5">
+          <h2
+            id={`titre-${s.ancre}`}
+            class="text-3xl font-semibold md:text-5xl"
+          >
+            {s.titre}
+          </h2>
+          <span class="flex-1 border-t border-encre" />
+          <p class="text-base text-gris">{pluriel(s.images.length, 'carte')}</p>
+        </div>
+        <ul class="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 md:gap-x-8 md:gap-y-12">
+          {s.images.map((image) => {
+            const reference = referenceCarte(image.src);
+            const legende = image.legende ?? s.titre;
+            return (
+              <li>
+                <CartePostale
+                  src={image.src}
+                  legende={legende}
+                  reference={reference && `Réf. ${reference}`}
+                  href={grandes.get(image.src) ?? image.src}
+                  visionneuse
+                />
+              </li>
+            );
+          })}
+        </ul>
+        {suivant && (
+          <nav
+            aria-label="Thème suivant"
+            class="mt-14 flex justify-end"
+            data-pagefind-ignore
+          >
+            <a
+              href={`#${suivant.ancre}`}
+              class="group block w-full border-t-3 border-encre pt-3 text-right hover:border-foret md:w-80"
+            >
+              <span class="block text-xs font-bold tracking-surtitre text-ocre-fonce uppercase">
+                Thème suivant →
+              </span>
+              <span class="font-titre text-2xl font-semibold group-hover:text-foret group-hover:underline">
+                {suivant.titre} · {pluriel(suivant.images.length, 'carte')}
+              </span>
+            </a>
+          </nav>
+        )}
+      </section>
+    );
+  })}
+</div>
+
+<dialog
+  aria-labelledby="visionneuse-legende"
+  class="m-0 h-dvh max-h-none w-dvw max-w-none bg-nuit p-0 text-papier backdrop:bg-nuit/80"
+  data-visionneuse
+>
+  <div class="flex h-full flex-col gap-4 p-4 md:p-8">
+    <div class="flex items-center justify-between gap-4">
+      <p>
+        <span
+          class="font-titre text-xl font-semibold md:text-2xl"
+          data-visionneuse-theme
+        ></span>
+        <span class="ml-2 text-papier/80" data-visionneuse-position></span>
+      </p>
+      <form method="dialog">
+        <button class="inline-flex min-h-12 items-center gap-2 border border-papier px-4 font-bold hover:bg-papier hover:text-nuit focus-visible:outline-papier">
+          <svg
+            viewBox="0 0 24 24"
+            class="size-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <path d="M6 6l12 12M18 6 6 18"></path>
+          </svg>
+          Fermer
+        </button>
+      </form>
+    </div>
+    <figure class="flex min-h-0 flex-1 flex-col items-center justify-center gap-4">
+      <img
+        src="data:,"
+        alt=""
+        class="min-h-0 max-w-full flex-1 border-8 border-creme bg-sepia object-contain md:border-[14px]"
+        data-visionneuse-image
+      />
+      <figcaption id="visionneuse-legende" class="text-center">
+        <span
+          class="block font-titre text-2xl font-semibold text-balance md:text-3xl"
+          data-visionneuse-legende
+        ></span>
+        <span class="mt-1 hidden text-sm text-papier/80 md:block">
+          Flèches du clavier pour naviguer, Échap pour fermer
+        </span>
+      </figcaption>
+    </figure>
+    <div class="flex justify-center gap-4">
+      <button
+        type="button"
+        class="inline-flex size-14 items-center justify-center rounded-full border border-papier hover:bg-papier hover:text-nuit focus-visible:outline-papier"
+        aria-label="Carte précédente"
+        data-visionneuse-precedent
+      >
+        <svg
+          viewBox="0 0 24 24"
+          class="size-6"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="m15 5-7 7 7 7"></path>
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="inline-flex size-14 items-center justify-center rounded-full border border-papier hover:bg-papier hover:text-nuit focus-visible:outline-papier"
+        aria-label="Carte suivante"
+        data-visionneuse-suivant
+      >
+        <svg
+          viewBox="0 0 24 24"
+          class="size-6"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="m9 5 7 7-7 7"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  // Thème actif : pastille courante selon l'ancre de l'URL.
+  const liensThemes = [
+    ...document.querySelectorAll<HTMLAnchorElement>('[data-theme-lien]'),
+  ];
+  const marquerTheme = () => {
+    const ancre = location.hash.slice(1);
+    const existe = liensThemes.some((l) => l.hash.slice(1) === ancre);
+    liensThemes.forEach((l, i) => {
+      const actif = existe ? l.hash.slice(1) === ancre : i === 0;
+      if (actif) l.setAttribute('aria-current', 'true');
+      else l.removeAttribute('aria-current');
+    });
+  };
+  addEventListener('hashchange', marquerTheme);
+  marquerTheme();
+
+  // Visionneuse (<dialog> natif) : cartes du thème affiché, flèches et Échap.
+  const visionneuse =
+    document.querySelector<HTMLDialogElement>('[data-visionneuse]');
+  if (visionneuse) {
+    const image = visionneuse.querySelector<HTMLImageElement>(
+      '[data-visionneuse-image]',
+    )!;
+    const legende = visionneuse.querySelector('[data-visionneuse-legende]')!;
+    const position = visionneuse.querySelector('[data-visionneuse-position]')!;
+    const theme = visionneuse.querySelector('[data-visionneuse-theme]')!;
+    let liens: HTMLAnchorElement[] = [];
+    let index = 0;
+
+    const montrer = (n: number) => {
+      index = (n + liens.length) % liens.length;
+      const lien = liens[index];
+      image.src = lien.href;
+      image.alt = lien.dataset.legende ?? '';
+      legende.textContent = lien.dataset.legende ?? '';
+      position.textContent = `${index + 1} / ${liens.length}`;
+      // Précharge la carte suivante.
+      new Image().src = liens[(index + 1) % liens.length].href;
+    };
+
+    document.addEventListener('click', (e) => {
+      const lien = (e.target as Element).closest<HTMLAnchorElement>(
+        '[data-visionneuse-lien]',
+      );
+      if (!lien || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault();
+      const section = lien.closest('section')!;
+      liens = [
+        ...section.querySelectorAll<HTMLAnchorElement>(
+          '[data-visionneuse-lien]',
+        ),
+      ];
+      theme.textContent = section.querySelector('h2')?.textContent ?? '';
+      montrer(liens.indexOf(lien));
+      visionneuse.showModal();
+    });
+    visionneuse
+      .querySelector('[data-visionneuse-precedent]')
+      ?.addEventListener('click', () => montrer(index - 1));
+    visionneuse
+      .querySelector('[data-visionneuse-suivant]')
+      ?.addEventListener('click', () => montrer(index + 1));
+    visionneuse.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') montrer(index - 1);
+      if (e.key === 'ArrowRight') montrer(index + 1);
+    });
+    // Rend le focus à la carte ouverte à la fermeture.
+    visionneuse.addEventListener('close', () => liens[index]?.focus());
+  }
+</script>

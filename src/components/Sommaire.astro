@@ -1,0 +1,36 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+
+const titres = Astro.props.headings.filter((h) => h.depth === 2);
+---
+
+{titres.length > 3 && (
+  <nav
+    aria-labelledby="titre-sommaire"
+    class="border border-encre bg-creme p-4 lg:border-0 lg:bg-transparent lg:p-0"
+    data-pagefind-ignore
+  >
+    <h2
+      id="titre-sommaire"
+      class="font-texte text-xs font-bold tracking-surtitre text-ocre-fonce uppercase"
+    >
+      Sommaire
+    </h2>
+    <ol class="mt-2 border-t border-encre text-base">
+      {titres.map((h) => (
+        <li class="border-b border-filet">
+          <a
+            href={`#${h.slug}`}
+            class="flex min-h-11 items-center py-2 font-bold text-foret hover:text-foret-fonce hover:underline"
+          >
+            {h.text}
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+)}

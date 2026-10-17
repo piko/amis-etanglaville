@@ -1,0 +1,57 @@
+---
+import Bouton from './Bouton.astro';
+import { infosImage } from '../lib/medias.mjs';
+import { accueil } from '../lib/data';
+import { typo } from '../lib/texte';
+
+const { surtitre, titre, texte, image, alt, legende } = accueil.hero;
+const infos = await infosImage(image);
+---
+
+<section
+  aria-labelledby="titre-accueil"
+  class="mx-auto grid max-w-site gap-8 px-4 py-8 md:px-6 lg:grid-cols-12 lg:items-center lg:gap-12 lg:py-12"
+>
+  <figure class="lg:col-span-7">
+    <img
+      src={image}
+      srcset={infos?.srcset}
+      sizes="(min-width: 1200px) 43rem, (min-width: 1024px) 58vw, 100vw"
+      width={infos?.width}
+      height={infos?.height}
+      alt={alt}
+      fetchpriority="high"
+      decoding="async"
+      class="aspect-4/3 w-full border border-encre bg-sepia object-cover"
+    />
+    {legende && (
+      <figcaption class="mt-2 font-titre text-base text-gris italic">
+        {typo(legende)}
+      </figcaption>
+    )}
+  </figure>
+  <div class="lg:col-span-5">
+    <p class="text-sm font-bold tracking-surtitre text-ocre-fonce uppercase">
+      {surtitre}
+    </p>
+    <h1
+      id="titre-accueil"
+      class="mt-3 text-4xl leading-tight font-semibold text-balance md:text-5xl"
+    >
+      {typo(titre)}
+    </h1>
+    <p class="mt-5 text-lg leading-relaxed">{typo(texte)}</p>
+    <p class="mt-7 flex flex-wrap gap-3">
+      <Bouton
+        variante="primaire"
+        href="/contact/"
+        libelle="Adhérer à l’association"
+      />
+      <Bouton
+        variante="secondaire"
+        href="/lassociation/"
+        libelle="Qui sommes-nous ?"
+      />
+    </p>
+  </div>
+</section>
