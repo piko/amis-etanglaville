@@ -43,10 +43,16 @@ Fusion : _Squash and merge_ pour les branches de travail ; _Create a merge commi
 
 - **Bénévoles** : [Pages CMS](https://app.pagescms.org), sur la branche `recette`.
 - **Avec Claude** : dans VS Code (Claude Code), ou en ouvrant une issue « Demande de modification » sur GitHub avec `@claude`.
-- **À la main** : fichiers Markdown de `src/content/pages/` (une page = un fichier, son nom donne l'URL).
+- **À la main** :
+  - pages : `src/content/pages/` (une page = un fichier, son nom donne l'URL) ;
+  - bulletins : `src/content/bulletins/` (un fichier par numéro) ;
+  - actualités : `src/content/actualites/` ;
+  - cartes postales : `src/content/galeries/cartes-postales.yml` ;
+  - accueil : `src/data/accueil.yml`.
+- **Médias** : dans `public/medias/AAAA/MM/`, puis `npm run medias:optimiser` pour alléger les fichiers lourds.
 
 ## Liens
 
 - Production (provisoire, avant bascule du domaine) : https://amis-etanglaville.vercel.app
 - Recette : https://amis-etanglaville-git-recette-amis-etang-la-ville.vercel.app
-- Canevas de design : _à compléter_
+- Canevas de design : [`design/canevas.html`](design/canevas.html) et [`design/composants.md`](design/composants.md)

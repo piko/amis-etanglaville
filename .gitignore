@@ -30,3 +30,6 @@ pnpm-debug.log*
 
 # Captures Playwright (vérifications visuelles)
 .playwright-mcp/
+
+# Vignettes générées (scripts/vignettes.mjs)
+public/vignettes/

@@ -17,7 +17,12 @@ const accueil = variante === 'accueil';
 
 // Numéro du dernier bulletin (masqué tant que la collection est vide).
 const numeros = accueil
-  ? (await getCollection('bulletins')).map((b) => b.data.numero)
+  ? (
+      await getCollection(
+        'bulletins',
+        ({ data }) => data.type === 'bulletin' && data.disponible,
+      )
+    ).map((b) => b.data.numero)
   : [];
 const dernierBulletin = numeros.length ? Math.max(...numeros) : undefined;
 ---

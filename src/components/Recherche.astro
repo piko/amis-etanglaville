@@ -1,0 +1,35 @@
+---
+interface Props {
+  exemple?: string;
+  valeur?: string;
+  class?: string;
+}
+
+const {
+  exemple = 'Ex. : Séguier, bulletin 130, gare',
+  valeur,
+  class: classe = 'mt-8 max-w-texte',
+} = Astro.props;
+---
+
+<form role="search" action="/recherche/" class={classe}>
+  <label for="recherche" class="block font-bold">
+    Rechercher sur le site
+  </label>
+  <div class="mt-2 flex flex-col gap-2 sm:flex-row">
+    <input
+      id="recherche"
+      name="q"
+      type="search"
+      value={valeur}
+      placeholder={exemple}
+      class="min-h-12 min-w-0 flex-1 border-2 border-encre bg-creme px-4 text-lg placeholder:text-gris"
+    />
+    <button
+      type="submit"
+      class="inline-flex min-h-12 items-center justify-center bg-foret px-6 font-bold text-papier hover:bg-foret-fonce"
+    >
+      Rechercher
+    </button>
+  </div>
+</form>

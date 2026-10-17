@@ -1,0 +1,33 @@
+---
+interface Props {
+  /** Étapes après « Accueil » ; la dernière est la page courante (sans lien). */
+  items: { titre: string; href?: string }[];
+}
+
+const { items } = Astro.props;
+const lien = 'text-foret underline underline-offset-4 hover:text-foret-fonce';
+---
+
+<nav aria-label="Fil d’Ariane" class="text-sm" data-pagefind-ignore>
+  <ol class="flex flex-wrap gap-x-2 gap-y-1">
+    <li>
+      <a href="/" class={lien}>
+        Accueil
+      </a>
+    </li>
+    {items.map((item, i) => (
+      <li class="flex gap-2">
+        <span aria-hidden="true">›</span>
+        {i === items.length - 1 || !item.href ? (
+          <span aria-current={i === items.length - 1 ? 'page' : undefined}>
+            {item.titre}
+          </span>
+        ) : (
+          <a href={item.href} class={lien}>
+            {item.titre}
+          </a>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>

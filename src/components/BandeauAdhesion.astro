@@ -1,0 +1,52 @@
+---
+import Bouton from './Bouton.astro';
+import Embleme from './Embleme.astro';
+import { site } from '../lib/data';
+---
+
+<section
+  aria-labelledby="titre-adhesion"
+  class="bg-foret text-papier"
+  data-pagefind-ignore
+>
+  <div class="mx-auto flex max-w-site flex-col gap-8 px-4 py-12 md:px-6 lg:flex-row lg:items-center lg:justify-between">
+    <div class="flex max-w-2xl gap-6">
+      <Embleme class="mt-1 hidden h-16 w-13 shrink-0 text-papier md:block" />
+      <div>
+        <h2
+          id="titre-adhesion"
+          class="text-3xl leading-tight font-semibold md:text-4xl"
+        >
+          Rejoignez les Amis de l’Étang
+        </h2>
+        <p class="mt-3 text-lg">
+          La cotisation annuelle donne le droit de vote à l’Assemblée générale.
+          Cotisations et dons sont déductibles des impôts&#8239;; le reçu fiscal
+          est envoyé après le paiement en ligne.
+        </p>
+      </div>
+    </div>
+    <div class="flex flex-col gap-3">
+      <p class="flex flex-wrap gap-3">
+        <Bouton
+          variante="clair"
+          href={site.adhesion}
+          libelle="Adhérer en ligne"
+        />
+        <Bouton
+          variante="contour-clair"
+          href={site.don}
+          libelle="Faire un don"
+        />
+      </p>
+      {site.formulaire && (
+        <a
+          href={site.formulaire}
+          class="inline-flex min-h-11 items-center text-papier underline underline-offset-4 hover:no-underline focus-visible:outline-papier"
+        >
+          {site.formulaireLibelle}
+        </a>
+      )}
+    </div>
+  </div>
+</section>

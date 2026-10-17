@@ -1,91 +1,87 @@
 ---
-title: Les Trains et le Tram 13
+title: Les trains et le tram 13
+description: "De la ligne de Saint-Lazare ouverte en 1884 au tram 13 : l’histoire du rail à L’Étang-la-Ville et l’engagement des Amis de l’Étang pour des transports respectueux du village."
+parent: notre-village
+order: 6
 wp_id: 913
 updated: 2024-10-28
 ---
 
-**La 1ère ligne de chemin de fer**
+## La première ligne de chemin de fer
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/05/Gare-de-lEtang2.jpg)
+![Carte postale ancienne de la gare de L’Étang-la-Ville : un petit bâtiment bas à lambrequins, entouré d’arbres, et deux passantes sur le trottoir.](/medias/2019/05/Gare-540.jpg)
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/05/Gare-de-l-Etang1.jpg)
+### De Saint-Lazare à Saint-Germain via Saint-Nom-la-Bretèche
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/05/Gare-540.jpg)
+Ce n’est qu’en 1884 que fut réalisée la ligne de Paris-Saint-Lazare par Saint-Cloud, avec pour terminus la station de L’Étang-la-Ville-Ouest, à l’emplacement de l’actuelle gare de l’Étang. Elle fut prolongée en 1888 pour rejoindre la Grande Ceinture à la gare de Saint-Nom-la-Bretèche-Forêt-de-Marly.
 
-**ST LAZARE A ST GERMAIN VIA ST NOM LA BRETECHE**
+La ligne venant de Saint-Lazare permettait de rejoindre directement, par la Grande Ceinture, la gare de Saint-Germain-en-Laye (aujourd’hui gare du RER A).
 
-Ce n’est qu’en 1884 que sera réalisée la ligne de Paris ST Lazare par St Cloud avec comme terminus la station de l’Etang la Ville / Ouest, à l’emplacement actuel de la gare de l’Etang. Elle sera prolongée en 1888 pour rejoindre la grande ceinture à la gare de St Nom la Bretèche-Forêt de Marly.
+À la demande des Stagnovillois, l’ouverture d’une porte de 1 m de large dans le mur de la forêt fut obtenue en 1893 pour leur donner accès à la halte. Elle fut élargie en porte « charretière » vers 1920, lors de la création de la route de Saint-Nom.
 
-La ligne venant de St Lazare permettait de rejoindre directement la gare de St Germain (aujourd’hui gare de RER A) en Laye par la grande ceinture. (Voir Horaire de 1902).
+*Note : une porte charretière est une porte de ferme donnant principalement passage aux véhicules agricoles. Synonyme : porte cochère.*
 
-A la demande des stagnovillois, l’ouverture d’une porte de 1 m de large dans le mur de la forêt fut obtenue en 1893 pour leur permettre d’avoir un accès à la halte. Elle fut élargie en porte « charretière » vers 1920 avec la création de la route de St Nom.
+Le trajet jusqu’à Paris durait environ une heure et coûtait 2,15 F (environ 6,90 €) en 1re classe et 1,50 F (4,80 €) en 2e classe.
 
-*Note : une « porte charretière » est une porte de ferme donnant principalement passage aux véhicules agricoles. Synonyme : porte cochère*
+En 1888, 68 voyageurs l’empruntaient à L’Étang-la-Ville et 300 à Marly-le-Roi.
 
-Le parcours jusqu’à Paris durait environ 1 heure et coûtait 2F15 (env 6,9€) en 1èreclasse et 1F50 (4,8 €) en 2èmeclasse.
+## L’électrification
 
-En 1888, 68 voyageurs l’empruntent à l’Etang la Ville et 300 à Marly le Roi.
+![Deux trains reliés par un dessin de voie ferrée : à gauche, une ancienne rame sombre pavoisée d’une cocarde tricolore et marquée « 1978 » ; à droite, une rame moderne bleu et argent de la SNCF.](/medias/2019/05/Electrification.jpg)
 
-**L’Electrification**
+![Carte postale ancienne de la gare de Saint-Nom-la-Bretèche-Forêt-de-Marly : une voiture à cheval devant le bâtiment en brique et des voitures de train à impériale derrière la barrière.](/medias/2019/05/Gare-de-St-Nom.jpg)
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/05/Electrification.jpg)
+L’électrification de la ligne Saint-Lazare – Saint-Nom fut achevée en 1932, en courant continu de 750 volts par troisième rail.
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/05/Gare-de-St-Nom.jpg)
+Cette électrification imposa la construction d’une passerelle à la gare de l’Étang, la commune y participant pour 3 000 francs (soit 8 000 euros).
 
-L’électrification de la ligne St Lazare – St Nom a été terminée en 1932 en courant 750 volts continu avec un troisième rail.
+En 1973, le nombre de voyageurs (départs et arrivées) était de 402 000 à l’Étang, 384 000 à Saint-Nom et 2 millions à Marly-le-Roi.
 
-Cette électrification impose à la gare de l’Etang la construction d’une passerelle, la commune y participant pour 3.000Fr (soit 8.0000 Euros)
+En 1980, l’électrification est passée à 25 000 volts par caténaire, avec un nouveau matériel roulant.
 
-En 1973, le nombre de voyageurs (départ – arrivée) était de 402.000 à l’Etang, 384.000 à St Nom et 2 millions à Marly le Roi.
+Les vieilles rames ont cédé la place à un matériel plus performant, la dernière faisant son ultime voyage le dimanche 1er octobre 1978.
 
-En 1980, l’électrification est passée à 25.000 volts par caténaire avec un nouveau matériel roulant.
+## Le dossier des transports ferroviaires
 
-Les vieilles rames ont cédé la place à du matériel plus performant, la dernière faisant son ultime voyage le dimanche 1eroctobre 1978.
+![Carte ancienne des chemins de fer autour de Paris : la Grande Ceinture, tracée en trait épais, passe notamment par Achères, Saint-Germain, Noisy-le-Roi, Versailles, Juvisy et Noisy-le-Sec.](/medias/2019/05/GCO.jpg)
 
-**Le Dossier des Transports ferrovières**
+### La réouverture de la Grande Ceinture Ouest (GCO)
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/05/GCO.jpg)
+Dès la constitution de l’association, les Amis de l’Étang ont œuvré pour une politique de transports en commun efficaces, respectueuse du caractère champêtre de notre village. En témoigne le long processus qui a abouti au projet final, maintenant bien « sur les voies », et qui devrait aboutir en 2012.
 
-**LA REOUVERTURE DE LA GRANDE CEINTURE OUEST (CGO)**
+**Historique.** La Grande Ceinture autour de Paris, longue de 124 km, a été créée après la guerre de 1870 pour desservir les forts militaires entourant la région parisienne et favoriser le déplacement des populations, à une époque où les véhicules automobiles n’existaient pas encore.
 
-Les Amis de l’Etang ont, dès la constitution de l’Association, œuvré pour une politique de transports communs efficaces tout en respectant le caractère champêtre de notre village comme en témoigne le long processus ayant abouti au projet final maintenant bien « sur les voies » et qui devrait aboutir en 2012.
+Le tronçon ouest, entre Achères et Versailles, fut mis en service en 1882, avant la ligne de L’Étang-la-Ville à Saint-Lazare. Cette dernière n’ouvrit qu’en 1884, avec un raccordement à la GCO à Saint-Nom-la-Bretèche en 1889.
 
-**HISTORIQUE** La grande ceinture autour de Paris, longue de 124 km a été créée après la guerre de 1870 pour desservir les forts militaires entourant la région parisienne et favoriser le déplacement des populations à une époque où les véhicules automobiles n’existaient pas encore.
+Cette ligne de trains à vapeur, qui desservait à l’époque la gare de Saint-Germain-Centre, cessa de fonctionner en 1935, victime du développement du trafic automobile.
 
-Le tronçon Ouest entre Achères et Versailles fut mis en service en 1882 AVANT la ligne de l’Etang la Ville à St Lazare. Cette dernière n’ouvrit qu’en 1884 avec raccordement à la GCO à St Nom la Bretèche en 1889.
+### La réouverture de la GCO (1970-1980)
 
-Cette ligne de trains à vapeur, desservant à l’époque la gare de St Germain Centre, cessa de fonctionner en 1935 victime du développement du trafic automobile.
+![Plan de la Grande Ceinture Ouest rouverte, en rouge, de Saint-Germain-GC à Noisy-le-Roi, en correspondance à Saint-Nom-la-Bretèche avec la ligne de Saint-Lazare qui dessert L’Étang-la-Ville.](/medias/2019/05/GCO-reouverture.jpg)
 
-**LA REOUVERTURE DE LA GCO (1970-1980)**
+![Rame de la Grande Ceinture Ouest franchissant un passage à niveau aux barrières baissées.](/medias/2019/05/Train-GCO.jpg)
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/05/GCO-r%C3%A9ouverture.jpg)
+Devant l’accroissement des besoins de transports en commun, et pour éviter un agrandissement toujours plus important du parking près de la gare de Saint-Nom, au détriment de la forêt, notre comité défendit, dans les années 1970-1980, la prolongation de la ligne de Saint-Lazare vers Noisy-le-Roi. Il proposait d’utiliser une bretelle de raccordement en tranchée, existante mais à équiper, qui se raccordait à la ligne GCO entre Saint-Nom et Noisy.
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/05/Train-GCO.jpg)
+Plus rien ne bougea jusqu’en 1992-1994, époque où apparut un vaste projet du Schéma directeur de la Région Île-de-France (SDRIF) et de la SNCF, dit projet EOLE, visant à réactiver la GCO et à la raccorder à Saint-Lazare par des passages en « sauts-de-mouton » à la gare de Saint-Nom. Ce projet entraînait une vaste emprise sur le territoire de notre commune et la destruction de nombreux hectares de forêt.
 
-Devant l’accroissement des besoins de transports en commun et pour éviter un agrandissement de plus en plus important du parking automobile près de la gare de Saint Nom, au détriment de la forêt, notre comité défendit, dans la période 1970/80 la prolongation de la ligne de St Lazare vers Noisy le Roi en proposant d’utiliser une bretelle de raccordement en tranchée existante, mais à équiper, et se raccordant à la ligne GCO entre St Nom et Noisy.
+Notre comité, aidé par deux autres associations du village, se mobilisa à nouveau pour contrecarrer ce projet délirant sur le plan environnemental. Grâce à des actions conjuguées et à beaucoup d’efforts, notamment ceux de l’association « L’Étang-la-Ville : Transport/Environnement », le projet se transforma, et la solution d’une gare de correspondance à Saint-Nom entre la tangentielle et la radiale fut entérinée, non sans mal, en 1998.
 
-Plus rien ne bougea jusqu’en 1992/94, époque où apparut un vaste projet du Schéma Directeur (dit projet EOLE) de la Région Ile de France (SDRIF) et de la SNCF visant à réactiver la GCO et à la raccorder à St Lazare par passages en « sauts de mouton » à la gare de St Nom. Ceci entraînait une vaste emprise sur le territoire de notre commune et la destruction de nombreux hectares de forêt.
-Notre comité (aidé par deux autres associations du village) se mobilisa à nouveau pour contrecarrer ce projet délirant sur le plan environnemental.
-Grâce à ses actions conjuguées et beaucoup d’efforts, notamment ceux de l’Association « L’Etang La Ville : Transport/Environnement », ce projet se transforma et la solution d’une gare de correspondance à St Nom entre la tangentielle et la radiale fut entérinée, non sans mal, en 1998.
+Le temps passa sans que les choses bougent vraiment, et ce n’est qu’en avril 2001 que la SNCF et RFF (Réseau ferré de France) sortirent leur pharaonique projet de Tangentielle Ouest-Sud (TOS). Ce projet prévoyait de relier Achères à Melun en empruntant en partie la Grande Ceinture Ouest et Sud.
 
-Le temps passa sans que les choses bougent vraiment et ce n’est qu’en avril 2001 que la SNCF et RFF (Réseau Ferré de France) sortit son pharaonique projet de tangentielle Ouest-Sud (TOS). Ce TOS prévoyait de relier Achères à Melun en empruntant en partie la grande ceinture Ouest et Sud.
+Ce vaste projet ne cachait pas ses ambitieux objectifs : faire passer le fret lourd entre les deux gares de triage citées, essentiellement la nuit, et assurer la desserte des voyageurs le jour, en correspondance avec les lignes radiales existantes (train et RER). Le STIF édita en janvier 2002 un cahier des charges pour cette liaison, en mentionnant bien le développement du fret. La réalisation de l’ensemble se décomposait en six secteurs, dont celui qui nous concerne directement, d’Achères-Ville à Versailles-Chantiers.
 
-Ce vaste projet ne cachait pas ses ambitieux objectifs : faire passer le fret lourd entre les 2 gares de triage citées, essentiellement la nuit, et assurer la desserte voyageurs le jour avec maillage aux dessertes radiales existantes : train et RER. La STIF édita en janvier 2002 un cahier des charges pour cette liaison en mentionnant bien le développement du fret. La réalisation de cet ensemble se décomposait en 6 secteurs dont celui nous concernant directement allant de Achères Ville à Versailles Chantier.
+## Le tram 13
 
-## Le Tram 13
+Le tram 13 a une longue histoire.
 
-**Le tram 13 a une longue histoire.**
+Dans le [bulletin n° 127 (février 2021, PDF)](/medias/2021/03/No-127-FEV-2021_web.pdf), nous évoquions le début des travaux et les interventions menées pour améliorer le projet.
 
-Dans le bulletin 127 nous évoquions le début des travaux et les interventions qui avaient été menées pour améliorer le projet.
+Dans le [bulletin n° 129 (avril 2022, PDF)](/medias/2022/05/Bulletin-No129-Avr-2022_min.pdf), nous déplorions le saccage environnemental résultant des travaux :
 
-Dans le bulletin 129 nous déplorions le saccage environnemental résultant des travaux :
+- la bétonisation de l’allée de la Pigeonnière ;
+- la mise en péril de la source ;
+- l’éclairage nocturne ;
+- les nuisances sonores.
 
-la bétonnisation de l’allée de la Pigeonnière
-
-La mise en péril de la source
-
-L’éclairage nocturne
-
-Les nuisances sonores
-
-Depuis certaines améliorations ont été apportées mais rien ne fera revivre l’allée de la Pigeonnière.
+Depuis, certaines améliorations ont été apportées, mais rien ne fera revivre l’allée de la Pigeonnière.

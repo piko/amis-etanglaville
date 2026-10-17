@@ -1,136 +1,129 @@
 ---
-title: Infos Diverses
+title: Infos pratiques
+description: "Pyrale du buis et maladie de Lyme : deux nuisances liées à la forêt et aux jardins, avec les moyens de lutte contre la chenille du buis et les repères médicaux sur les tiques."
+order: 1
 wp_id: 1579
 updated: 2026-05-07
 ---
 
-**INTRODUCTION**
+Habitant près de la forêt de Marly et dans un village arboré, nous avons pensé utile d’inclure dans notre site quelques articles sur les nuisances ou dangers possibles :
 
-Habitant près de la forêt de Marly et dans un village arboré, nous avons pensé utile d’inclure dans notre site quelques articles sur les nuisances ou dangers possibles.
+1. [la pyrale du buis](#la-pyrale-du-buis) ;
+2. [la maladie de Lyme](#tiques-et-maladie-de-lyme).
 
-1. La Pyrale du buis
+## La pyrale du buis
 
-2. La maladie de Lyme
+*« Comment repousser l’envahisseur ? », article de Marc Mennessier, mis à jour le 9 mai 2019.*
 
-**La Pyrale du Buis**
+Au jardin ce week-end : la brusque hausse des températures a réveillé ces terribles chenilles, originaires de Chine, qui dévastent les buis de l’Hexagone depuis maintenant dix ans. Traitements, pièges : des solutions bio existent, mais il faut agir dès ce week-end. Explications.
 
-Comment repousser l’envahisseur?
+Comme chaque année à pareille époque, la pyrale du buis refait parler d’elle ! En dépit des gelées enregistrées en début de semaine dans la moitié nord du pays, la hausse des températures printanières réveille les chenilles hivernantes de ce papillon nocturne (*Cydalima perspectalis*) qui, depuis dix ans maintenant, ravage consciencieusement dentelles, bordures et topiaires de buis, parfois jusqu’à l’écorce. Seuls quelques départements sont encore épargnés par la gloutonnerie de ce parasite venu de Chine, qui sème la désolation dans les parcs et jardins à la française, mais aussi chez les particuliers attachés à ce bel arbuste au feuillage persistant, riche d’histoire et de symboles.
 
-Par Marc Mennessier Mis à jour le 09/05/2019
+![Chenille verte tachetée de noir de la pyrale du buis, sur un rameau de buis tenu entre deux doigts.](/medias/2019/06/Pyale-du-buis.png)
+*Pyrale du buis.*
 
-**AU JARDIN CE WEEK-END – La brusque hausse des températures a réveillé ces terribles chenilles, originaires de Chine, qui dévastent les buis de l’hexagone depuis maintenant dix ans. Traitements, pièges: des solutions bio existent mais il faut agir dès ce week-end. Explications.**
+### Première vague d’assaut
 
-Comme chaque année à pareille époque, la pyrale du buis refait parler d’elle! En dépit des gelées enregistrées en début de semaine dans la moitié nord du pays, la hausse des températures printanières réveillent les chenilles hivernantes de ce papillon nocturne ( *Cydalima perspectalis* ) qui, depuis dix ans maintenant, ravage consciencieusement dentelles, bordures et topiaires de buis, parfois jusqu’à l’écorce. Seuls quelques départements sont encore épargnés par la gloutonnerie de ce parasite venu de Chine qui sème la désolation dans les parcs et jardins à la française. Mais aussi chez les particuliers attachés à ce bel arbuste au feuillage persistant, riche d’histoire et de symboles.
+Pour contenir cette première vague d’assaut, il faut pulvériser ces jours-ci un insecticide bio à base de *Bacillus thuringiensis* (Bt), en prenant certaines précautions. « Le traitement doit être réalisé le soir (le produit se dégrade à la lumière) et au moins trois heures avant une pluie, pour qu’il ne soit pas lessivé. Le tout en mouillant bien le feuillage de façon à atteindre le maximum de chenilles », explique Jérôme Jullien, expert national en surveillance biologique du territoire au ministère de l’Agriculture. Le Bt étant surtout efficace sur les jeunes larves (stades L1 et L2), vous devez intervenir sans tarder, avant qu’elles ne prennent de l’embonpoint et passent ainsi à travers les mailles du filet.
 
-Première vague d’assaut
+« Le timing doit être très précis, ce qui n’est pas toujours facile à mettre en œuvre, en particulier s’il pleut et fait du vent pendant une longue période, ce qui est malheureusement fréquent au printemps depuis quelques années », constate Patrick Borgeot, chef jardinier du château de Vaux-le-Vicomte. Il utilise un autre insecticide bio, à base de spinosad, plus souple d’utilisation car efficace à la fois sur les chenilles et les papillons, mais dont l’emploi est réservé… aux professionnels.
 
-Pour contenir, cette première vague d’assaut, il faut pulvériser ces jours-ci un insecticide bio, à base de *Bacillus thuringensis* (Bt), en prenant certaines précautions. «Le traitement doit être réalisé le soir (le produit se dégrade à la lumière) et au moins trois heures avant une pluie pour qu’il ne soit pas lessivé. Le tout en mouillant bien le feuillage de façon à atteindre le maximum de chenilles», explique Jérôme Jullien, expert national en Surveillance biologique du territoire au Ministère de l’agriculture. Le Bt étant surtout efficace sur les larves jeunes (stades L1 et L2) vous devez intervenir sans tarder pour éviter qu’elles ne prennent de l’embonpoint et passent ainsi à travers les mailles du filet.
+« Le recours aux nématodes, vers microscopiques capables de s’attaquer eux aussi à de grosses chenilles, est une alternative intéressante, même si leur efficacité est inférieure à celle du Bt », souligne Thibault Crance, responsable des jardins et espaces verts chez Koppert, entreprise spécialisée dans la lutte biologique, qui lance cette solution cette année.
 
-«Le timing doit être très précis, ce qui n’est pas toujours facile à mettre en œuvre, en particulier s’il pleut et fait du vent pendant une longue période, ce qui est malheureusement fréquent au printemps depuis quelques années», constate Patrick Borgeot, chef jardinier du château de Vaux-le-Vicomte qui utilise un autre insecticide bio, à base de spinosad, plus souple d’utilisation car efficace à la fois sur chenilles et papillons. Mais dont l’emploi est réservé… aux professionnels.
+La bataille ne s’arrête pas là. Car si ce premier traitement, correctement appliqué, réduit significativement les populations de chenilles, celles qui en réchappent se transformeront d’ici à la mi-mai en papillons adultes, qui vont se reproduire et reconstituer les rangs de l’ennemi.
 
-«Le recours aux nématodes, vers microscopiques capables de s’attaquer eux aussi à de grosses chenilles, est une alternative intéressante même si leur efficacité est inférieure à celle du Bt» souligne Thibault Crance, responsable des jardins et espaces verts chez Koppert, entreprise spécialisée dans la lutte biologique, qui lance cette solution cette année.
+### Pièges à phéromones
 
-La bataille ne s’arrête pas là. Car si ce premier traitement réduit significativement les populations de chenilles, lorsqu’il est correctement appliqué, celles qui en réchappent se transformeront d’ici à la mi-mai en papillons adultes qui vont se reproduire et reconstituer les rangs de l’ennemi.
+Pour prévenir cette nouvelle invasion, la pose de pièges à phéromones permet de détecter le vol nuptial en attirant les mâles, leurrés par ces substances naturellement émises par les femelles. Il en existe plusieurs modèles, notamment le Buxatrap (du latin *buxus*, buis), qui a l’avantage de fonctionner sans qu’il soit nécessaire de le recharger en eau. Le dispositif doit être installé dans vos buis dès maintenant, afin de ne pas rater les premiers vols, avec une phéromone à longue durée de vie, car les pyrales pondent deux, voire trois fois dans la saison dans la moitié sud ou si l’automne est doux. Les phéromones proposées par Koppert sous la marque Solabiol et par M2I, entreprise française spécialisée dans la lutte biologique en jardinage et en agriculture, restent actives pendant trois à quatre mois. Mais celle de Sumi Agro France, vendue sous la marque Ginko Buxus, a l’avantage de tenir toute une saison. La surveillance est donc beaucoup plus simple, tant pour le jardinier amateur (qui n’a pas toujours le temps…) que pour le professionnel ou le gestionnaire de parc qui doit protéger de très longs linéaires de buis.
 
-Pièges à phéromones
+À partir d’un certain nombre de captures de papillons mâles, vous devrez procéder à une nouvelle application de Bt ou de nématodes, à renouveler dix à quinze jours plus tard si vous constatez que quelques-unes de ces satanées chenilles sont passées entre les gouttes.
 
-Pour prévenir cette nouvelle invasion, la pose de pièges à phéromones permet de détecter le vol nuptial en attirant les mâles leurrés par ces substances naturellement émises par les femelles. Il en existe plusieurs modèles notamment le Buxatrap (du latin *buxus* , buis) qui a l’avantage de fonctionner sans qu’il soit nécessaire de le recharger en eau. Le dispositif doit être installé dans vos buis dès maintenant, afin de ne pas rater les premiers vols, avec une phéromone à longue durée de vie car les pyrales pondent 2 voire 3 fois dans la saison dans la moitié sud ou si l’automne est doux. Les phéromones proposées par Koppert sous la marque Solabiol et M2I, entreprise française spécialisée dans la lutte biologique en jardinage et en agriculture, restent actives pendant 3 à 4 mois. Mais celle de Sumi Agro France, vendue sous la marque Ginko Buxus, a l’avantage de tenir toute une saison. La surveillance est donc beaucoup plus simple, tant pour le jardinier amateur (qui n’a pas toujours le temps…) que pour le professionnel ou le gestionnaire de parc qui doit protéger de très longs linéaires de buis.
+![Piège vert à couvercle et réservoir transparent, suspendu au-dessus d’une haie de buis ravagée.](/medias/2019/06/Piege-a-pyrales.png)
+*Piège à phéromones Buxatrap.*
 
-À partir d’un certain nombre de capture de papillons mâles, vous devrez procéder à une nouvelle application de Bt ou de nématodes, à renouveler 10 à 15 jours plus tard, si vous constatez que quelques-unes de ces satanées chenilles sont passées à travers les gouttes.
+## Tiques et maladie de Lyme
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/06/Pyale-du-buis.png)
-*Pyrale du buis*
+Rares il n’y a pas si longtemps, la prolifération des tiques et le risque de contracter la maladie de Lyme se sont accrus ces derniers temps. Vu notre proximité avec la forêt de Marly, il nous a paru important de vous présenter ce sujet.
 
-![Piège à pyrales](https://amis-letanglaville.org/wp-content/uploads/2019/06/Pi%C3%A8ge-%C3%A0-pyrales.png)
-*Piège à phéromone Buxatrap*
+![Panneau triangulaire d’avertissement représentant une tique, fixé sur un tronc d’arbre en forêt.](/medias/2019/06/Attention-tiques.jpg)
 
-**Tiques et maladie de Lyme**
+![Les stades de la tique, à la même échelle : larve minuscule, nymphe, femelle adulte et mâle adulte.](/medias/2019/06/Tiques.jpg)
 
-**Rare, il n’y pas si longtemps, la prolifération des tiques et le risque de contracter la maladie de Lyme se sont accrus ces derniers temps.**
+*Article écrit par les docteurs Jacqueline Rossant-Lumbrose, médecin généraliste, et Lyonel Rossant, pédiatre.*
 
-**Nous avons pensé que vous présenter ce sujet était important au vu de notre proximité avec la forêt de Marly.**
+### Qu’est-ce que la maladie de Lyme ?
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/06/Attention-tiques.jpg)
+La maladie de Lyme, ou « borréliose de Lyme », est une maladie infectieuse due à une bactérie appelée *Borrelia burgdorferi*, transmise par la piqûre d’une tique infectée. Cette zoonose peut toucher plusieurs organes et systèmes : la peau, mais aussi les articulations et le système nerveux. Non traitée, elle évolue sur plusieurs années ou décennies en trois stades de plus en plus graves. Le traitement repose sur la prise d’antibiotiques ; il sera d’autant plus efficace qu’il sera administré rapidement.
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/06/Tiques.jpg)
+### Causes et facteurs de risque
 
-**Article écrit par les Docteurs**
-Jacqueline Rossant-Lumbrose, Médecin Généraliste
-Lyonel Rossant, Pédiatre
+La bactérie responsable est un spirochète, c’est-à-dire une bactérie de forme hélicoïdale, qui répond au doux nom de *Borrelia burgdorferi*.
 
-Qu’est-ce que la maladie de Lyme ?
+Les activités conduisant à des contacts avec les tiques représentent le principal facteur de risque de la maladie : travaux agricoles, promenades en forêt.
 
-La maladie de Lyme ou « borréliose de Lyme » est une maladie infectieuse due à une bactérie appelée *Borrelia burgdorferi* , transmise par l’intermédiaire d’une piqûre de tique infectée. Cette zoonose peut toucher plusieurs organes et systèmes, la peau mais aussi les articulations et le système nerveux. Non traitée, elle évolue sur plusieurs années ou décennies en trois stades de plus en plus graves. Le traitement repose sur la prise d’antibiotiques, il sera d’autant plus efficace qu’il sera administré rapidement.
+Le réservoir de germes est très vaste : tiques, mammifères domestiques (chiens, chevaux, bétail) et sauvages (écureuils, cerfs, mulots, campagnols). En France, la majorité des contaminations surviennent entre mars et septembre.
 
-**Causes et facteurs de risque de la borréliose de Lyme**
+![Tique fixée sur une peau rougie autour du point de piqûre.](/medias/2019/06/tique-erytheme-maladie-de-lyme.png)
 
-La bactérie responsable est un **spirochète**, c’est-à-dire une **bactérie** de forme hélicoïdale, qui répond au doux nom de **Borrelia burgdorferi**.
+![Visuel « Comment retirer une tique ? » montrant une tique sur la peau.](/medias/2019/06/Comment-retirer-une-tique.jpg)
 
-Les activités conduisant à des contacts avec les tiques représentent le principal facteur de risque de survenue de la maladie : travaux agricoles, **promenades en forêt**.
+![Tique retirée de la peau à l’aide d’un crochet tire-tique vert.](/medias/2019/06/Comment-retirer-une-tique2.jpg)
 
-Le réservoir de germes est très vaste : **tiques**, mammifères domestiques ( **chiens**, **chevaux**, bétail) et sauvages (écureuils, cerfs, mulots, campagnols).
-En France, la majorité des contaminations survient entre les mois de mars et de septembre.
+### Symptômes
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/06/tique-erytheme-maladie-de-lyme.png)
+Après l’inoculation de la bactérie dans la peau lors de la piqûre de tique, la maladie de Lyme évolue en trois grandes phases, séparées par des périodes asymptomatiques (sans signe de la maladie).
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/06/Comment-retirer-une-tique.jpg)
+#### La phase primaire
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/06/Comment-retirer-une-tique2.jpg)
+Elle est caractérisée par une lésion cutanée : l’érythème chronique migrant (ECM). Cette lésion survient entre 3 et 30 jours après la piqûre de tique. Il s’agit d’une papule érythémateuse (rouge) centrée sur le point de piqûre, qui s’étend progressivement de façon centrifuge. La lésion est ovale (elle peut mesurer jusqu’à 50 cm) ; sa bordure est plus rouge que son centre, qui retrouve progressivement un aspect normal. Elle est habituellement non prurigineuse (elle ne démange pas) et siège de préférence aux membres inférieurs (parfois aux membres supérieurs, voire au visage chez l’enfant).
 
-## Symptômes de la maladie de Lyme
+Des manifestations générales (maux de tête, douleurs articulaires, légère élévation de la température, fatigue) et des ganglions proches de la lésion cutanée peuvent y être associés, traduisant la dissémination de la bactérie dans l’organisme.
 
-Après l’inoculation cutanée de la bactérie lors de la piqûre de tique, la maladie de Lyme évolue en **trois grandes phases**, séparées par des périodes asymptomatiques (absence de signes de la maladie).
+En l’absence de traitement, l’ECM évolue pendant quelques semaines (extension progressive) puis disparaît sans séquelle.
 
-### **LA PHASE PRIMAIRE DE LA MALADIE DE LYME**
+![Érythème migrant sur le flanc : plaque rouge ovale, plus claire autour d’une tache centrale.](/medias/2019/06/Phase-2.png)
 
-Elle est caractérisée par une **lésion cutanée**: l’**érythème chronique migrant** (ECM). Cette lésion survient ente 3 et 30 jours après la piqûre de tique. Il s’agit d’une papule érythémateuse ( **rouge**) centrée par le point de piqûre, s’étendant progressivement de façon centrifuge. La lésion est **ovale** (pouvant mesurer jusqu’à 50 cm), la bordure est plus érythémateuse (rouge) que son centre qui retrouve progressivement un aspect cutané normal. Elle est habituellement non prurigineuse (absence de grattage) et siège préférentiellement aux membres inférieurs (parfois aux membres supérieurs, voire au visage chez l’enfant).
+![Schéma des symptômes de la maladie de Lyme : maux de tête, perte d’audition ou paralysie du visage, douleur musculaire, érythème migrant, complications cardiovasculaires, nausées et vomissements, fièvre, frissons, fatigue et faiblesse. Vecteur : la tique. Agent pathogène : la bactérie Borrelia.](/medias/2019/06/Lyme-symptomes.png)
 
-Des manifestations générales (maux de t^te, douleurs articulmaires, légère ascension de la température corporelle, fatigue) et des ganglions proches de la lésion cutanée peuvent être associés traduisant la dissémination de la bactérie dans l’organisme.
-En l’absence de traitement, l’ECM évolue pendant quelques semaines (extension progressive) et disparaît sans séquelle.
+#### La phase secondaire
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/06/Phase-2.png)
+Elle survient plusieurs semaines ou plusieurs mois après la disparition de l’ECM, mais peut aussi révéler la maladie (l’ECM étant passé inaperçu, ou absent dans près de la moitié des cas). Cette phase se caractérise par :
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/06/Lyme-sympt%C3%B4mes.png)
+- **des manifestations cutanées** : des lésions semblables à celles de la phase primaire ;
+- **des manifestations articulaires** : des douleurs articulaires fréquentes. Les [arthrites](http://dictionnaire.doctissimo.fr/definition-arthrite.htm) (inflammations des articulations) sont moins fréquentes et touchent les grosses articulations (genou) ;
+- **des manifestations cardiaques** : syncopes ([pertes de connaissance](http://www.doctissimo.fr/html/sante/encyclopedie/sa_841_syncopes.htm)), palpitations (sensation de battements du cœur dans la poitrine), douleurs thoraciques et surtout troubles de la conduction auriculo-ventriculaire (le « courant électrique » qui circule normalement des oreillettes aux ventricules est interrompu de façon sporadique, ce qui peut entraîner de graves problèmes cardiaques). Ces manifestations cardiaques évoluent le plus souvent vers la guérison sans séquelle ;
+- **des manifestations neurologiques** : la radiculite hyperalgique (inflammation très douloureuse des racines des nerfs innervant le territoire de la piqûre). Le nerf facial est fréquemment touché. Une [méningite](http://www.doctissimo.fr/html/dossiers/meningite.htm) peut également s’observer.
 
-### **LA PHASE SECONDAIRE DE LA MALADIE DE LYME**
+#### La phase tertiaire, ou phase tardive
 
-Elle survient **plusieurs semaines ou mois après la disparition de l’ECM** mais **peut révéler la maladie** (l’ECM étant passé inaperçu ou pouvant manquer dans près de la moitié des cas). Cette phase se caractérise par :
+Elle se manifeste des mois ou des années après le début de l’infection par :
 
-- **Des manifestations cutanées**: il s’agit de **lésions** semblables à celles observées lors de la phase primaire de la maladie ;
-- **Des manifestations articulaires**: **douleurs articulaires** fréquentes. Les [arthrites](http://dictionnaire.doctissimo.fr/definition-arthrite.htm) (inflammation des articulations) sont moins fréquentes et touchent les grosses articulations (genou) ;
-- **Des manifestations cardiaques**: **syncopes** ([perte de connaissance](http://www.doctissimo.fr/html/sante/encyclopedie/sa_841_syncopes.htm)), **palpitations** (sensation de battement cardiaque dans la poitrine), douleurs thoraciques et surtout troubles de la conduction auriculo-ventriculaire (le « courant électrique » circulant normalement des oreillettes aux ventricules est interrompu de façon sporadique pouvant entraîner de graves problèmes cardiaques). Ces manifestations cardiaques évoluent le plus souvent vers la **guérison sans séquelle**;
-- **Des manifestations neurologiques**: la radiculite hyper-algique (inflammation très douloureuse des racines des nerfs innervant le territoire de la piqûre de tique). Le nerf facial est fréquemment touché. Une [méningite](http://www.doctissimo.fr/html/dossiers/meningite.htm) peut également s’observer.
+- **des atteintes cutanées** : la [maladie de Pick-Herxheimer](http://www.doctissimo.fr/html/sante/encyclopedie/sa_1590_mal_pick.htm) (inflammation cutanée évoluant vers une atrophie de la peau), le lymphocytome cutané bénin (nodules violacés, arrondis, à contours nets, fermes, localisés sur le front ou le lobe de l’oreille, qui régressent spontanément en quelques mois) ;
+- **des atteintes articulaires** : identiques à celles de la phase secondaire ;
+- **des atteintes neurologiques** : touchant la moelle épinière ou le cerveau (manifestations neuropsychiatriques diverses).
 
-### **LA PHASE TERTIAIRE OU PHASE TARDIVE DE LA MALADIE DE LYME**
+### Diagnostic
 
-Elle se manifeste **des mois ou des années après** le début de l’infection par :
+Le médecin examine attentivement le patient et effectue si nécessaire un électrocardiogramme (enregistrement de l’activité électrique du cœur), à la recherche notamment de troubles de la conduction auriculo-ventriculaire (qui nécessitent une hospitalisation).
 
-- **Des atteintes cutanées**: la [maladie de Pick Herxheimer](http://www.doctissimo.fr/html/sante/encyclopedie/sa_1590_mal_pick.htm) (inflammation cutanée évoluant vers une atrophie de la peau), le lymphocytome cutané bénin (nodules violacés, arrondis, à contours nets, fermes, localisés sur le front, le lobe de l’oreille et régressant spontanément en quelques mois) ;
-- **Des atteintes articulaires**: identiques à celles observées dans la phase secondaire ;
-- **Des atteintes neurologiques**: touchant la moelle épinière ou le cerveau (manifestations neuro-psychiatriques diverses).
-
-#### **Diagnostic de la maladie de Lyme**
-
-Le médecin examine attentivement le patient et effectue un **électrocardiogramme** (enregistrement de l’activité électrique du cœur) si nécessaire, à la recherche entre autres de troubles de la conduction auriculo-ventriculaire (hospitalisation nécessaire).
-
-Un examen neurologique complet est nécessaire : en cas de radiculite (phase secondaire), cet examen peut être normal ou mettre en évidence une diminution de la sensibilité, une diminution de la force musculaire ou une abolition des réflexes dans le territoire innervé par le nerf touché par l’inflammation.
+Un examen neurologique complet est nécessaire : en cas de radiculite (phase secondaire), cet examen peut être normal ou mettre en évidence une diminution de la sensibilité, une diminution de la force musculaire ou une abolition des réflexes dans le territoire du nerf touché par l’inflammation.
 
 Le diagnostic de la maladie de Lyme repose essentiellement sur les signes cliniques observés.
 
-La numération formule sanguine (prise de sang banale) est normale le plus souvent.
+La numération formule sanguine (prise de sang courante) est le plus souvent normale.
 
-Diverses techniques de laboratoire peuvent mettre en évidence dans le sang des anticorps témoins d’une réponse de l’organisme à l’infection bactérienne. Les tests immunologiques les plus récents sont à privilégier.
+Diverses techniques de laboratoire peuvent mettre en évidence dans le sang des anticorps témoignant d’une réponse de l’organisme à l’infection bactérienne. Les tests immunologiques les plus récents sont à privilégier.
 
-En cas d’atteinte neurologique, la présence d’anticorps dans le liquide céphalo-rachidien (obtenu par ponction lombaire) est un argument en faveur de la maladie de Lyme.
+En cas d’atteinte neurologique, la présence d’anticorps dans le liquide céphalo-rachidien (prélevé par ponction lombaire) est un argument en faveur de la maladie de Lyme.
 
-### **Evolution de la maladie de Lyme**
+### Évolution
 
 L’évolution vers une phase tertiaire reste rare, même en l’absence de traitement.
 
-La maladie présente une évolution très favorable lorsqu’elle est traitée.
+La maladie évolue très favorablement lorsqu’elle est traitée.
 
-### **Traitement de la maladie de Lyme**
+### Traitement
 
-Lors de la première phase de la maladie, le traitement a pour but d’assurer la disparition des premiers symptômes de la maladie et de prévenir la survenue des manifestations tardives en éradiquant le germe des organes pouvant être infectés.
+Lors de la première phase de la maladie, le traitement a pour but de faire disparaître les premiers symptômes et de prévenir la survenue des manifestations tardives, en éradiquant le germe des organes susceptibles d’être infectés.
 
-Ainsi, pour chaque phase et selon la sévérité de la maladie, le traitement peut varier et peut nécessiter une hospitalisation. Il consiste à administrer un antibiotique (amoxicilline ou doxycycline) éventuellement associé à un corticoïde en cas de troubles de la conduction auriculo-ventriculaire.
+Pour chaque phase, et selon la sévérité de la maladie, le traitement peut varier et nécessiter une hospitalisation. Il consiste à administrer un antibiotique (amoxicilline ou doxycycline), éventuellement associé à un corticoïde en cas de troubles de la conduction auriculo-ventriculaire.

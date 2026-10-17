@@ -1,6 +1,5 @@
 ---
-// Logo : pictogramme (maison, arbre et étoiles) et nom de l'association, lien vers l'accueil.
-// « grand » sur l'accueil (en-tête centré sur ordinateur), « petit » ailleurs.
+import Embleme from './Embleme.astro';
 import { site } from '../lib/data';
 
 interface Props {
@@ -15,58 +14,9 @@ const grand = taille === 'grand';
   href="/"
   class:list={['flex items-center gap-3 text-encre', grand && 'lg:gap-5']}
 >
-  <svg
-    viewBox="0 0 100 120"
+  <Embleme
     class:list={['h-11 w-9 shrink-0 text-foret', grand && 'lg:h-18 lg:w-15']}
-    aria-hidden="true"
-    focusable="false"
-  >
-    <rect
-      x="3"
-      y="3"
-      width="94"
-      height="114"
-      rx="8"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="5"
-    ></rect>
-    <path
-      d="M16 48 50 20 84 48v54H16z"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="5"
-      stroke-linejoin="round"
-    ></path>
-    <circle
-      cx="50"
-      cy="54"
-      r="13"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="5"
-    ></circle>
-    <path
-      d="M50 67v19"
-      stroke="currentColor"
-      stroke-width="5"
-      stroke-linecap="round"
-    ></path>
-    <path
-      d="M18 92q8-6 16 0t16 0 16 0 16 0"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="4.5"
-    ></path>
-    <path
-      class="fill-ocre"
-      d="M22 17l1.18 3.38 3.58.07-2.86 2.17 1.04 3.43-2.94-2.05-2.94 2.05 1.04-3.43-2.86-2.17 3.58-.07z"
-    ></path>
-    <path
-      class="fill-ocre"
-      d="M78 17l1.18 3.38 3.58.07-2.86 2.17 1.04 3.43-2.94-2.05-2.94 2.05 1.04-3.43-2.86-2.17 3.58-.07z"
-    ></path>
-  </svg>
+  />
   <span
     class:list={[
       'font-titre text-xl leading-tight font-semibold md:text-3xl',

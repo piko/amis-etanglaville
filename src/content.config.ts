@@ -40,11 +40,16 @@ const actualites = defineCollection({
     title: z.string(),
     date: z.coerce.date(),
     dateFin: z.coerce.date().optional(),
+    // Précision réelle de la date : « 6 nov. 2026 », « Nov. 2023 » ou « 2023 ».
+    datePrecision: z.enum(['jour', 'mois', 'annee']).default('jour'),
     lieu: z.string().optional(),
     categorie: z
       .enum(['salon', 'portes-ouvertes', 'ag', 'environnement', 'autre'])
       .default('autre'),
     image: z.string().optional(),
+    imageAlt: z.string().optional(),
+    resume: z.string().optional(),
+    annule: z.boolean().default(false),
     draft: z.boolean().default(false),
   }),
 });

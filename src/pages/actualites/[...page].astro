@@ -1,0 +1,216 @@
+---
+// Liste des actualités : /actualites/, /actualites/2/, /actualites/salon/, /actualites/salon/2/…
+// Les événements à venir sont en tête (page 1), les événements passés sont paginés.
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import CarteActualite from '../../components/CarteActualite.astro';
+import EnTetePage from '../../components/EnTetePage.astro';
+import Embleme from '../../components/Embleme.astro';
+import FilAriane from '../../components/FilAriane.astro';
+import Pagination from '../../components/Pagination.astro';
+import {
+  actualites,
+  categories,
+  filtres,
+  PAR_PAGE,
+  type Categorie,
+} from '../../lib/actualites';
+import { infosImage } from '../../lib/medias.mjs';
+import { paveDate } from '../../lib/dates';
+
+export const getStaticPaths = (async () => {
+  const chemins = [];
+  for (const categorie of [undefined, ...filtres.map((f) => f.slug)]) {
+    const { passees, aVenir } = await actualites(categorie);
+    if (categorie && !passees.length && !aVenir.length) continue;
+    const total = Math.max(1, Math.ceil(passees.length / PAR_PAGE));
+    for (let page = 1; page <= total; page++) {
+      const segments = [categorie, page > 1 ? String(page) : undefined].filter(
+        Boolean,
+      );
+      chemins.push({
+        params: { page: segments.length ? segments.join('/') : undefined },
+        props: { categorie, page, total },
+      });
+    }
+  }
+  return chemins;
+}) satisfies GetStaticPaths;
+
+interface Props {
+  categorie?: Categorie;
+  page: number;
+  total: number;
+}
+
+const { categorie, page, total } = Astro.props;
+const { aVenir, passees } = await actualites(categorie);
+const listePassees = passees.slice((page - 1) * PAR_PAGE, page * PAR_PAGE);
+const base = categorie ? `/actualites/${categorie}/` : '/actualites/';
+const urlPage = (n: number) => (n === 1 ? base : `${base}${n}/`);
+
+// Filtres : seulement les catégories qui ont des actualités.
+const filtresUtiles = [];
+for (const f of filtres) {
+  const { aVenir: v, passees: p } = await actualites(f.slug);
+  if (v.length || p.length) filtresUtiles.push(f);
+}
+
+const prochain = page === 1 ? aVenir.find((a) => !a.data.annule) : undefined;
+const affiche = prochain?.data.image
+  ? await infosImage(prochain.data.image)
+  : null;
+const paveProchain = prochain
+  ? paveDate(
+      prochain.data.date,
+      prochain.data.dateFin,
+      prochain.data.datePrecision,
+    )
+  : undefined;
+const titre = categorie
+  ? `Actualités : ${filtres.find((f) => f.slug === categorie)?.libelle.toLowerCase()}`
+  : 'Actualités';
+const pastille =
+  'inline-flex min-h-11 items-center border border-encre px-4 hover:bg-encre hover:text-papier aria-[current=page]:bg-encre aria-[current=page]:text-papier';
+---
+
+<Base
+  title={page > 1 ? `${titre} (page ${page})` : titre}
+  description="Salons, portes ouvertes des ateliers, assemblées générales et actions pour l’environnement : la vie de l’association des Amis de L’Étang-la-Ville."
+>
+  <div class="mx-auto max-w-site px-4 pt-6 md:px-6">
+    <FilAriane
+      items={
+        categorie
+          ? [
+              { titre: 'Actualités', href: '/actualites/' },
+              { titre: categories[categorie] },
+            ]
+          : [{ titre: 'Actualités' }]
+      }
+    />
+    <EnTetePage
+      surtitre="La vie de l’association"
+      title="Actualités"
+      description="Salons, portes ouvertes des ateliers, assemblées générales et actions pour l’environnement."
+      filet={false}
+    />
+    <nav
+      aria-label="Filtrer par catégorie"
+      class="border-t-4 border-b border-double border-encre py-3"
+      data-pagefind-ignore
+    >
+      <ul class="flex gap-2 overflow-x-auto text-sm font-bold">
+        <li class="shrink-0">
+          <a
+            href="/actualites/"
+            aria-current={!categorie ? 'page' : undefined}
+            class={pastille}
+          >
+            Tout
+          </a>
+        </li>
+        {filtresUtiles.map((f) => (
+          <li class="shrink-0">
+            <a
+              href={`/actualites/${f.slug}/`}
+              aria-current={categorie === f.slug ? 'page' : undefined}
+              class={pastille}
+            >
+              {f.libelle}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+
+  {page === 1 && aVenir.length > 0 && (
+    <section
+      aria-labelledby="titre-avenir"
+      class="mx-auto max-w-site px-4 py-10 md:px-6 md:py-12"
+    >
+      <h2 id="titre-avenir" class="text-3xl font-semibold md:text-4xl">
+        À venir
+      </h2>
+      <div
+        class:list={[
+          'mt-7 grid gap-10',
+          prochain && 'md:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] md:gap-14',
+        ]}
+      >
+        {prochain &&
+          (affiche ? (
+            <figure>
+              <img
+                src={affiche.src}
+                srcset={affiche.srcset}
+                sizes="20rem"
+                width={affiche.width}
+                height={affiche.height}
+                alt={prochain.data.imageAlt ?? ''}
+                class="w-full border border-encre bg-sepia"
+              />
+              <figcaption class="mt-2 text-sm text-gris">
+                Affiche : {prochain.data.title}
+              </figcaption>
+            </figure>
+          ) : (
+            <div
+              class="hidden aspect-3/4 flex-col items-center justify-between gap-4 border border-encre bg-creme p-6 text-center shadow-carte md:flex"
+              aria-hidden="true"
+            >
+              <Embleme class="h-14 w-12 text-foret" />
+              <div>
+                <p class="text-xs font-bold tracking-surtitre text-ocre-fonce uppercase">
+                  {categories[prochain.data.categorie]}
+                </p>
+                <p class="mt-2 font-titre text-4xl leading-tight font-semibold text-balance">
+                  {prochain.data.title}
+                </p>
+              </div>
+              <p class="w-full border-t-4 border-double border-encre pt-3 font-titre text-3xl font-semibold text-foret">
+                {paveProchain?.grand} {paveProchain?.petit}
+              </p>
+            </div>
+          ))}
+        <div class="flex flex-col gap-10">
+          {aVenir.map((a) => (
+            <CarteActualite actualite={a} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section
+    aria-labelledby="titre-passes"
+    class:list={[page === 1 && aVenir.length > 0 && 'border-t border-encre']}
+  >
+    <div class="mx-auto max-w-site px-4 py-10 md:px-6 md:py-12">
+      <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+        <h2 id="titre-passes" class="text-3xl font-semibold md:text-4xl">
+          Événements passés
+        </h2>
+        <a
+          href="/collections/"
+          class="font-bold text-foret underline-offset-4 hover:underline"
+        >
+          Bilans annuels et archives
+        </a>
+      </div>
+      {listePassees.length ? (
+        <ul class="mt-8 grid gap-x-10 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+          {listePassees.map((a) => (
+            <li>
+              <CarteActualite actualite={a} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="mt-6 text-lg">Aucun événement passé dans cette catégorie.</p>
+      )}
+      <Pagination page={page} total={total} urlPage={urlPage} />
+    </div>
+  </section>
+</Base>

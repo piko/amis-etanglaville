@@ -4,7 +4,8 @@ import '../styles/global.css';
 import { Font } from 'astro:assets';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { site } from '../lib/data';
+import BandeauAdhesion from '../components/BandeauAdhesion.astro';
+import { accueil, site } from '../lib/data';
 import Analytics from '@vercel/analytics/astro';
 
 interface Props {
@@ -13,6 +14,12 @@ interface Props {
   image?: string;
   /** Variante de l'en-tête : « accueil » pour la page d'accueil. */
   variante?: 'accueil' | 'interieur';
+  /** Bandeau « Rejoignez les Amis de l’Étang » en fin de page. */
+  bandeau?: boolean;
+  /** Classes de <main> (par défaut : pleine largeur, les sections gèrent leur gabarit). */
+  classeMain?: string;
+  /** Page indexée par la recherche du site (Pagefind). */
+  indexer?: boolean;
 }
 
 const {
@@ -20,10 +27,13 @@ const {
   description = site.description,
   image,
   variante = 'interieur',
+  bandeau = true,
+  classeMain = 'flex-1',
+  indexer = true,
 } = Astro.props;
 const fullTitle = title ? `${title} | ${site.nom}` : site.nom;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = image ? new URL(image, Astro.site) : undefined;
+const ogImage = new URL(image ?? accueil.hero.image, Astro.site);
 // Tant que le domaine n'a pas basculé, le nouveau site n'est pas indexé
 // (variable PUBLIC_INDEXABLE=true à définir dans Vercel, en production, à la bascule).
 const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true';
@@ -52,7 +62,7 @@ const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true';
     <meta property="og:title" content={title ?? site.nom} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta property="og:image" content={ogImage} />
     <meta name="generator" content={Astro.generator} />
     <Analytics />
   </head>
@@ -64,8 +74,13 @@ const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true';
       Aller au contenu
     </a>
     <Header variante={variante} actif={Astro.url.pathname} />
-    <main id="contenu" class="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
+    <main
+      id="contenu"
+      class={classeMain}
+      data-pagefind-body={indexer ? '' : undefined}
+    >
       <slot />
+      {bandeau && <BandeauAdhesion />}
     </main>
     <Footer />
   </body>

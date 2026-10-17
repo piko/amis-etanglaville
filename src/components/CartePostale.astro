@@ -1,0 +1,62 @@
+---
+import { infosImage } from '../lib/medias.mjs';
+import { typo } from '../lib/texte';
+
+interface Props {
+  src: string;
+  legende: string;
+  /** Ligne secondaire : « Réf. 310 », « 9 cartes postales »… */
+  reference?: string;
+  /** Lien de la carte ; pour la visionneuse, l'image en grand. */
+  href: string;
+  /** Lien ouvert dans la visionneuse de la galerie. */
+  visionneuse?: boolean;
+  /** Taille d'affichage (attribut sizes). */
+  sizes?: string;
+  /** eager pour une carte visible dès l'ouverture de la page. */
+  chargement?: 'lazy' | 'eager';
+}
+
+const {
+  src,
+  legende,
+  reference,
+  href,
+  visionneuse = false,
+  sizes = '(min-width: 1024px) 23rem, (min-width: 768px) 33vw, 50vw',
+  chargement = 'lazy',
+} = Astro.props;
+const image = await infosImage(src);
+// Une carte verticale est montrée entière sur son passe-partout, sans recadrage.
+const portrait = image ? image.height > image.width : false;
+---
+
+<figure class="group relative">
+  <div class="bg-creme p-2 shadow-carte transition group-hover:-translate-y-1 group-hover:shadow-carte-survol">
+    <img
+      src={src}
+      srcset={image?.srcset}
+      sizes={image?.srcset ? sizes : undefined}
+      width={image?.width}
+      height={image?.height}
+      alt=""
+      loading={chargement}
+      decoding="async"
+      class:list={[
+        'aspect-3/2 w-full',
+        portrait ? 'object-contain' : 'bg-sepia object-cover',
+      ]}
+    />
+  </div>
+  <figcaption class="mt-3">
+    <a
+      href={href}
+      data-visionneuse-lien={visionneuse ? '' : undefined}
+      data-legende={visionneuse ? typo(legende) : undefined}
+      class="font-titre text-xl leading-snug font-semibold after:absolute after:inset-0 group-hover:underline focus-visible:outline-none focus-visible:after:outline-3 focus-visible:after:outline-offset-4 focus-visible:after:outline-foret"
+    >
+      {typo(legende)}
+    </a>
+    {reference && <span class="block text-sm text-gris">{reference}</span>}
+  </figcaption>
+</figure>

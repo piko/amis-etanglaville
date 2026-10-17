@@ -16,6 +16,21 @@ const VERCEL = 'vercel.json';
 const config = JSON.parse(await readFile(VERCEL, 'utf8'));
 const generated = [];
 
+// Pages WordPress remplacées par une route dédiée (plus de fichier dans src/content/pages).
+const REMPLACEES = {
+  1450: '/cartes-postales-historiques/',
+  3376: '/bulletins/#periode-origines',
+  3587: '/bulletins/',
+};
+for (const [wpId, destination] of Object.entries(REMPLACEES)) {
+  generated.push({
+    source: '/',
+    has: [{ type: 'query', key: 'page_id', value: wpId }],
+    destination,
+    permanent: true,
+  });
+}
+
 for (const file of (await readdir(PAGES)).filter((f) => f.endsWith('.md'))) {
   const raw = await readFile(join(PAGES, file), 'utf8');
   const fm = parse(raw.match(/^---\n([\s\S]*?)\n---/)?.[1] ?? '') ?? {};

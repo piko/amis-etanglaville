@@ -1,0 +1,38 @@
+---
+// Conteneur du Markdown rendu : toute la typographie du texte est portée ici,
+// le contenu reste sans classe (voir src/lib/rehype-contenu.mjs pour les figures).
+interface Props {
+  class?: string;
+}
+
+const { class: classe } = Astro.props;
+
+const typographie = [
+  // Base et liens (repris du canevas)
+  'max-w-texte text-lg leading-relaxed [&_p]:mt-4',
+  '[&_a]:text-foret [&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:text-foret-fonce',
+  // Titres
+  '[&_h2]:mt-14 [&_h2]:scroll-mt-6 [&_h2]:border-t [&_h2]:border-encre [&_h2]:pt-6 [&_h2]:text-3xl [&_h2]:leading-tight [&_h2]:font-semibold md:[&_h2]:text-4xl',
+  '[&>h2:first-child]:mt-0 [&>h2:first-child]:border-t-0 [&>h2:first-child]:pt-0',
+  '[&_h3]:mt-9 [&_h3]:scroll-mt-6 [&_h3]:text-2xl [&_h3]:leading-snug [&_h3]:font-semibold',
+  '[&_h4]:mt-6 [&_h4]:font-texte [&_h4]:text-base [&_h4]:font-bold [&_h4]:tracking-surtitre [&_h4]:text-ocre-fonce [&_h4]:uppercase',
+  // Citations
+  '[&_blockquote]:my-8 [&_blockquote]:border-y [&_blockquote]:border-encre [&_blockquote]:py-6 [&_blockquote]:font-titre [&_blockquote]:text-2xl [&_blockquote]:leading-snug [&_blockquote]:italic [&_blockquote_p]:mt-0 [&_blockquote_p+p]:mt-3',
+  // Listes
+  '[&_ul]:mt-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:mt-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:mt-2 [&_li]:pl-1 [&_li::marker]:text-foret [&_li_ul]:mt-2 [&_li_ol]:mt-2 [&_li>p]:mt-2',
+  // Figures et images
+  '[&_figure]:my-8 [&_figcaption]:mt-2 [&_figcaption]:font-titre [&_figcaption]:text-base [&_figcaption]:text-gris [&_figcaption]:italic',
+  '[&_img]:h-auto [&_img]:max-w-full [&_img]:bg-sepia [&_figure_img]:max-h-[34rem] [&_figure_img]:w-auto [&_figure_img]:border [&_figure_img]:border-filet',
+  '[&_[data-galerie]]:my-8 [&_[data-galerie]]:grid [&_[data-galerie]]:grid-cols-2 [&_[data-galerie]]:items-start [&_[data-galerie]]:gap-x-6 [&_[data-galerie]]:gap-y-8 sm:[&_[data-galerie]:not([data-galerie="2"],[data-galerie="4"])]:grid-cols-3 [&_[data-galerie]_figure]:my-0 [&_[data-galerie]_figcaption]:text-sm [&_[data-galerie]_figcaption]:not-italic',
+  // Tableaux et séparateurs
+  '[&_table]:mt-6 [&_table]:w-full [&_table]:border-collapse [&_table]:text-base [&_th]:border-b-2 [&_th]:border-encre [&_th]:py-2 [&_th]:pr-4 [&_th]:text-left [&_td]:border-b [&_td]:border-filet [&_td]:py-2 [&_td]:pr-4 [&_td]:align-top',
+  '[&_hr]:my-10 [&_hr]:border-filet',
+  // Image cliquable (ouvre l'original) : pas de soulignement, effet au survol
+  '[&_figure>a]:block [&_figure>a]:no-underline [&_figure>a:hover_img]:border-foret',
+  '[&_strong]:font-bold',
+];
+---
+
+<article class:list={[typographie, classe]}>
+  <slot />
+</article>

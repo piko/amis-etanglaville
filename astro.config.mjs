@@ -1,18 +1,21 @@
-// @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
+import { unified } from '@astrojs/markdown-remark';
+import rehypeContenu from './src/lib/rehype-contenu.mjs';
 
-// https://astro.build/config
 export default defineConfig({
   site: 'https://amis-letanglaville.org',
-  // Toutes les URL se terminent par « / » (aligné avec vercel.json)
   trailingSlash: 'always',
+  devToolbar: { enabled: false },
   vite: {
     plugins: [tailwindcss()],
   },
+  markdown: {
+    // Processeur unified (remark/rehype) pour le plugin de mise en forme du contenu.
+    processor: unified({ rehypePlugins: [rehypeContenu] }),
+  },
   integrations: [sitemap()],
-  // Polices du canevas, téléchargées au build et servies par le site (aucune requête vers Google)
   fonts: [
     {
       provider: fontProviders.google(),

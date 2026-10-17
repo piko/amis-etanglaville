@@ -1,34 +1,38 @@
 ---
 title: Archives 2023
+description: "L’année 2023 de l’association : bulletins nos 131 et 132, Portes ouvertes des artistes, 53e Salon des arts, 12e Salon des créateurs et compte rendu de l’assemblée générale."
+parent: collections
+order: 1
 wp_id: 3496
 updated: 2026-05-07
 ---
 
-**Communication**
+## Communication
 
-**Bulletins :**
+### Bulletins
 
-2 bulletins (131 et 132) ont été publiés.
+Deux bulletins (nos 131 et 132) ont été publiés. Ils sont à lire sur la page [Bulletins](/bulletins/).
 
-Mails de la vice-présidente qui vous tient au courant de multiples activités
+### Courriels
 
-**Manifestations culturelles**
+Des courriels de la vice-présidente vous tiennent au courant de multiples activités.
 
-Au mois de juin les artistes de l’Etang la Ville ont ouvert leurs porte.
+## Manifestations culturelles
+
+Au mois de juin, les artistes de L’Étang-la-Ville ont ouvert leurs portes.
 
 En novembre ont eu lieu :
 
-– Le 53ème Salon des Arts
+- le 53e Salon des arts ;
+- le 12e Salon des créateurs.
 
-– Le 12ème Salon des Créateurs
+## Autres manifestations
 
-**Autres manifestations**
+- Atelier hérissons
+- Visites en forêt avec l’ONF
 
-**Atelier hérissons**
+## Documents
 
-**Visites en forêt avec l’ONF**
+![](/medias/2024/02/Archive.webp)
 
-**Documents**
-
-[![](https://amis-letanglaville.org/wp-content/uploads/2024/02/Archive.webp)](https://amis-letanglaville.org/wp-content/uploads/2024/02/CR-AG-2023.pdf)
-*Compte Rendu AG*
+[Lire le compte rendu des assemblées générales du 25 mars 2023 (PDF)](/medias/2024/02/CR-AG-2023.pdf)

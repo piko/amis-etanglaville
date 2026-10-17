@@ -2,7 +2,7 @@
 
 Document de référence pour lancer le développement dans VS Code, et pour toute personne (ou IA) qui reprendra le site.
 
-> État : cadrage du 17/10/2026. Socle initialisé le 17/10/2026 (Astro 7.4, Tailwind 4.3, 21 pages importées telles quelles). Le design et la structure des pages sont en cours de réflexion dans un canevas Claude. Les choix ouverts sont listés en fin de document.
+> État : cadrage du 17/10/2026. Socle initialisé le 17/10/2026 (Astro 7.4, Tailwind 4.3). Design du canevas (piste A) appliqué et migration du contenu réalisée le 17/10/2026 (§14). Les choix ouverts sont listés en fin de document.
 
 ---
 
@@ -412,6 +412,8 @@ Une ligne par page : la correspondance `wp_id` → slug est dans le front matter
 ---
 
 ## 14. Migration du contenu (`_import/` → `src/content/`)
+
+> Réalisée le 17/10/2026 (étapes 1 à 7). Les noms de médias contenant des accents, des espaces ou « ° » ont été translittérés (`Séguie-Charles_Le_Brun.jpg` → `Seguie-Charles_Le_Brun.jpg`). Les PDF lourds ont été recompressés avec Ghostscript, et les marges de scan de 24 cartes postales rognées. Les couvertures de bulletins sont tirées de la première page des PDF. Les actualités 2019-2023 viennent des bilans annuels (`A3-Archives-*.pdf`) et du compte rendu de l'AG 2023.
 
 Source : `_import/` (export WordPress du 17/10/2026 : 21 pages, menu, 308 médias). Voir `_import/README.md` pour les anomalies relevées.
 
