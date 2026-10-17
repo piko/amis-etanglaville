@@ -37,6 +37,8 @@ Circuit :
 3. Le bureau relit sur la préproduction.
 4. Merge dans `main` : la production est mise à jour.
 
+Fusion : _Squash and merge_ pour les branches de travail ; _Create a merge commit_ pour `recette` → `main`, sans supprimer `recette` (détails dans [AGENTS.md](AGENTS.md)).
+
 ## Modifier le contenu
 
 - **Bénévoles** : [Pages CMS](https://app.pagescms.org), sur la branche `recette`.
@@ -45,6 +47,6 @@ Circuit :
 
 ## Liens
 
-- Production : _à compléter après le premier déploiement Vercel_
-- Recette : _à compléter_
+- Production (provisoire, avant bascule du domaine) : https://amis-etanglaville.vercel.app
+- Recette : https://amis-etanglaville-git-recette-amis-etang-la-ville.vercel.app
 - Canevas de design : _à compléter_
