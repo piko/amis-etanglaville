@@ -1,0 +1,133 @@
+# Configuration Pages CMS (https://pagescms.org/docs/configuration/)
+# Les noms techniques (`name`) doivent rester alignés avec src/content.config.ts et src/lib/data.ts.
+# Les bénévoles travaillent sur la branche « recette », jamais sur « main ».
+# Bulletins, actualités et galeries seront ajoutés avec leurs gabarits (après le canevas de design).
+
+media:
+  input: public/medias
+  output: /medias
+
+content:
+  - name: pages
+    label: Pages
+    type: collection
+    path: src/content/pages
+    format: yaml-frontmatter
+    view:
+      fields: [title, updated]
+      primary: title
+      sort: [title]
+    fields:
+      - name: title
+        label: Titre
+        type: string
+        required: true
+      - name: description
+        label: Résumé (référencement)
+        type: text
+      - name: parent
+        label: Rubrique (slug de la page parente)
+        type: string
+      - name: order
+        label: Ordre dans la rubrique
+        type: number
+      - name: image
+        label: Image de partage
+        type: image
+      - name: updated
+        label: Dernière mise à jour
+        type: date
+        options:
+          format: yyyy-MM-dd
+      - name: draft
+        label: Brouillon (non publié)
+        type: boolean
+      - name: wp_id
+        label: Identifiant WordPress (ne pas modifier)
+        type: number
+        readonly: true
+      - name: body
+        label: Contenu
+        type: rich-text
+        options:
+          format: markdown
+
+  - name: menu
+    label: Menu
+    type: file
+    path: src/data/menu.yml
+    format: yaml
+    list: true
+    fields:
+      - name: title
+        label: Libellé
+        type: string
+        required: true
+      - name: link
+        label: Lien (slug de la page ou URL)
+        type: string
+        required: true
+      - name: children
+        label: Sous-menu
+        type: object
+        list: true
+        fields:
+          - name: title
+            label: Libellé
+            type: string
+            required: true
+          - name: link
+            label: Lien (slug de la page ou URL)
+            type: string
+            required: true
+          - name: children
+            label: Sous-menu
+            type: object
+            list: true
+            fields:
+              - name: title
+                label: Libellé
+                type: string
+                required: true
+              - name: link
+                label: Lien (slug de la page ou URL)
+                type: string
+                required: true
+
+  - name: site
+    label: Infos de l’association
+    type: file
+    path: src/data/site.yml
+    format: yaml
+    fields:
+      - name: nom
+        label: Nom de l’association
+        type: string
+        required: true
+      - name: nomCourt
+        label: Sigle
+        type: string
+        required: true
+      - name: description
+        label: Description (référencement)
+        type: text
+        required: true
+      - name: email
+        label: E-mail de contact
+        type: string
+        required: true
+      - name: adresse
+        label: Adresse du siège
+        type: string
+        required: true
+      - name: adhesion
+        label: Lien d’adhésion (PayAsso)
+        type: string
+        required: true
+      - name: don
+        label: Lien de don (PayAsso)
+        type: string
+        required: true
+      - name: facebook
+        label: Lien Facebook
+        type: string

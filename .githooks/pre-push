@@ -1,0 +1,12 @@
+#!/bin/sh
+# Refuse tout push direct sur main : tout passe par une PR relue sur la recette.
+# (GitHub Free ne protège pas main sur un dépôt privé ; ce hook compense en local.)
+# Contournement exceptionnel : ALLOW_MAIN_PUSH=1 git push origin main
+[ "$ALLOW_MAIN_PUSH" = "1" ] && exit 0
+while read -r local_ref local_sha remote_ref remote_sha; do
+  if [ "$remote_ref" = "refs/heads/main" ]; then
+    echo "✋ Push direct sur main refusé. Créez une branche et ouvrez une PR." >&2
+    exit 1
+  fi
+done
+exit 0
