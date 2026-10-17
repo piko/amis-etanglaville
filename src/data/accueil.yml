@@ -1,0 +1,26 @@
+# Page d’accueil (src/pages/index.astro). Les actualités et le dernier bulletin s’affichent automatiquement.
+hero:
+  surtitre: "Depuis 1960"
+  titre: "Nous défendons notre environnement"
+  texte: "Association non partisane, nous protégeons la forêt, les paysages et le patrimoine de L’Étang-la-Ville, et nous informons ses habitants des projets qui engagent notre cadre de vie."
+  image: "/medias/accueil/vuillard-window-overlooking-the-woods.jpg"
+  alt: "Tableau d’Édouard Vuillard : depuis une fenêtre, un vallon boisé aux couleurs d’automne, un clocher et des toits entre les arbres."
+  legende: "Édouard Vuillard, « Window Overlooking the Woods », 1899. Art Institute of Chicago. Le peintre nabi séjournait souvent à L’Étang-la-Ville."
+missions:
+  - titre: "Protéger l’environnement et la biodiversité"
+    texte: "Concertation sur les projets d’urbanisme et d’infrastructure, pour un cadre de vie « entre ville et forêt »."
+  - titre: "Préserver le patrimoine"
+    texte: "Château, lavoir de la Montagne, fontaine Saint-Pierre, croix Saint-Michel : le patrimoine historique et artistique du village."
+  - titre: "Informer les habitants"
+    texte: "Bulletins, réunions et site internet pour partager les enjeux de la commune."
+# Suite de la phrase « 184 cartes postales anciennes, … » (le nombre est calculé)
+memoire: "les seigneurs de l’Étang, les peintres nabis, les trains et le tram 13, les restaurants du temps passé."
+succes:
+  - titre: "Le château de l’Étang sauvé"
+    texte: "de la démolition, aujourd’hui la Mairie, et inscrit aux sites pittoresques d’Île-de-France."
+  - titre: "1986"
+    texte: ": abandon du projet de 36 000 m² de bureaux à l’Auberderie."
+  - titre: "Restaurations"
+    texte: ": fontaine Saint-Pierre, lavoir de la Montagne, croix Saint-Michel en forêt de Marly."
+  - titre: "1994"
+    texte: ": recours devant le Conseil d’État contre l’arrêté Grande Ceinture."

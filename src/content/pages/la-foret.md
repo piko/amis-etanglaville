@@ -1,102 +1,95 @@
 ---
-title: La Forêt et Les Arbres en ville
+title: La forêt et les arbres
+description: "Arbres remarquables de la forêt de Marly, cartes pour les retrouver, documents de l’ONF et étude du ponceau de la route royale : la forêt qui entoure L’Étang-la-Ville."
+parent: documentation
+order: 3
 wp_id: 817
 updated: 2024-10-28
 ---
 
-La forêt de Marly qui ceinture notre Village en est un des principaux attraits. Les Amis de l’Etang ont toujours oeuvré pour protéger cet atout contre les coupes à blanc, les déchets sauvages et autres dégradations.
+La forêt de Marly, qui entoure notre village, en est l’un des principaux attraits. Les Amis de l’Étang ont toujours œuvré pour protéger cet atout contre les coupes à blanc, les déchets sauvages et autres dégradations.
 
-**LES ARBRES REMARQUABLES**
+## Les arbres remarquables
 
-Promenez-vous dans la forêt de Marly, vous pourrez y découvrir quelques arbres remarquables dans ses peuplements forestiers !
+Promenez-vous dans la forêt de Marly : vous pourrez y découvrir quelques arbres remarquables au sein de ses peuplements forestiers.
 
-Ces arbres remarquables par leur âge, leur taille, leur forme ont été recensés par l’Office National des Forêts (ONF). La plupart sont indiqués sur les cartes que l’on trouve sur les panneaux placés par l’ONF aux entrées des promenades. La carte ci-dessus en est un exemple, elle est proposée sur le site de l’ONF pour la forêt de Marly. En plus de ces arbres de l’ONF, nous en avons aussi ajouté quelques-uns que nous trouvions particulièrement beaux.
+Ces arbres, remarquables par leur âge, leur taille ou leur forme, ont été recensés par l’Office national des forêts (ONF). La plupart sont indiqués sur les cartes affichées par l’ONF sur les panneaux placés à l’entrée des promenades. La carte ci-dessous en est un exemple : elle est proposée sur le site de l’ONF pour la forêt de Marly. En plus de ces arbres de l’ONF, nous en avons ajouté quelques-uns que nous trouvions particulièrement beaux.
 
-Ces quelques pages de notre site veulent vous fournir des précisions sur tous ces arbres, nous vous proposons des indications pour les trouver et un petit descriptif pour chaque arbre.
+![Carte de l’ONF de la forêt domaniale de Marly : le massif boisé, coloré en vert selon les essences, s’étend entre Saint-Nom-la-Bretèche, L’Étang-la-Ville et Marly-le-Roi.](/medias/2019/04/vue-gen_onf_foret_marly.jpg)
 
-Tout d’abord, chaque arbre remarquable est identifié par une petite icône sur les cartes qui suivent.
+Ces quelques pages de notre site vous donnent des précisions sur tous ces arbres : des indications pour les trouver et un petit descriptif de chacun.
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/04/vue-gen_onf_foret_marly.jpg)
+Chaque arbre remarquable est identifié par une petite icône sur les cartes qui suivent. Ces icônes sont censées représenter la silhouette de l’arbre.
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/04/Silhouettes-arbres.png)
+![Les six silhouettes utilisées sur les cartes : chêne, hêtre, châtaignier, douglas, alisier et pin maritime.](/medias/2019/04/Silhouettes-arbres.png)
 
-Les icônes que nous utilisons pour identifier les arbres sont censées représenter la silhouette de l’arbre.
+### Au nord de L’Étang-la-Ville
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/04/Foret-Nord.jpg)
+![Carte IGN de la partie de la forêt de Marly au nord de L’Étang-la-Ville : cinq arbres remarquables signalés par des icônes encadrées de rouge, de part et d’autre de la D 98.](/medias/2019/04/Foret-Nord.jpg)
 
-**La partie de la forêt de Marly au Nord de l’Etang la ville :**
+- 2 chênes
+- 1 châtaignier
+- 1 hêtre
+- 1 pin maritime
 
-**2 chênes,**
+### À l’ouest
 
-**1 châtaignier,**
+![Carte IGN de la partie ouest de la forêt de Marly, vers Joyenval et la porte de Sainte-Gemme : trois arbres remarquables signalés par des icônes encadrées de rouge.](/medias/2019/04/Foret-Ouest.png)
 
-**1 hêtre,**
+- 2 chênes
+- 1 châtaignier
 
-**1 pin maritime**
+### Au sud de L’Étang-la-Ville
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/04/Foret-Ouest.png)
+![Carte IGN de la partie de la forêt de Marly au sud de L’Étang-la-Ville, vers le Val Cruye et l’Auberderie : cinq arbres remarquables signalés par des icônes encadrées de rouge.](/medias/2019/04/Foret-Sud.png)
 
-**La partie Ouest de la forêt de Marly :**
+- 3 chênes
+- 1 hêtre
+- 1 châtaigneraie
 
-**2 chênes,**
+## Une publication intéressante
 
-**1 châtaignier**
+![Couverture du magazine Books, numéro spécial été « La forêt et nous » : un promeneur minuscule au pied de séquoias géants.](/medias/2019/06/Books-N99.jpg)
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/04/Foret-Sud.png)
+Pour ceux qui s’intéressent au sujet, Books vient de sortir un numéro spécial sur la forêt : n° 99, juillet-août 2019.
 
-**La partie de la forêt de Marly au Sud de l’Etang la ville :**
+## Un document de l’ONF
 
-**3 chênes,**
+Comité de la forêt domaniale de Marly du 7 janvier 2021.
 
-**1 hêtre,**
+![En-tête du document de l’Office national des forêts : « Comité de la forêt domaniale de Marly, le jeudi 7 janvier 2021 à 14 h 30 ».](/medias/2021/04/ONF-Janv-2021.png)
 
-**1 châtaigneraie**
+[Lire le document du comité de la forêt de Marly du 7 janvier 2021 (PDF)](/medias/2021/01/Comite-de-foret-de-MARLY-7-janvier-2021_Optim.pdf)
 
-**Publication intéressante**
+## Le ponceau de la forêt de Marly
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/06/Books-N99.jpg)
+### Un ouvrage de génie civil sur la route royale
 
-Pour ceux qui s’intéressent au sujet, Books vient de sortir un numéro spécial sur la Forêt
+En génie civil, on appelle ponceau un passage voûté en maçonnerie permettant l’écoulement des eaux superficielles. Un tel ouvrage a été construit sous la route royale, en forêt de Marly. C’est une construction de très bonne qualité qui enjambe un talweg orienté sud-nord. Il est remarquable par ses deux arches, construites en grand appareil de pierres de taille de dimensions assez conséquentes, aux claveaux parfaitement ajustés : cela lui confère une grande solidité et lui a permis de résister aux dommages du temps.
 
-N°99 Juillet-Août 2019
+L’ouvrage est en partie envahi par la végétation. Les arches sont, semble-t-il, ancrées à même le sol ; il n’a toutefois pas été possible d’effectuer de sondage à leur base. La voûte est construite en deux temps : un soubassement en maçonnerie de pierraille très compacte, vraisemblablement de grande épaisseur et suivant la pente du terrain ; au-dessus, la voûte en petits moellons réguliers disposés en lits successifs. Côté aval, la sortie du tunnel présente une forte pente ; deux murs construits perpendiculairement, dont l’un de grande hauteur, évitent le comblement du talweg lors des fortes pluies d’hiver.
 
-**DOCUMENT INTERESSANT DE L’ONF**
+La chaussée, posée juste au-dessus du tunnel et légèrement bombée (largeur à vérifier), est composée de pierres de petite taille disposées de champ, perpendiculairement à l’axe de la route.
 
-Comité de la forêt de MARLY 2021-01_07
+Si les deux arches sont bien conservées, avec seulement quelques claveaux légèrement disjoints, la voûte présente en revanche, en plusieurs endroits, des glissements et des manques de pierres qui nécessiteraient une restauration. Nous n’avons pu observer l’état de la voûte dans sa partie centrale, car celle-ci est fermée par deux murs en petits parpaings réguliers ; celui de l’amont menace de tomber et il est soutenu par deux madriers. D’après le matériau utilisé pour ces deux murs (petits parpaings de pierre), on peut les dater de la fin du XIXe ou du début du XXe siècle.
 
-Cliquer sur l’image ci-dessous pour lire le document
+Ce ponceau étant étroitement associé à la route royale qui passe immédiatement au-dessus, on peut sans grand risque d’erreur attribuer sa construction à l’aménagement des axes principaux de la forêt de Marly, réalisé au XVIIe siècle sous le règne de Louis XIV. La construction des deux arches en grand appareil va dans ce sens.
 
-[![](https://amis-letanglaville.org/wp-content/uploads/2021/04/ONF-Janv-2021.png)](https://amis-letanglaville.org/wp-content/uploads/2021/01/Comite-de-foret-de-MARLY-7-janvier-2021_Optim.pdf)
+Dans l’ensemble, ce monument est parfaitement restaurable et mériterait d’être mis en valeur.
 
-**Ponceau de la Forêt de Marly**
+Contribution d’Alain Chambon et de Bernard Henin.
 
-**Un ouvrage de génie civil sur la route royale en forêt de Marly.** On appelle ponceau en génie civil un passage voûté en maçonnerie pour l’écoulement des eaux superficielles. Un tel ouvrage a été construit sous la route royale en forêt de Marly. C’est une construction de très bonne qualité qui enjambe un talweg de direction Sud-Nord. Il est remarquable par ses deux arches construites en grand appareil de pierres de taille de dimension assez conséquente aux claveaux parfaitement ajustés, ce qui lui confère une grande solidité et lui a permis de résister aux dommages du temps.
+![Arche en pierre de taille du ponceau, envahie par le lierre, avec un tronc d’arbre couché au premier plan.](/medias/2019/05/Ponceau-1.jpg)
+*L’arche du tunnel, côté amont.*
 
-L’ouvrage est en partie envahi par la végétation. Les arches sont, semble-t-il, ancrées à même le sol, il n’a pas été, toutefois, possible d’effectuer de sondage à leur base. La voûte est construite en deux temps : un soubassement fait en une maçonnerie de pierraille très compacte, vraisemblablement de grande épaisseur et suivant la pente du terrain. Au-dessus est posée la voûte en petits moellons réguliers disposés en lits successifs. Coté aval, la sortie du tunnel présente une forte pente, deux murs dont un de grande hauteur, construits perpendiculairement évitent un comblement du talweg lors des fortes pluies d’hiver.
+![Intérieur du ponceau : soubassement de pierraille en bas, voûte de petits moellons disposés en lits au-dessus.](/medias/2019/05/Ponceau-2.jpg)
+*En partie basse, le soubassement en maçonnerie de pierraille compacte ; au-dessus, la voûte en petits moellons réguliers disposés en lits successifs.*
 
-La chaussée posée juste au-dessus du tunnel, légèrement bombée (largeur à vérifier) est composée de pierres de petites tailles disposées de champ, perpendiculairement à l’axe de la route.
+![Sortie aval du tunnel, encombrée de branchages, bordée d’un haut mur de pierre.](/medias/2019/05/Ponceau-3.jpg)
+*Côté aval du tunnel, avec le haut mur construit perpendiculairement, qui évite le comblement du talweg lors des fortes pluies d’hiver.*
 
-Si les deux arches sont bien conservées, avec seulement quelques claveaux légèrement disjoints, la voûte en revanche présente en plusieurs endroits des glissements et des manques de pierres qui nécessiteraient une restauration. Nous n’avons pu observer l’état de la voûte dans la partie centrale car celle-ci est fermée par deux murs en petits parpaings réguliers, celui en amont manque de tomber, il est soutenu par deux madriers. D’après le matériau utilisé pour ces deux murs (petits parpaings de pierre), on peut dater ceux-ci de la fin du 19ème siècle début 20ème.
-
-Étant donné que ce ponceau est étroitement associé à la route royale qui passe immédiatement au-dessus, on peut sans un grand risque d’erreur attribuer sa construction à l’aménagement des axes principaux de la forêt de Marly effectué au 17ème siècle sous le règne de Louis XIV. La construction des deux arches en grand appareil abonde dans ce sens.
-
-Dans l’ensemble ce monument est parfaitement restaurable et mériterait d’être mis en valeur.
-
-Contribution de
-
-Alain Chambon et Bernard Henin
-
-![](https://amis-letanglaville.org/wp-content/uploads/2019/05/Ponceau-1.jpg)
-*L’arche du tunnel coté amont*
-
-![](https://amis-letanglaville.org/wp-content/uploads/2019/05/Ponceau-2.jpg)
-*En partie basse, soubassement en maçonnerie de pierraille compacte, au-dessus la voute en petits moellons réguliers disposés en lits successifs*
-
-![](https://amis-letanglaville.org/wp-content/uploads/2019/05/Ponceau-3.jpg)
-*Coté aval du tunnel avec le haut mur construit perpendiculairement évitant un comblement du talweg lors des fortes pluies d’hiver.*
-
-![](https://amis-letanglaville.org/wp-content/uploads/2019/05/Ponceau-4.jpg)
+![Chemin forestier revêtu de petites pierres, bordé d’herbe.](/medias/2019/05/Ponceau-4.jpg)
 *La chaussée légèrement bombée, en pierres disposées de champ.*
 
-![](https://amis-letanglaville.org/wp-content/uploads/2019/05/Ponceau-map.jpg)
-*Cartographie Bernard Henin*
+![Carte IGN de la forêt de Marly : une flèche orange indique l’emplacement du ponceau sous la route royale, près de l’autoroute, avec une photo de l’arche en médaillon.](/medias/2019/05/Ponceau-map.jpg)
+*Cartographie : Bernard Henin.*

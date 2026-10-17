@@ -7,3 +7,16 @@ adhesion: "https://www.payasso.fr/cdps/cotisations"
 don: "https://www.payasso.fr/CDPS/DONS"
 # Groupe Facebook « Les arbres de l’Étang la Ville » : URL à renseigner
 facebook: ""
+# Bulletin d’adhésion à imprimer (PDF), proposé dans le bandeau d’adhésion
+formulaire: "/medias/2025/11/Bulletin-dadhesion-2026.pdf"
+formulaireLibelle: "Bulletin d’adhésion 2026 à imprimer (PDF)"
+# Associations partenaires (pied de page et page Activités)
+partenaires:
+  - nom: "JADE"
+    url: "https://www.jade-asso.fr"
+  - nom: "SLY"
+  - nom: "CADEB"
+    url: "https://www.cadeb.org"
+  - nom: "ASCM"
+  - nom: "AAFSG"
+    url: "http://www.amisforetsaintgermainmarly.org/"

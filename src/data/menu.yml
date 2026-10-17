@@ -54,5 +54,5 @@
       link: "infos-pratiques"
     - title: "Les produits"
       link: "les-produits"
-# Pages publiées mais absentes du menu : archives-2023 (liée depuis « Archives »), bulletins-1-et-2.
-# « Actualités » mène à une 404 tant que la page /actualites/ n’est pas créée.
+# Pages publiées mais absentes du menu : archives-2023 (liée depuis « Archives »), mentions-legales
+# (pied de page). Elles figurent dans le plan du site.
