@@ -16,7 +16,7 @@ Référence complète : [ARCHITECTURE.md](ARCHITECTURE.md). Ce fichier en est le
 | Commande                          | Rôle                                                                                                                         |
 | --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | `npm run dev`                     | Serveur local sur http://localhost:4321. Pour un agent : `npx astro dev --background`, puis `npx astro dev stop`             |
-| `npm run check`                   | Types et schémas de contenu (`astro check`)                                                                                  |
+| `npm run check`                   | Garde-fou contenu (aucune adresse `raw.githubusercontent.com`), puis types et schémas (`astro check`)                        |
 | `npm run build`                   | Build de production dans `dist/`. Valide tout le contenu                                                                     |
 | `npm run format` / `format:check` | Prettier (code uniquement : `src/content` et `src/data` sont exclus)                                                         |
 | `npm run redirects`               | Régénère les redirections de `vercel.json` (`?page_id=N` vers le slug)                                                       |
@@ -37,7 +37,8 @@ src/layouts/              Base.astro (head, SEO, en-tête, pied), Page.astro (pa
 src/components/           Header, Menu, MenuList, Footer…
 src/pages/                Routes : index, [...slug] (pages fixes), bulletins, actualites, cartes-postales-historiques, recherche, plan-du-site, 404
 public/medias/AAAA/MM/    Images et PDF (mêmes chemins que WordPress), servis en /medias/…
-scripts/                  Import WordPress, génération des redirections
+scripts/                  Import WordPress, redirections, garde-fou contenu (verifier-contenu.mjs)
+.github/workflows/        CI, @claude (claude.yml : plan, « @claude go », PR vers recette), rebuild quotidien
 _import/                  Export brut de l'ancien site (source de la migration, ne pas modifier)
 .pages.yml                Configuration Pages CMS
 vercel.json               Redirections 301
@@ -74,8 +75,17 @@ vercel.json               Redirections 301
 Branche puis PR. Vercel publie une préproduction (lien dans la PR). Le bureau relit, puis la PR est fusionnée dans `main` et la production est mise à jour.
 Les bénévoles modifient le contenu sur la branche `recette` via Pages CMS. Une PR `recette` → `main` regroupe leurs modifications.
 
+Demandes confiées à `@claude` dans une issue (`.github/workflows/claude.yml`), en deux temps :
+
+1. **Plan** : « @claude » dans l'issue ou un commentaire. Claude reformule, propose un plan (pages, changements, images) et pose ses questions. Il ne peut rien modifier : jeton en lecture seule, outils d'écriture et Bash interdits.
+2. **Réalisation** : commentaire « @claude go ». Claude part de `recette` sur une branche `contenu/<n° issue>-<début du titre>` (ex. `contenu/12-ajouter-la-brocante-2027-aux`).
+3. **Arrivée sur la recette** : si Claude a terminé (et ne s'est pas arrêté sur une question), le workflow ouvre une PR `contenu/…` → `recette`, lance la CI et fusionne en merge commit dès qu'elle est verte. Conflit, CI rouge ou incident : la PR reste ouverte et c'est signalé dans l'issue.
+
+`@claude` ajouté en modifiant la description d'une issue ne déclenche rien (seule la création est écoutée) : l'écrire dans un commentaire. Dans une PR, `@claude` agit directement sur la branche de la PR.
+
 Règles de fusion :
 
+- PR `contenu/…` → `recette` (ouverte par le workflow `@claude`) : **merge commit automatique** une fois la CI verte, puis branche supprimée.
 - PR d'une branche de travail (`feat/…`, `claude/…`…) → `main` : **Squash and merge**, puis supprimer la branche.
 - PR `recette` → `main` : **Create a merge commit** (jamais de squash, pour que `recette` et `main` ne divergent pas) et **ne pas supprimer `recette`**.
 - Après une fusion dans `main`, resynchroniser la recette : `git switch recette && git pull && git merge main && git push`.

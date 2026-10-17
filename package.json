@@ -10,7 +10,7 @@
     "dev": "astro dev",
     "build": "astro build && pagefind --site dist",
     "preview": "astro preview",
-    "check": "astro check",
+    "check": "node scripts/verifier-contenu.mjs && astro check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "import:pages": "node scripts/import-wordpress.mjs",

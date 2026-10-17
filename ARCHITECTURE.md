@@ -333,11 +333,12 @@ Les schémas Zod de `src/content.config.ts` et les champs de `.pages.yml` doiven
 
 ## 10. Branches, recette et déploiement
 
-| Branche              | Rôle                                               | Déploiement Vercel                                            |
-| -------------------- | -------------------------------------------------- | ------------------------------------------------------------- |
-| `main`               | Production                                         | `amis-letanglaville.org` (à la bascule), sinon `*.vercel.app` |
-| `recette`            | Modifications de contenu des bénévoles (Pages CMS) | URL stable de branche (`…-git-recette-….vercel.app`)          |
-| `feat/*`, `claude/*` | Évolutions (dev, Claude)                           | Préproduction par PR                                          |
+| Branche              | Rôle                                                   | Déploiement Vercel                                            |
+| -------------------- | ------------------------------------------------------ | ------------------------------------------------------------- |
+| `main`               | Production                                             | `amis-letanglaville.org` (à la bascule), sinon `*.vercel.app` |
+| `recette`            | Modifications de contenu des bénévoles (Pages CMS)     | URL stable de branche (`…-git-recette-….vercel.app`)          |
+| `contenu/*`          | Demandes `@claude` (issues), fusionnées dans `recette` | Vues sur la recette                                           |
+| `feat/*`, `claude/*` | Évolutions (dev, Claude)                               | Préproduction par PR                                          |
 
 Circuit :
 
@@ -383,9 +384,13 @@ Une ligne par page : la correspondance `wp_id` → slug est dans le front matter
   - installation : `claude` dans le dépôt, puis `/install-github-app`, option « abonnement » ;
   - secret : `CLAUDE_CODE_OAUTH_TOKEN` (via `claude setup-token`), à remplacer par `ANTHROPIC_API_KEY` de l'asso en phase 2 ;
   - déclenchement : `@claude` dans une issue ou une PR, réservé aux membres qui ont l'accès en écriture ;
+  - issues, en deux temps : job `plan` (lecture seule : `GITHUB_TOKEN` sans écriture sur le contenu, outils d'écriture et Bash interdits) qui reformule, propose un plan et pose ses questions ; puis job `realisation` sur un commentaire « @claude go », qui travaille sur une branche `contenu/<n°>-<titre>` partie de `recette` ;
+  - arrivée sur la recette : job `vers-recette` (`.github/scripts/vers-recette.sh`) qui ouvre la PR vers `recette`, lance la CI (`workflow_dispatch`, car une PR ouverte avec le `GITHUB_TOKEN` ne déclenche pas de workflow) et fusionne en merge commit quand elle est verte (fusion automatique native si disponible, sinon attente de la CI). Conflits, CI rouge et incidents sont signalés dans l'issue ;
+  - PR : action directe sur la branche de la PR ;
+  - modèle `sonnet`, rapport d'exécution dans le résumé du run (`display_report`) ;
   - garde-fous : `--max-turns`, `timeout-minutes` sur le job ;
   - dépôt privé : les minutes GitHub Actions sont prises sur le quota gratuit mensuel, à surveiller.
-- **Modèle d'issue** « Demande de modification » : page concernée, modification souhaitée, pièces jointes, date de mise en ligne.
+- **Modèle d'issue** « Demande de modification » : page concernée, modification souhaitée, pièces jointes, date de mise en ligne. Son texte d'aide explique le circuit plan → « @claude go » → recette.
 
 ---
 

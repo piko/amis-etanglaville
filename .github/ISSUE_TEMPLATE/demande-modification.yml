@@ -1,13 +1,21 @@
 name: Demande de modification
 description: Demander une modification du site (texte, image, page, menu…)
-title: '[Modification] '
 labels: [contenu]
 body:
   - type: markdown
     attributes:
       value: |
-        Décrivez la modification souhaitée. Pour la confier à Claude, ajoutez « @claude » dans la description ou dans un commentaire.
-        Rien n'est publié sans relecture : la modification passe par une préproduction à valider.
+        Décrivez la modification souhaitée, avec un titre court et parlant (ex. « Ajouter la brocante 2027 aux actualités »).
+
+        **Pour la confier à Claude**, écrivez « @claude » dans la description. Ensuite :
+        1. Claude reformule la demande, propose un plan et pose ses questions. Il ne modifie rien à ce stade.
+        2. Répondez à ses questions en commentaire (il peut ajuster son plan si vous écrivez de nouveau « @claude »).
+        3. Quand le plan vous convient, écrivez **« @claude go »** dans un nouveau commentaire : Claude réalise la modification.
+        4. La modification apparaît sur la préproduction de la recette : https://amis-etanglaville-git-recette-amis-etang-la-ville.vercel.app (quelques minutes après le message de Claude dans la demande).
+
+        Si vous ajoutez « @claude » après avoir créé la demande, faites-le **dans un commentaire** : modifier la description ne déclenche rien.
+
+        Rien n'est publié sur le site sans relecture du bureau sur la préproduction.
   - type: input
     id: page
     attributes:
