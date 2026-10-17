@@ -68,15 +68,17 @@ Un astérisque (\*) signale un champ absent des schémas actuels. Il faut l'ajou
 
 Générées depuis `canevas.html` avec Chromium, avec les polices Newsreader et Public Sans. Les images de l'ancien site n'étaient pas accessibles lors de la génération : elles apparaissent en aplat sépia, l'état de chargement prévu par le design.
 
-| Gabarit                    | Mobile (375 px)               | Ordinateur (1280 px)                   |
-| -------------------------- | ----------------------------- | -------------------------------------- |
-| Accueil                    | `accueil-mobile.png`          | `accueil-ordinateur.png`               |
-| Page de texte              | `texte-mobile.png`            | `texte-ordinateur.png`                 |
-| Liste des bulletins        | `bulletins-mobile.png`        | `bulletins-ordinateur.png`             |
-| Actualités                 | `actualites-mobile.png`       | `actualites-ordinateur.png`            |
-| Galerie                    | `galerie-mobile.png`          | `galerie-ordinateur.png`               |
-| Page d'erreur 404          | `erreur-mobile.png`           | `erreur-ordinateur.png`                |
-| État : menu ouvert         | `etat-menu-ouvert-mobile.png` | `etat-sous-menu-ouvert-ordinateur.png` |
-| État : visionneuse ouverte | `etat-visionneuse-mobile.png` | `etat-visionneuse-ordinateur.png`      |
+| Gabarit                     | Mobile (375 px)               | Ordinateur (1280 px)                   |
+| --------------------------- | ----------------------------- | -------------------------------------- |
+| Accueil                     | `accueil-mobile.png`          | `accueil-ordinateur.png`               |
+| Page de texte               | `texte-mobile.png`            | `texte-ordinateur.png`                 |
+| Liste des bulletins         | `bulletins-mobile.png`        | `bulletins-ordinateur.png`             |
+| Actualités                  | `actualites-mobile.png`       | `actualites-ordinateur.png`            |
+| Galerie                     | `galerie-mobile.png`          | `galerie-ordinateur.png`               |
+| Page d'erreur 404           | `erreur-mobile.png`           | `erreur-ordinateur.png`                |
+| État : menu ouvert          | `etat-menu-ouvert-mobile.png` | `etat-sous-menu-ouvert-ordinateur.png` |
+| État : visionneuse ouverte  | `etat-visionneuse-mobile.png` | `etat-visionneuse-ordinateur.png`      |
+| En-tête, variante accueil   | `header-accueil-mobile.png`   | `header-accueil-ordinateur.png`        |
+| En-tête, variante intérieur | `header-interieur-mobile.png` | `header-interieur-ordinateur.png`      |
 
-Les captures de gabarit sont en pleine page, à une densité de 1. Les captures d'état reproduisent l'écran visible (812 px de haut en mobile, 560 ou 800 px en ordinateur).
+Les captures de gabarit sont en pleine page, à une densité de 1. Les captures d'état reproduisent l'écran visible (812 px de haut en mobile, 560 ou 800 px en ordinateur). Les captures d'en-tête (ajoutées le 17/10/2026) se limitent à l'élément `header`, menus fermés (`?vue=accueil` et `?vue=texte`).
