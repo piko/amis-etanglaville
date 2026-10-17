@@ -1,13 +1,89 @@
 ---
+// En-tête du site : bandeau (ordinateur), logo, bouton « Menu » (mobile) et menu principal.
+// « accueil » : logo centré en grand et filet d'informations ; « interieur » : en-tête compact.
+import { getCollection } from 'astro:content';
+import Logo from './Logo.astro';
 import Menu from './Menu.astro';
-import { site } from '../lib/data';
+import { menu, site } from '../lib/data';
+
+interface Props {
+  variante?: 'accueil' | 'interieur';
+  /** URL de la page courante. */
+  actif: string;
+}
+
+const { variante = 'interieur', actif } = Astro.props;
+const accueil = variante === 'accueil';
+
+// Numéro du dernier bulletin (masqué tant que la collection est vide).
+const numeros = accueil
+  ? (await getCollection('bulletins')).map((b) => b.data.numero)
+  : [];
+const dernierBulletin = numeros.length ? Math.max(...numeros) : undefined;
 ---
 
-<header class="border-b border-pierre bg-white">
-  <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-4 py-4">
-    <a href="/" class="font-titre text-xl font-bold text-foret">
-      {site.nom}
-    </a>
-    <Menu />
+<header class="bg-papier">
+  <div class="hidden border-b border-filet text-sm md:block">
+    <div class="mx-auto flex max-w-site items-center justify-between gap-6 px-6 py-2">
+      <p>
+        Association loi 1901 · Comité de Défense et de Protection Stagnovillois
+      </p>
+      <ul class="flex gap-5 font-bold">
+        <li>
+          <a
+            href={site.adhesion}
+            class="text-foret underline-offset-4 hover:underline"
+          >
+            Adhérer
+          </a>
+        </li>
+        <li>
+          <a
+            href={`mailto:${site.email}`}
+            class="text-foret underline-offset-4 hover:underline"
+          >
+            Contact
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="mx-auto max-w-site px-4 md:px-6">
+    <div
+      class:list={[
+        'flex items-center justify-between gap-4 border-b border-encre py-3',
+        accueil ? 'lg:flex-col lg:border-b-0 lg:pt-8 lg:pb-0' : 'lg:py-4',
+      ]}
+    >
+      <Logo taille={accueil ? 'grand' : 'petit'} />
+      <button
+        type="button"
+        class="inline-flex min-h-11 items-center gap-2 border-2 border-encre px-3 font-bold hover:bg-encre hover:text-papier aria-expanded:bg-encre aria-expanded:text-papier lg:hidden"
+        aria-expanded="false"
+        aria-controls="menu-principal"
+        data-menu-toggle
+      >
+        <svg
+          viewBox="0 0 24 24"
+          class="size-5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+        Menu
+      </button>
+    </div>
+    {accueil && (
+      <p class="mt-6 hidden justify-between gap-6 border-t border-b-4 border-double border-encre py-2 text-xs font-bold tracking-surtitre uppercase lg:flex">
+        <span>Fondée en 1960</span>
+        <span>Entre ville et forêt</span>
+        {dernierBulletin && <span>Dernier bulletin : n°{dernierBulletin}</span>}
+      </p>
+    )}
+    <Menu items={menu} actif={actif} />
   </div>
 </header>
