@@ -10,7 +10,7 @@ const { Content } = accueil ? await render(accueil) : { Content: null };
 const rubriques = menu.filter((item) => item.link !== 'accueil');
 ---
 
-<Base description={accueil?.data.description}>
+<Base description={accueil?.data.description} variante="accueil">
   <section class="prose max-w-none prose-h1:text-foret">
     {Content && <Content />}
   </section>

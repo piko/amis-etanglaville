@@ -227,21 +227,21 @@ Principes : HTML sémantique, accessibilité (contrastes, focus visible, `alt`),
 
 ## 8. Design system
 
-Tous les choix visuels sont dans `src/styles/global.css` :
+Tous les choix visuels sont dans `src/styles/global.css`. Ses tokens `@theme` reprennent le canevas piste A « La Gazette du village » (validé le 17/10/2026) :
+
+- couleurs : `papier` (fond), `creme`, `pierre`, `filet`, `encre`, `nuit`, `gris`, `foret`, `foret-fonce`, `mousse`, `ocre`, `ocre-fonce`, `sepia` ;
+- typographies : `titre` (Newsreader) et `texte` (Public Sans) ;
+- mise en page : `max-w-site` (1200 px), `max-w-texte` (46rem), `tracking-surtitre`, ombres `shadow-carte` et `shadow-carte-survol`.
+
+Les polices sont déclarées dans `astro.config.mjs` (API Fonts d'Astro, fournisseur Google). Elles sont téléchargées au build et servies par le site : aucune requête vers Google côté visiteur. Newsreader inclut son axe optique (`opsz` de 6 à 72).
 
 ```css
-@import 'tailwindcss';
-
 @theme {
-  /* Couleurs (provisoires, à définir avec le bureau) */
-  --color-foret: #2f5d3a;
-  --color-mousse: #7a9a5b;
-  --color-pierre: #e8e2d6;
-  --color-encre: #1f2421;
-
-  /* Typographies */
-  --font-titre: 'Fraunces', Georgia, serif;
-  --font-texte: 'Inter', system-ui, sans-serif;
+  --color-papier: #f4f0e6;
+  --color-foret: #1f5b3f;
+  /* … */
+  --font-titre: var(--font-newsreader);
+  --font-texte: var(--font-public-sans);
 }
 ```
 

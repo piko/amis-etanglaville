@@ -1,22 +1,32 @@
 ---
 // Menu principal, alimenté par src/data/menu.yml.
-// Sous-menus : <details> (accessibles au clavier, sans JS). Mobile : bouton d'ouverture.
+// Mobile : panneau ouvert par le bouton « Menu » de l'en-tête ([data-menu-toggle]).
+// Sous-menus : <details> (accessibles au clavier sans JS) ; le script n'en laisse qu'un ouvert.
+import Bouton from './Bouton.astro';
 import MenuList from './MenuList.astro';
-import { menu } from '../lib/data';
+import { site, type MenuItem } from '../lib/data';
+
+interface Props {
+  items: MenuItem[];
+  /** URL de la page courante. */
+  actif: string;
+}
+
+const { items, actif } = Astro.props;
 ---
 
-<nav aria-label="Menu principal" class="w-full md:w-auto">
-  <button
-    type="button"
-    class="rounded border border-foret px-3 py-1 text-foret md:hidden"
-    aria-expanded="false"
-    aria-controls="menu-principal"
-    data-menu-toggle
-  >
-    Menu
-  </button>
-  <div id="menu-principal" class="hidden md:block" data-menu>
-    <MenuList items={menu} />
+<nav aria-label="Menu principal" class="lg:border-b lg:border-filet">
+  <div id="menu-principal" class="hidden lg:block" data-menu>
+    <MenuList items={items} actif={actif} />
+    <p class="flex flex-wrap gap-3 py-4 lg:hidden">
+      <Bouton variante="primaire" href={site.adhesion} libelle="Adhérer" />
+      <a
+        href={`mailto:${site.email}`}
+        class="inline-flex min-h-12 items-center font-bold text-foret underline underline-offset-4 hover:text-foret-fonce"
+      >
+        Nous écrire
+      </a>
+    </p>
   </div>
 </nav>
 
@@ -24,9 +34,42 @@ import { menu } from '../lib/data';
   const bouton =
     document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
   const menu = document.querySelector<HTMLElement>('[data-menu]');
+  const sousMenus = [
+    ...document.querySelectorAll<HTMLDetailsElement>('details[data-sous-menu]'),
+  ];
+  const rubriqueActive = sousMenus.find((d) =>
+    d.querySelector('summary[data-actif]'),
+  );
+
+  // Menu mobile : à l'ouverture, la rubrique de la page courante est dépliée.
   bouton?.addEventListener('click', () => {
-    const ouvert = bouton.getAttribute('aria-expanded') === 'true';
-    bouton.setAttribute('aria-expanded', String(!ouvert));
-    menu?.classList.toggle('hidden', ouvert);
+    const ouvrir = bouton.getAttribute('aria-expanded') !== 'true';
+    bouton.setAttribute('aria-expanded', String(ouvrir));
+    menu?.classList.toggle('hidden', !ouvrir);
+    if (ouvrir && rubriqueActive) rubriqueActive.open = true;
+  });
+
+  // Sous-menus : un seul ouvert à la fois, fermeture par Échap ou clic extérieur (ordinateur).
+  for (const d of sousMenus) {
+    d.addEventListener('toggle', () => {
+      if (d.open)
+        for (const autre of sousMenus) if (autre !== d) autre.open = false;
+    });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const ouvert = sousMenus.find((d) => d.open);
+    if (ouvert) {
+      ouvert.open = false;
+      ouvert.querySelector('summary')?.focus();
+    }
+  });
+  document.addEventListener('click', (e) => {
+    if (
+      window.matchMedia('(min-width: 64rem)').matches &&
+      !(e.target as Element).closest('details[data-sous-menu]')
+    ) {
+      for (const d of sousMenus) d.open = false;
+    }
   });
 </script>

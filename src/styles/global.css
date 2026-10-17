@@ -3,24 +3,42 @@
 
 /*
  * Design system : tous les choix visuels du site sont ici (voir ARCHITECTURE.md §8).
- * Valeurs PROVISOIRES, en attente du canevas de design. Les polices ne sont pas
- * encore chargées : les piles de repli s'appliquent.
+ * Valeurs du canevas piste A « La Gazette du village » (design/canevas.html, validé le 17/10/2026).
+ * Les polices sont déclarées dans astro.config.mjs et chargées par Base.astro.
  */
 @theme {
   /* Couleurs */
-  --color-foret: #2f5d3a;
-  --color-mousse: #7a9a5b;
-  --color-pierre: #e8e2d6;
-  --color-encre: #1f2421;
+  --color-papier: #f4f0e6; /* fond du site */
+  --color-creme: #fffdf7; /* couvertures de bulletins, champs, marie-louise des cartes */
+  --color-pierre: #eae3d3; /* sections alternées */
+  --color-filet: #d6cdb8; /* filets fins, bordures discrètes */
+  --color-encre: #1c2320; /* texte, filets forts */
+  --color-nuit: #161b18; /* fond de la visionneuse */
+  --color-gris: #4a4f49; /* légendes, métadonnées (7,4:1 sur papier) */
+  --color-foret: #1f5b3f; /* liens, boutons, bandeau adhésion */
+  --color-foret-fonce: #123a28; /* survol des boutons et des liens */
+  --color-mousse: #dfe6d6; /* fond de survol des menus */
+  --color-ocre: #a8772a; /* décor uniquement : étoiles du logo, guillemets */
+  --color-ocre-fonce: #7a561c; /* surtitres (5,4:1 sur papier) */
+  --color-sepia: #c4b48f; /* fond des images en cours de chargement */
 
-  /* Typographies */
-  --font-titre: 'Fraunces', Georgia, serif;
-  --font-texte: 'Inter', system-ui, sans-serif;
+  /* Typographies (variables générées par l'API Fonts d'Astro, avec leurs polices de repli) */
+  --font-titre: var(--font-newsreader);
+  --font-texte: var(--font-public-sans);
+
+  /* Mise en page */
+  --container-site: 75rem; /* largeur maximale du site (1200 px) */
+  --container-texte: 46rem; /* longueur de ligne du texte courant (70 caractères environ) */
+  --tracking-surtitre: 0.12em;
+
+  /* Ombres « papier » des cartes */
+  --shadow-carte: 4px 4px 0 var(--color-filet);
+  --shadow-carte-survol: 6px 6px 0 var(--color-foret);
 }
 
 @layer base {
   html {
-    @apply bg-white font-texte text-encre;
+    @apply bg-papier font-texte text-encre;
   }
 
   h1,
@@ -30,6 +48,6 @@
   }
 
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-foret;
+    @apply outline-3 outline-offset-2 outline-foret;
   }
 }

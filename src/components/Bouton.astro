@@ -1,0 +1,26 @@
+---
+// Bouton-lien. « clair » et « contour-clair » sont prévus pour les fonds forêt (bandeau d'adhésion).
+interface Props {
+  variante?: 'primaire' | 'secondaire' | 'clair' | 'contour-clair';
+  href: string;
+  libelle: string;
+}
+
+const { variante = 'primaire', href, libelle } = Astro.props;
+
+// Classes écrites en entier pour que Tailwind les détecte.
+const classes = {
+  primaire:
+    'inline-flex min-h-12 items-center justify-center bg-foret px-6 font-bold text-papier hover:bg-foret-fonce',
+  secondaire:
+    'inline-flex min-h-12 items-center justify-center border-2 border-encre px-6 font-bold text-encre hover:bg-encre hover:text-papier',
+  clair:
+    'inline-flex min-h-12 items-center justify-center bg-papier px-6 font-bold text-foret hover:bg-creme hover:underline focus-visible:outline-papier',
+  'contour-clair':
+    'inline-flex min-h-12 items-center justify-center border-2 border-papier px-6 font-bold text-papier hover:bg-papier hover:text-foret focus-visible:outline-papier',
+};
+---
+
+<a href={href} class={classes[variante]}>
+  {libelle}
+</a>

@@ -1,52 +1,84 @@
 ---
-// Liste récursive des entrées du menu (jusqu'à 3 niveaux dans menu.yml).
-// Une entrée avec sous-menu s'ouvre dans un <details> : panneau flottant sur bureau,
-// dépliage en place sur mobile et dans les niveaux inférieurs.
+// Entrées du menu principal (menu.yml), sur deux niveaux.
+// Une rubrique avec sous-menu s'ouvre dans un <details> : panneau flottant sur ordinateur,
+// dépliage en place sur mobile. Les niveaux plus profonds sont remis à plat dans le sous-menu.
 import { hrefFor, type MenuItem } from '../lib/data';
 
 interface Props {
   items: MenuItem[];
-  niveau?: number;
+  /** URL de la page courante. */
+  actif: string;
 }
 
-const { items, niveau = 0 } = Astro.props;
-const courant = Astro.url.pathname;
+const { items, actif } = Astro.props;
+
+const avecSlash = (chemin: string) =>
+  chemin.endsWith('/') ? chemin : `${chemin}/`;
+const courant = avecSlash(actif);
+const estActif = (link: string) => avecSlash(hrefFor(link)) === courant;
+const aplatir = (entrees: MenuItem[]): MenuItem[] =>
+  entrees.flatMap((e) => [e, ...aplatir(e.children ?? [])]);
 ---
 
-<ul
-  class:list={[
-    'flex flex-col gap-2',
-    niveau === 0 && 'mt-3 md:mt-0 md:flex-row md:gap-6',
-  ]}
->
-  {items.map((item) => {
-    const href = hrefFor(item.link);
-    const actif = href === courant ? 'page' : undefined;
-    return (
-      <li class="relative">
-        {item.children?.length ? (
-          <details>
-            <summary class="cursor-pointer hover:text-foret">
-              {item.title}
-            </summary>
-            <div
-              class:list={[
-                'mt-2 flex flex-col gap-2 pl-4',
-                niveau === 0 &&
-                  'md:absolute md:z-10 md:w-64 md:border md:border-pierre md:bg-white md:p-3 md:shadow',
-              ]}
-            >
-              <a href={href} aria-current={actif} class="hover:text-foret">
-                {item.title} (présentation)
-              </a>
-              <Astro.self items={item.children} niveau={niveau + 1} />
-            </div>
-          </details>
-        ) : (
-          <a href={href} aria-current={actif} class="hover:text-foret">
+<ul class="flex flex-col py-2 lg:flex-row lg:flex-wrap lg:justify-center lg:gap-x-8 lg:py-0">
+  {items.map((item, i) => {
+    const enfants = aplatir(item.children ?? []);
+    if (!enfants.length) {
+      return (
+        <li>
+          <a
+            href={hrefFor(item.link)}
+            aria-current={estActif(item.link) ? 'page' : undefined}
+            class="flex min-h-12 items-center border-b border-filet font-bold hover:text-foret aria-[current=page]:text-foret lg:min-h-11 lg:border-b-3 lg:border-transparent lg:text-sm lg:tracking-wider lg:uppercase lg:hover:border-foret lg:aria-[current=page]:border-foret"
+          >
             {item.title}
           </a>
-        )}
+        </li>
+      );
+    }
+    const rubriqueActive =
+      estActif(item.link) || enfants.some((e) => estActif(e.link));
+    const dernier = i === items.length - 1;
+    return (
+      <li class="relative">
+        <details class="group/sm" data-sous-menu>
+          <summary
+            data-actif={rubriqueActive ? '' : undefined}
+            class="flex min-h-12 cursor-pointer list-none items-center justify-between gap-2 border-b border-filet font-bold hover:text-foret data-actif:text-foret lg:min-h-11 lg:border-b-3 lg:border-transparent lg:text-sm lg:tracking-wider lg:uppercase lg:hover:border-foret lg:data-actif:border-foret [&::-webkit-details-marker]:hidden"
+          >
+            {item.title}
+            <svg
+              viewBox="0 0 24 24"
+              class="size-4 shrink-0 transition-transform group-open/sm:rotate-180"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </summary>
+          <ul
+            class:list={[
+              'flex flex-col border-b border-filet py-2 pl-4 lg:absolute lg:top-full lg:z-20 lg:mt-1 lg:w-72 lg:border lg:border-encre lg:bg-papier lg:p-2 lg:shadow-carte',
+              dernier ? 'lg:right-0' : 'lg:left-0',
+            ]}
+          >
+            {enfants.map((enfant) => (
+              <li>
+                <a
+                  href={hrefFor(enfant.link)}
+                  aria-current={estActif(enfant.link) ? 'page' : undefined}
+                  class="flex min-h-11 items-center px-2 hover:bg-mousse hover:text-foret aria-[current=page]:font-bold aria-[current=page]:text-foret"
+                >
+                  {enfant.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </details>
       </li>
     );
   })}
