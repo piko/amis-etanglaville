@@ -6,9 +6,9 @@
 #   1. realisation  : « @claude » (issue ouverte ou commentaire) → Claude travaille sur une branche
 #                     contenu/N-titre partie de recette. En cas de doute, il pose sa question et
 #                     s'arrête (travail_termine=false) : la réponse en commentaire « @claude » relance.
-#   2. vers-recette : PR de cette branche vers recette, CI, fusion en merge commit, puis attente du
-#                     déploiement Vercel (.github/scripts/vers-recette.sh). Le lien direct vers les
-#                     pages concernées est alors donné dans l'issue.
+#   2. vers-recette : CI sur cette branche, fusion dans recette (merge commit, sans PR intermédiaire),
+#                     puis attente du déploiement Vercel (.github/scripts/vers-recette.sh). Le lien
+#                     direct vers les pages concernées est alors donné dans l'issue.
 # Dans une PR (relecture), Claude agit directement : job « pr ».
 #
 # Syntaxe de claude_args (anthropics/claude-code-action v1) : arguments shell ; une ligne qui
@@ -83,9 +83,8 @@ jobs:
             --append-system-prompt "${{ env.CONSIGNE_COMMUNE }}
             RÉALISATION : réalise directement la demande décrite dans l'issue et dans les commentaires qui
             suivent. Tu pars de la branche recette (préproduction relue par le bureau) : ne vise jamais main
-            et n'ouvre pas de PR toi-même. À la fin, le workflow ouvre une PR vers recette, l'intègre
-            automatiquement si la CI est verte et donne lui-même dans l'issue le lien direct vers les pages,
-            une fois en ligne. Brouillon : mets toujours draft: false, sauf si la demande parle
+            et n'ouvre pas de PR toi-même. À la fin, le workflow intègre ta branche à la recette si la CI
+            est verte et donne lui-même dans l'issue le lien direct vers les pages, une fois en ligne. Brouillon : mets toujours draft: false, sauf si la demande parle
             explicitement de brouillon. Actualité : respecte le schéma actualites de src/content.config.ts
             et le nom de fichier AAAA-MM-JJ-slug.md (date de l'événement). En cas de doute (date, texte
             exact, emplacement, image manquante…), ne suppose rien : ne pousse aucune modification, pose
@@ -101,8 +100,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30 # CI (≈ 5 min) puis déploiement Vercel (10 min au plus)
     permissions:
-      contents: write
-      pull-requests: write
+      contents: write # fusionner dans recette et supprimer la branche
       issues: write
       actions: write # lancer la CI (workflow_dispatch) et suivre son exécution
       statuses: read # attendre le déploiement Vercel de la recette (statut de commit « Vercel »)
@@ -110,7 +108,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           sparse-checkout: .github/scripts
-      - name: PR vers recette, CI, fusion, puis lien vers la préproduction
+      - name: CI, fusion dans recette, puis lien vers la préproduction
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}

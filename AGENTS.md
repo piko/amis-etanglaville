@@ -38,7 +38,7 @@ src/components/           Header, Menu, MenuList, Footer…
 src/pages/                Routes : index, [...slug] (pages fixes), bulletins, actualites, cartes-postales-historiques, recherche, plan-du-site, 404
 public/medias/AAAA/MM/    Images et PDF (mêmes chemins que WordPress), servis en /medias/…
 scripts/                  Import WordPress, redirections, garde-fou contenu (verifier-contenu.mjs)
-.github/workflows/        CI, @claude (claude.yml : réalisation, PR vers recette, lien dans l'issue), rebuild quotidien
+.github/workflows/        CI, @claude (claude.yml : réalisation, fusion dans recette, lien dans l'issue), rebuild quotidien
 _import/                  Export brut de l'ancien site (source de la migration, ne pas modifier)
 .pages.yml                Configuration Pages CMS
 vercel.json               Redirections 301
@@ -79,14 +79,14 @@ Les bénévoles modifient le contenu sur la branche `recette` via Pages CMS. Une
 Demandes confiées à `@claude` dans une issue (`.github/workflows/claude.yml`) :
 
 1. **Réalisation** : « @claude » dans l'issue ou un commentaire. Claude part de `recette` sur une branche `contenu/<n° issue>-<début du titre>` (ex. `contenu/12-ajouter-la-brocante-2027-aux`). En cas de doute, il pose sa question et s'arrête ; la réponse, en commentaire « @claude », le relance.
-2. **Arrivée sur la recette** : si Claude a terminé, le workflow ouvre une PR `contenu/…` → `recette`, lance la CI et fusionne en merge commit dès qu'elle est verte. Conflit, CI rouge ou incident : la PR reste ouverte et c'est signalé dans l'issue.
+2. **Arrivée sur la recette** : si Claude a terminé, le workflow lance la CI sur la branche `contenu/…` et, dès qu'elle est verte, la fusionne dans `recette` (merge commit « Contenu : … (#n° issue) »), sans PR intermédiaire. Conflit, CI rouge ou incident : la branche est conservée et c'est signalé dans l'issue ; un membre du bureau peut alors ouvrir la PR à la main.
 3. **Lien de relecture** : le workflow attend le déploiement Vercel de la recette, puis donne dans l'issue le lien direct vers chaque page concernée (ex. `/actualites/2026-10-30-brocante/`) sur la préproduction fixe https://amis-etanglaville-git-recette-amis-etang-la-ville.vercel.app.
 
 `@claude` ajouté en modifiant la description d'une issue ne déclenche rien (seule la création est écoutée) : l'écrire dans un commentaire. Dans une PR, `@claude` agit directement sur la branche de la PR.
 
 Règles de fusion :
 
-- PR `contenu/…` → `recette` (ouverte par le workflow `@claude`) : **merge commit automatique** une fois la CI verte, puis branche supprimée.
+- Branche `contenu/…` (workflow `@claude`) → `recette` : **merge commit automatique, sans PR**, une fois la CI verte, puis branche supprimée.
 - PR d'une branche de travail (`feat/…`, `claude/…`…) → `main` : **Squash and merge**, puis supprimer la branche.
 - PR `recette` → `main` : **Create a merge commit** (jamais de squash, pour que `recette` et `main` ne divergent pas) et **ne pas supprimer `recette`**.
 - Après une fusion dans `main`, resynchroniser la recette : `git switch recette && git pull && git merge main && git push`.
