@@ -1,6 +1,18 @@
 # @claude dans une issue ou une PR (réservé aux membres ayant l'accès en écriture).
 # Prérequis : app GitHub Claude installée sur le dépôt + secret CLAUDE_CODE_OAUTH_TOKEN
 # (claude setup-token). Phase 2 : remplacer par ANTHROPIC_API_KEY de l'association.
+#
+# Circuit d'une issue :
+#   1. realisation  : « @claude » (issue ouverte ou commentaire) → Claude travaille sur une branche
+#                     contenu/N-titre partie de recette. En cas de doute, il pose sa question et
+#                     s'arrête (travail_termine=false) : la réponse en commentaire « @claude » relance.
+#   2. vers-recette : PR de cette branche vers recette, CI, fusion en merge commit, puis attente du
+#                     déploiement Vercel (.github/scripts/vers-recette.sh). Le lien direct vers les
+#                     pages concernées est alors donné dans l'issue.
+# Dans une PR (relecture), Claude agit directement : job « pr ».
+#
+# Syntaxe de claude_args (anthropics/claude-code-action v1) : arguments shell ; une ligne qui
+# commence par # est ignorée. Pas de guillemet droit (") ni de $ dans les consignes.
 name: Claude
 
 on:
@@ -10,16 +22,107 @@ on:
     types: [created]
   pull_request_review:
     types: [submitted]
+  # Seulement « opened » : l'action ne réagit pas à « edited », ni à « assigned » sans assignee_trigger.
+  # @claude ajouté après coup va donc dans un commentaire (voir le gabarit d'issue).
   issues:
-    types: [opened, assigned]
+    types: [opened]
+
+env:
+  PREPROD_RECETTE: https://amis-etanglaville-git-recette-amis-etang-la-ville.vercel.app
+  CONSIGNE_COMMUNE: >-
+    Tu travailles sur le site de l'association Les Amis de L'Étang-la-Ville. Les personnes qui
+    t'écrivent sont des bénévoles non techniciens : réponds en français, en langage simple, sans
+    jargon (pas de commit, branche, Markdown, YAML, front matter…). Respecte AGENTS.md : aucun style
+    dans le contenu, médias dans public/medias/AAAA/MM/ référencés en /medias/AAAA/MM/fichier
+    (jamais d'adresse raw.githubusercontent.com), texte alternatif pour chaque image porteuse de sens.
 
 jobs:
-  claude:
+  realisation:
     if: |
-      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
-      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
-      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
-      (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
+      github.event.sender.type != 'Bot' && (
+        (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude'))) ||
+        (github.event_name == 'issue_comment' && !github.event.issue.pull_request && contains(github.event.comment.body, '@claude'))
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    concurrency:
+      group: claude-issue-${{ github.event.issue.number }}
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+    outputs:
+      branche: ${{ steps.claude.outputs.branch_name }}
+      resultat: ${{ steps.claude.outputs.structured_output }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+      - uses: ./.github/actions/installer
+      - id: claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          display_report: true
+          base_branch: recette
+          branch_prefix: 'contenu/'
+          branch_name_template: '{{prefix}}{{entityNumber}}-{{description}}'
+          claude_args: |
+            --model sonnet
+            --max-turns 30
+            --allowedTools "Bash(npm run build),Bash(npm run check),Bash(npm run format),Bash(npm run redirects)"
+            --json-schema '{"type":"object","properties":{"travail_termine":{"type":"boolean","description":"true si la demande est entièrement réalisée, vérifiée et poussée ; false si tu t es arrêté pour poser une question ou si tu n as pas pu finir"}},"required":["travail_termine"]}'
+            --append-system-prompt "${{ env.CONSIGNE_COMMUNE }}
+            RÉALISATION : réalise directement la demande décrite dans l'issue et dans les commentaires qui
+            suivent. Tu pars de la branche recette (préproduction relue par le bureau) : ne vise jamais main
+            et n'ouvre pas de PR toi-même. À la fin, le workflow ouvre une PR vers recette, l'intègre
+            automatiquement si la CI est verte et donne lui-même dans l'issue le lien direct vers les pages,
+            une fois en ligne. Brouillon : mets toujours draft: false, sauf si la demande parle
+            explicitement de brouillon. Actualité : respecte le schéma actualites de src/content.config.ts
+            et le nom de fichier AAAA-MM-JJ-slug.md (date de l'événement). En cas de doute (date, texte
+            exact, emplacement, image manquante…), ne suppose rien : ne pousse aucune modification, pose
+            tes questions en liste numérotée, demande d'y répondre dans un commentaire commençant par
+            « @claude », et réponds travail_termine=false. Avant de terminer, npm run check et npm run
+            build doivent passer. Dans ton commentaire final, résume en une ou deux phrases ce que tu as
+            fait et annonce que le lien pour relire arrivera dans un prochain message, d'ici une dizaine
+            de minutes. Ne donne pas toi-même d'adresse de préproduction."
+
+  vers-recette:
+    needs: realisation
+    if: needs.realisation.outputs.branche != '' && fromJSON(needs.realisation.outputs.resultat || '{}').travail_termine == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 30 # CI (≈ 5 min) puis déploiement Vercel (10 min au plus)
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      actions: write # lancer la CI (workflow_dispatch) et suivre son exécution
+      deployments: read # attendre le déploiement Vercel de la recette
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          sparse-checkout: .github/scripts
+      - name: PR vers recette, CI, fusion, puis lien vers la préproduction
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          BRANCHE: ${{ needs.realisation.outputs.branche }}
+          BASE: recette
+          ISSUE: ${{ github.event.issue.number }}
+          TITRE_ISSUE: ${{ github.event.issue.title }}
+          PREPROD: ${{ env.PREPROD_RECETTE }}
+          DETAIL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: bash .github/scripts/vers-recette.sh
+
+  pr:
+    if: |
+      github.event.sender.type != 'Bot' && (
+        (github.event_name == 'issue_comment' && github.event.issue.pull_request && contains(github.event.comment.body, '@claude')) ||
+        (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
+        (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude'))
+      )
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -32,14 +135,16 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 1
-      - uses: actions/setup-node@v5
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-      - run: npm ci
+      - uses: ./.github/actions/installer
       - uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          display_report: true
           claude_args: |
+            --model sonnet
             --max-turns 30
             --allowedTools "Bash(npm run build),Bash(npm run check),Bash(npm run format),Bash(npm run redirects)"
+            --append-system-prompt "${{ env.CONSIGNE_COMMUNE }}
+            RELECTURE D'UNE PR : applique directement la demande sur la branche de la PR, sans changer la
+            branche visée. S'il y a la moindre ambiguïté, ne modifie rien : pose la question dans ton
+            commentaire et arrête-toi. Avant de terminer, npm run check et npm run build doivent passer."
