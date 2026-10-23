@@ -74,7 +74,7 @@ vercel.json               Redirections 301
 ## Circuit de publication
 
 Branche puis PR. Vercel publie une préproduction (lien dans la PR). Le bureau relit, puis la PR est fusionnée dans `main` et la production est mise à jour.
-Les bénévoles modifient le contenu sur la branche `recette` via Pages CMS. Une PR `recette` → `main` regroupe leurs modifications.
+Les bénévoles modifient le contenu sur la branche `recette` via Pages CMS. Une PR **« Mise en production »** `recette` → `main` regroupe les modifications. Elle est ouverte, mise à jour ou fermée automatiquement (`.github/workflows/mise-en-production.yml`), et liste les pages concernées avec leur lien sur la préproduction. Le bureau relit, puis la fusionne.
 
 Demandes confiées à `@claude` dans une issue (`.github/workflows/claude.yml`) :
 
@@ -89,4 +89,4 @@ Règles de fusion :
 - Branche `contenu/…` (workflow `@claude`) → `recette` : **merge commit automatique, sans PR**, une fois la CI verte, puis branche supprimée.
 - PR d'une branche de travail (`feat/…`, `claude/…`…) → `main` : **Squash and merge**, puis supprimer la branche.
 - PR `recette` → `main` : **Create a merge commit** (jamais de squash, pour que `recette` et `main` ne divergent pas) et **ne pas supprimer `recette`**.
-- Après une fusion dans `main`, resynchroniser la recette : `git switch recette && git pull && git merge main && git push`.
+- Après une fusion dans `main`, la recette est **resynchronisée automatiquement** (`mise-en-production.yml`). En cas de conflit, le workflow échoue et il faut le faire à la main : `git switch recette && git pull && git merge main && git push`. Une mise en production fusionnée par erreur en squash est signalée dans sa PR.

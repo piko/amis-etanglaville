@@ -1,0 +1,37 @@
+# PR « Mise en production » (recette → main) tenue à jour automatiquement, et resynchronisation de la
+# recette après chaque arrivée sur main (.github/scripts/mise-en-production.sh). Le bureau n'a plus qu'à
+# relire la préproduction, puis fusionner la PR en « Create a merge commit ».
+# Prérequis : Settings > Actions > General, « Allow GitHub Actions to create and approve pull requests ».
+name: Mise en production
+
+on:
+  push:
+    branches: [recette, main]
+  # Lancée par vers-recette.sh après une fusion dans recette : un push fait avec le GITHUB_TOKEN
+  # ne déclenche pas « push », seul workflow_dispatch est permis.
+  workflow_dispatch:
+
+concurrency:
+  group: mise-en-production
+  cancel-in-progress: false
+
+jobs:
+  pr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write # resynchroniser recette
+      pull-requests: write # ouvrir, mettre à jour, commenter ou fermer la PR
+      actions: write # lancer la CI sur recette et supprimer les exécutions en attente d'approbation
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          sparse-checkout: .github/scripts
+      - name: Resynchroniser la recette et tenir à jour la PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          REF: ${{ github.ref_name }}
+          SHA: ${{ github.sha }}
+          PREPROD: https://amis-etanglaville-git-recette-amis-etang-la-ville.vercel.app
+        run: bash .github/scripts/mise-en-production.sh
