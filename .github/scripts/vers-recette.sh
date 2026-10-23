@@ -37,19 +37,7 @@ if [ "$avance" = "0" ]; then
 fi
 
 # 2. Pages concernées, avec leur adresse sur la préproduction de la recette
-pages=$(gh api "repos/$GH_REPO/compare/$BASE...$BRANCHE" --jq '.files[].filename' |
-  while read -r f; do
-    case "$f" in
-      (src/content/pages/*.md) s=${f#src/content/pages/}; echo "- [/${s%.md}/]($PREPROD/${s%.md}/)" ;;
-      (src/content/actualites/*.md) s=${f#src/content/actualites/}; echo "- [/actualites/${s%.md}/]($PREPROD/actualites/${s%.md}/)" ;;
-      (src/content/bulletins/*) echo "- [/bulletins/]($PREPROD/bulletins/)" ;;
-      (src/content/galeries/*) echo "- [/cartes-postales-historiques/]($PREPROD/cartes-postales-historiques/)" ;;
-      (src/data/accueil.yml) echo "- [Accueil]($PREPROD/)" ;;
-      (src/data/menu.yml | src/data/site.yml) echo "- Menu ou pied de page (toutes les pages) : [accueil]($PREPROD/)" ;;
-      (public/medias/*) ;; # images : visibles dans les pages ci-dessus
-      (*) echo "- Fichier technique : \`$f\`" ;;
-    esac
-  done | sort -u)
+pages=$(bash "$(dirname "$0")/pages-concernees.sh" "$BASE" "$BRANCHE" "$PREPROD")
 reprendre="un membre du bureau doit la reprendre (elle est conservée sur la branche \`$BRANCHE\`, détail technique : $DETAIL)"
 
 # 3. CI sur la branche, puis attente de son résultat (celle du commit de tête, pas d'un essai précédent)
@@ -95,6 +83,9 @@ if [ -z "$fusion" ]; then
 fi
 gh api -X DELETE "repos/$GH_REPO/git/refs/heads/$BRANCHE" >/dev/null ||
   echo "::warning::Branche $BRANCHE non supprimée."
+# PR « Mise en production » : la fusion faite avec le GITHUB_TOKEN ne déclenche pas son workflow.
+gh workflow run mise-en-production.yml --ref "$BASE" ||
+  echo "::warning::PR « Mise en production » non mise à jour."
 
 # Le commentaire de Claude contient, ajoutés par l'action (sans option pour les retirer), un lien vers
 # la branche, désormais supprimée, et un lien « Create PR ➔ » trompeur pour un bénévole : on les retire.
