@@ -115,15 +115,15 @@ if ! gh run watch "$run" --exit-status --interval 15 >/dev/null; then
 fi
 gh pr merge "$pr" --merge --delete-branch
 
-# 7. Attendre que Vercel ait déployé la recette (déploiement GitHub créé par Vercel sur le commit
-# de fusion), pour ne donner le lien qu'une fois la page réellement visible. 10 minutes au plus.
+# 7. Attendre que Vercel ait déployé la recette, pour ne donner le lien qu'une fois la page réellement
+# visible. Vercel le signale par un statut de commit « Vercel » sur le commit de fusion (pas par un
+# déploiement GitHub). 10 minutes au plus.
 fusion=$(gh pr view "$pr" --json mergeCommit --jq .mergeCommit.oid)
 deploye=""
 for _ in $(seq 1 40); do
   sleep 15
-  id=$(gh api "repos/$GH_REPO/deployments?sha=$fusion" --jq '.[0].id // empty')
-  [ -z "$id" ] && continue
-  etat=$(gh api "repos/$GH_REPO/deployments/$id/statuses" --jq '.[0].state // empty')
+  etat=$(gh api "repos/$GH_REPO/commits/$fusion/statuses" \
+    --jq '[.[] | select(.context == "Vercel")][0].state // empty')
   case "$etat" in
     success) deploye=oui; break ;;
     failure | error) break ;;
