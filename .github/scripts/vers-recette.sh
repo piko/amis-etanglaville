@@ -96,6 +96,17 @@ fi
 gh api -X DELETE "repos/$GH_REPO/git/refs/heads/$BRANCHE" >/dev/null ||
   echo "::warning::Branche $BRANCHE non supprimée."
 
+# Le commentaire de Claude contient, ajoutés par l'action (sans option pour les retirer), un lien vers
+# la branche, désormais supprimée, et un lien « Create PR ➔ » trompeur pour un bénévole : on les retire.
+# shellcheck disable=SC2016 # $ENV et les ` sont pour jq, pas pour le shell
+for id in $(gh api "repos/$GH_REPO/issues/$ISSUE/comments" --paginate \
+  --jq '.[] | select(.user.login == "claude[bot]" and (.body | contains("/tree/" + $ENV.BRANCHE))) | .id'); do
+  corps=$(gh api "repos/$GH_REPO/issues/comments/$id" --jq \
+    '.body | gsub(" • \\[`[^`]*`\\]\\([^)]*/tree/[^)]*\\)"; "") | gsub(" • \\[Create PR ➔\\]\\([^\n]*"; "")')
+  gh api -X PATCH "repos/$GH_REPO/issues/comments/$id" -f body="$corps" >/dev/null ||
+    echo "::warning::Commentaire $id non nettoyé."
+done
+
 # 5. Attendre que Vercel ait déployé la recette, pour ne donner le lien qu'une fois la page réellement
 # visible. Vercel le signale par un statut de commit « Vercel » sur le commit de fusion (pas par un
 # déploiement GitHub). 10 minutes au plus.
