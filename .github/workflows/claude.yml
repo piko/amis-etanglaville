@@ -105,7 +105,7 @@ jobs:
       pull-requests: write
       issues: write
       actions: write # lancer la CI (workflow_dispatch) et suivre son exécution
-      deployments: read # attendre le déploiement Vercel de la recette
+      statuses: read # attendre le déploiement Vercel de la recette (statut de commit « Vercel »)
     steps:
       - uses: actions/checkout@v5
         with:
