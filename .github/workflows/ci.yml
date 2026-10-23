@@ -4,6 +4,9 @@ on:
   pull_request:
   push:
     branches: [main]
+  # Lancée par claude.yml sur les branches contenu/… : une PR ouverte avec le GITHUB_TOKEN
+  # ne déclenche pas pull_request, seul workflow_dispatch est permis.
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -13,16 +16,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: write # signaler un échec dans l'issue d'origine (branches contenu/…)
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-      - run: npm ci
+      - uses: ./.github/actions/installer
       - name: Formatage (Prettier)
         run: npm run format:check
       - name: Types et contenu (astro check)
         run: npm run check
       - name: Build (valide les schémas de contenu)
         run: npm run build
+      - name: Signaler l'échec dans l'issue (branches contenu/…)
+        if: failure() && startsWith(github.head_ref || github.ref_name, 'contenu/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          BRANCHE: ${{ github.head_ref || github.ref_name }}
+          DETAIL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          # contenu/6-titre-de-l-issue ou contenu/issue-6-AAAAMMJJ-HHMM : numéro de l'issue
+          n=${BRANCHE#contenu/}; n=${n#issue-}; n=${n%%-*}
+          case "$n" in '' | *[!0-9]*) echo "Pas de numéro d'issue dans $BRANCHE"; exit 0 ;; esac
+          pr=$(gh pr list --head "$BRANCHE" --json number --jq '.[0].number // empty')
+          gh issue comment "$n" --body "⚠️ Les vérifications automatiques ont échoué sur la modification${pr:+ (#$pr)}. Elle n'a **pas** été intégrée à la recette et rien n'est publié. Un membre du bureau doit regarder (détail technique : $DETAIL)."

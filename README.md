@@ -24,11 +24,12 @@ npm run check && npm run build
 
 ## Branches et publication
 
-| Branche                       | Rôle                                                    | Déploiement Vercel                 |
-| ----------------------------- | ------------------------------------------------------- | ---------------------------------- |
-| `main`                        | Production (aucun push direct, merge par PR uniquement) | Production                         |
-| `recette`                     | Modifications de contenu des bénévoles (Pages CMS)      | Préproduction stable de la branche |
-| `feat/*`, `fix/*`, `claude/*` | Évolutions                                              | Préproduction par PR               |
+| Branche                       | Rôle                                                     | Déploiement Vercel                 |
+| ----------------------------- | -------------------------------------------------------- | ---------------------------------- |
+| `main`                        | Production (aucun push direct, merge par PR uniquement)  | Production                         |
+| `recette`                     | Modifications de contenu des bénévoles (Pages CMS)       | Préproduction stable de la branche |
+| `contenu/*`                   | Demandes confiées à `@claude`, fusionnées dans `recette` | (vues sur la recette)              |
+| `feat/*`, `fix/*`, `claude/*` | Évolutions                                               | Préproduction par PR               |
 
 Circuit :
 
@@ -42,7 +43,7 @@ Fusion : _Squash and merge_ pour les branches de travail ; _Create a merge commi
 ## Modifier le contenu
 
 - **Bénévoles** : [Pages CMS](https://app.pagescms.org), sur la branche `recette`.
-- **Avec Claude** : dans VS Code (Claude Code), ou en ouvrant une issue « Demande de modification » sur GitHub avec `@claude`.
+- **Avec Claude** : dans VS Code (Claude Code), ou en ouvrant une issue « Demande de modification » sur GitHub avec `@claude`. Claude réalise la modification (ou pose ses questions s'il a un doute), qui arrive automatiquement sur la recette. Le lien direct pour la relire est donné dans l'issue (circuit détaillé dans [AGENTS.md](AGENTS.md)).
 - **À la main** :
   - pages : `src/content/pages/` (une page = un fichier, son nom donne l'URL) ;
   - bulletins : `src/content/bulletins/` (un fichier par numéro) ;
