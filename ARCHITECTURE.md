@@ -347,6 +347,14 @@ Circuit :
 3. Le bureau relit sur la préproduction.
 4. La PR est fusionnée dans `main`, et la production est mise à jour automatiquement.
 
+Pour la recette, la PR `recette` → `main` (« Mise en production ») est tenue à jour par `.github/workflows/mise-en-production.yml` (`.github/scripts/mise-en-production.sh`). Il se déclenche à chaque push sur `recette` ou `main`, et par `workflow_dispatch` depuis `vers-recette.sh`, car les fusions faites avec le `GITHUB_TOKEN` ne déclenchent pas `push`. Ce workflow :
+
+- ouvre la PR quand la recette contient des modifications à publier, met à jour sa description (pages concernées avec leur lien sur la préproduction, issues d'origine, nombre de modifications Pages CMS), et la ferme quand il n'y a plus rien à publier ;
+- lance la CI sur `recette` pour que la PR porte une vérification, puis supprime les exécutions `pull_request` en attente d'approbation que crée une PR ouverte avec le `GITHUB_TOKEN` ;
+- après chaque arrivée sur `main`, resynchronise `recette` (avance rapide, sinon merge commit), et signale dans sa PR une mise en production fusionnée en squash.
+
+Prérequis : « Allow GitHub Actions to create and approve pull requests » (Settings > Actions > General).
+
 Configuration Vercel :
 
 - framework « Astro », commande `npm run build`, dossier `dist` ;

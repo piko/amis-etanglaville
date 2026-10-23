@@ -38,7 +38,7 @@ Circuit :
 3. Le bureau relit sur la préproduction.
 4. Merge dans `main` : la production est mise à jour.
 
-Fusion : _Squash and merge_ pour les branches de travail ; _Create a merge commit_ pour `recette` → `main`, sans supprimer `recette` (détails dans [AGENTS.md](AGENTS.md)).
+Fusion : _Squash and merge_ pour les branches de travail ; _Create a merge commit_ pour `recette` → `main`, sans supprimer `recette` (détails dans [AGENTS.md](AGENTS.md)). La PR « Mise en production » `recette` → `main` est ouverte et tenue à jour automatiquement, et la recette est resynchronisée après chaque fusion dans `main`.
 
 ## Modifier le contenu
 
