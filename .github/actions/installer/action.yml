@@ -1,5 +1,5 @@
-# Étapes communes à la CI et aux jobs Claude qui modifient le site : Node (version de .nvmrc,
-# cache npm) puis dépendances. À appeler après actions/checkout.
+# Installation pour la CI : Node (version de .nvmrc, cache npm) puis dépendances. À appeler après
+# actions/checkout. Pas dans claude.yml : voir le commentaire là-bas.
 name: Installer
 description: Node et dépendances du projet
 runs:
