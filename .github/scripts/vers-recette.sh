@@ -8,6 +8,9 @@
 # Jeton : GITHUB_TOKEN. Une PR créée avec ce jeton ne déclenche pas la CI (règle GitHub anti-boucle),
 # sauf workflow_dispatch : la CI est donc lancée explicitement sur la branche. Son résultat porte sur
 # le commit de tête de la PR et vaut donc comme vérification requise.
+# GitHub crée tout de même une exécution « pull_request » de la CI, en attente d'approbation et sans
+# job ; elle passe en échec à la fusion. Elle est supprimée à l'étape 8 pour ne pas laisser de croix
+# rouge sur la PR (https://docs.github.com/en/actions/concepts/security/github_token).
 #
 # Fusion : le script attend la CI et fusionne lui-même, puis attend le déploiement Vercel de la recette
 # avant de donner dans l'issue le lien direct vers les pages concernées.
@@ -128,6 +131,15 @@ for _ in $(seq 1 40); do
     success) deploye=oui; break ;;
     failure | error) break ;;
   esac
+done
+
+# 8. Supprimer l'exécution « pull_request » de la CI restée en attente d'approbation (voir l'en-tête).
+# Sans effet sur le résultat : en cas d'échec, elle reste simplement visible sur la PR.
+for id in $(gh run list --workflow ci.yml --branch "$BRANCHE" --event pull_request \
+  --json databaseId --jq '.[].databaseId'); do
+  gh run cancel "$id" >/dev/null 2>&1 || true
+  gh api -X DELETE "repos/$GH_REPO/actions/runs/$id" >/dev/null 2>&1 ||
+    echo "::warning::Exécution $id de la CI non supprimée."
 done
 
 liens=$(grep -v 'Fichier technique' <<<"$pages" || true)
