@@ -4,8 +4,8 @@ on:
   pull_request:
   push:
     branches: [main]
-  # Lancée par claude.yml sur les branches contenu/… : une PR ouverte avec le GITHUB_TOKEN
-  # ne déclenche pas pull_request, seul workflow_dispatch est permis.
+  # Lancée par claude.yml (vers-recette.sh) sur les branches contenu/…, qui n'ont pas de PR :
+  # le GITHUB_TOKEN ne peut déclencher que workflow_dispatch.
   workflow_dispatch:
 
 concurrency:
@@ -41,4 +41,4 @@ jobs:
           n=${BRANCHE#contenu/}; n=${n#issue-}; n=${n%%-*}
           case "$n" in '' | *[!0-9]*) echo "Pas de numéro d'issue dans $BRANCHE"; exit 0 ;; esac
           pr=$(gh pr list --head "$BRANCHE" --json number --jq '.[0].number // empty')
-          gh issue comment "$n" --body "⚠️ Les vérifications automatiques ont échoué sur la modification${pr:+ (#$pr)}. Elle n'a **pas** été intégrée à la recette et rien n'est publié. Un membre du bureau doit regarder (détail technique : $DETAIL)."
+          gh issue comment "$n" --body "⚠️ Les vérifications automatiques ont échoué sur la modification${pr:+ (#$pr)}. Elle n'a **pas** été intégrée à la recette et rien n'est publié. Un membre du bureau doit regarder (elle est conservée sur la branche \`$BRANCHE\`, détail technique : $DETAIL)."
