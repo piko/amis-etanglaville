@@ -20,8 +20,15 @@ jobs:
       contents: read
       pull-requests: read
       issues: write # signaler un échec dans l'issue d'origine (branches contenu/…)
+      statuses: write # statut de commit « CI » (voir la dernière étape)
     steps:
       - uses: actions/checkout@v5
+      - name: Statut de commit « CI » en cours (lancement par workflow_dispatch)
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DETAIL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: gh api -X POST "repos/$GITHUB_REPOSITORY/statuses/$GITHUB_SHA" -f state=pending -f context=CI -f description="Vérifications en cours" -f target_url="$DETAIL" >/dev/null
       - uses: ./.github/actions/installer
       - name: Formatage (Prettier)
         run: npm run format:check
@@ -42,3 +49,15 @@ jobs:
           case "$n" in '' | *[!0-9]*) echo "Pas de numéro d'issue dans $BRANCHE"; exit 0 ;; esac
           pr=$(gh pr list --head "$BRANCHE" --json number --jq '.[0].number // empty')
           gh issue comment "$n" --body "⚠️ Les vérifications automatiques ont échoué sur la modification${pr:+ (#$pr)}. Elle n'a **pas** été intégrée à la recette et rien n'est publié. Un membre du bureau doit regarder (elle est conservée sur la branche \`$BRANCHE\`, détail technique : $DETAIL)."
+      # Une exécution lancée par workflow_dispatch (vers-recette.sh, mise-en-production.sh) n'est pas
+      # rattachée aux PR : son résultat n'y apparaît pas. Un statut de commit, lui, s'affiche dans la
+      # PR « Mise en production » dont c'est le commit de tête.
+      - name: Statut de commit « CI » final (lancement par workflow_dispatch)
+        if: always() && github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ETAT: ${{ job.status }}
+          DETAIL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          case "$ETAT" in success) e=success; d="Vérifications passées" ;; *) e=failure; d="Vérifications en échec" ;; esac
+          gh api -X POST "repos/$GITHUB_REPOSITORY/statuses/$GITHUB_SHA" -f state="$e" -f context=CI -f description="$d" -f target_url="$DETAIL" >/dev/null

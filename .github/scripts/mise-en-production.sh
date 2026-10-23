@@ -60,9 +60,22 @@ if [ "$nb_fichiers" = 0 ]; then
 fi
 
 pages=$(bash "$(dirname "$0")/pages-concernees.sh" "$BASE" "$RECETTE" "$PREPROD")
-messages=$(gh api "repos/$GH_REPO/compare/$BASE...$RECETTE" --jq '.commits[].commit.message | split("\n")[0]')
-demandes=$(grep -oE '\(#[0-9]+\)' <<<"$messages" | tr -d '()' | sort -u -t'#' -k2n | paste -sd' ' - || true)
-pages_cms=$(grep -c '(via Pages CMS)' <<<"$messages" || true)
+# Origine des modifications : commits « … (#n° issue) » (fusions de vers-recette.sh) et « … (via Pages
+# CMS) » de la recette, retenus seulement si un de leurs fichiers reste à publier (une demande ajoutée
+# puis retirée n'apparaît donc pas).
+a_publier=$(gh api "repos/$GH_REPO/compare/$BASE...$RECETTE" --jq '.files[].filename')
+demandes=""
+pages_cms=0
+while read -r sha sujet; do
+  case "$sujet" in (*"(#"[0-9]*")" | *"(via Pages CMS)") ;; (*) continue ;; esac
+  fichiers=$(gh api "repos/$GH_REPO/commits/$sha" --jq '.files[].filename')
+  grep -qxF -f <(echo "$a_publier") <<<"$fichiers" || continue
+  case "$sujet" in
+    (*"(via Pages CMS)") pages_cms=$((pages_cms + 1)) ;;
+    (*) n=${sujet##*"(#"}; demandes="$demandes #${n%)}" ;;
+  esac
+done < <(gh api "repos/$GH_REPO/compare/$BASE...$RECETTE" --jq '.commits[] | "\(.sha) \(.commit.message | split("\n")[0])"')
+demandes=$(tr ' ' '\n' <<<"$demandes" | grep . | sort -u -t'#' -k2n | paste -sd' ' - || true)
 
 corps=$(
   cat <<EOF
