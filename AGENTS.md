@@ -63,6 +63,7 @@ vercel.json               Redirections 301
 - Design du canevas (piste A « La Gazette du village », `design/canevas.html`) appliqué à tous les gabarits : accueil, page de texte, bulletins, actualités, galerie, 404, plus recherche, plan du site et mentions légales.
 - Contenu migré : 17 pages remises en forme (titres, typographie, textes alternatifs), 35 bulletins (`src/content/bulletins/`), 29 actualités (`src/content/actualites/`), galerie de 184 cartes postales (`src/content/galeries/cartes-postales.yml`), accueil (`src/data/accueil.yml`).
 - Médias rapatriés dans `public/medias/` (305 fichiers, compressés), couvertures de bulletins dans `public/medias/bulletins/`. Les vignettes responsives (`public/vignettes/`) sont générées avant `dev` et `build`, et ne sont pas versionnées.
+- Dépôt GitHub **public** depuis le 25/10/2026, et il doit le rester : avec Vercel Hobby, un dépôt privé bloque le déploiement des commits d'un autre auteur que le propriétaire (voir ARCHITECTURE.md §4).
 - Reste à faire : faire valider par le bureau les points relevés dans la PR de migration (faits douteux, noms) ; renseigner l'URL du groupe Facebook ; supprimer `_import/` après validation.
 
 ## Médias et images
