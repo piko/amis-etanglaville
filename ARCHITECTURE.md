@@ -41,7 +41,7 @@ Règle d'or : **rien n'arrive en production sans passer par une PR relue sur la 
 | Contenu            | Markdown + front matter YAML, **content collections** Astro (schémas Zod) | Contenu typé et validé à la construction                    |
 | CMS                | **Pages CMS** (app.pagescms.org, connexion GitHub)                        | Interface d'édition pour les bénévoles, écrit dans le dépôt |
 | Hébergement        | **Vercel** (plan Hobby au départ)                                         | Build + CDN + recette par branche                           |
-| Code               | **GitHub**, dépôt **privé**                                               | Source unique de vérité                                     |
+| Code               | **GitHub**, dépôt **public**                                              | Source unique de vérité                                     |
 | IA                 | **Claude** : Claude Code (poste) + GitHub Action `@claude`                | Évolutions, contenu, corrections par PR                     |
 | Recherche (option) | Pagefind                                                                  | Recherche plein texte statique                              |
 | SEO                | `@astrojs/sitemap`, balises meta, redirections                            | Référencement conservé                                      |
@@ -56,19 +56,20 @@ Extensions VS Code conseillées : _Astro_, _Tailwind CSS IntelliSense_, _Prettie
 
 Phase 1 (démarrage) : tout est sur le **compte personnel d'Alexis**.
 
-| Service                          | Compte                                               | Remarque                                                    |
-| -------------------------------- | ---------------------------------------------------- | ----------------------------------------------------------- |
-| GitHub                           | Perso (`piko`), dépôt privé `piko/amis-etanglaville` | Passage en public prévu (voir ci-dessous)                   |
-| Vercel                           | Team d'Alexis, plan Hobby                            | Associer le dépôt GitHub perso                              |
-| Pages CMS                        | Connexion GitHub perso                               | Installer l'app GitHub Pages CMS sur le seul dépôt          |
-| Claude                           | Jeton d'abonnement (`CLAUDE_CODE_OAUTH_TOKEN`)       | Lié à Alexis, à remplacer par une clé API de l'asso à terme |
-| Domaine `amis-letanglaville.org` | Registrar actuel (à identifier)                      | DNS vers Vercel à la mise en production                     |
+| Service                          | Compte                                                | Remarque                                                    |
+| -------------------------------- | ----------------------------------------------------- | ----------------------------------------------------------- |
+| GitHub                           | Perso (`piko`), dépôt public `piko/amis-etanglaville` | Public depuis le 25/10/2026 (voir ci-dessous)               |
+| Vercel                           | Team d'Alexis, plan Hobby                             | Associer le dépôt GitHub perso                              |
+| Pages CMS                        | Connexion GitHub perso                                | Installer l'app GitHub Pages CMS sur le seul dépôt          |
+| Claude                           | Jeton d'abonnement (`CLAUDE_CODE_OAUTH_TOKEN`)        | Lié à Alexis, à remplacer par une clé API de l'asso à terme |
+| Domaine `amis-letanglaville.org` | Registrar actuel (à identifier)                       | DNS vers Vercel à la mise en production                     |
 
-**Limites tant que le dépôt est privé** (décision du 17/10/2026 : démarrer en privé, passer en public ensuite) :
+**Dépôt public depuis le 25/10/2026.** Il a démarré en privé (décision du 17/10/2026). Sur l'offre Vercel Hobby, il **doit rester public** : revenir en privé bloquerait à nouveau les déploiements décrits ci-dessous. Historique des limites du dépôt privé :
 
-- **GitHub Free ne protège pas `main` sur un dépôt privé.** Compensation : hook `.githooks/pre-push` (activé par `npm install`) qui refuse tout push direct sur `main`, règle `deny` dans `.claude/settings.json`, règle n°1 de `AGENTS.md`.
+- **GitHub Free ne protège pas `main` sur un dépôt privé.** Compensation : hook `.githooks/pre-push` (activé par `npm install`) qui refuse tout push direct sur `main`, règle `deny` dans `.claude/settings.json`, règle n°1 de `AGENTS.md`. Le dépôt public permet désormais la protection de `main` (voir « Configuration Vercel »).
 - **Vercel Hobby et dépôt privé : seuls le propriétaire de la Team et les bots peuvent déclencher un déploiement.** Les commits d'un autre humain (bénévole via Pages CMS, autre membre du bureau) sont bloqués : la collaboration n'est pas permise sur Hobby ([KB Vercel](https://vercel.com/kb/guide/commits-not-triggering-deployments)). Les commits de bots passent : constaté le 23/10/2026 sur la recette, avec une fusion signée `github-actions[bot]` déployée normalement (issue #13). Les commits faits en local par Claude Code passent aussi, car ils portent l'identité git d'Alexis (e-mail vérifié sur `piko`).
 - ⇒ Décision du 23/10/2026 : **le dépôt reste privé**. `@claude` fonctionne (commits de bots). Pour ouvrir Pages CMS aux bénévoles, il faudra passer Vercel en Pro ou rendre le dépôt public. Le dépôt public lève aussi la limite de minutes GitHub Actions et permet la protection de `main` (merge par PR, CI verte requise). Il ne contient aucun secret : les jetons sont dans les secrets GitHub et Vercel.
+- ⇒ Le 25/10/2026, la PR « Mise en production » #28, fusionnée par un membre du bureau sans compte Vercel, n'a pas été déployée (« Git author … must have access to the project on Vercel »), ni par Vercel ni par le Deploy Hook : un hook construit le dernier commit de la branche, et son auteur est contrôlé de la même façon. **Le dépôt est passé en public** le jour même, et le déploiement est reparti.
 
 Phase 2 (transfert à l'association), à planifier :
 
@@ -359,7 +360,7 @@ Configuration Vercel :
 
 - framework « Astro », commande `npm run build`, dossier `dist` ;
 - **Deployment Protection** : par défaut, les préproductions demandent une connexion Vercel. Pour que le bureau relise sans compte, désactiver la protection des previews (le contenu est public de toute façon) ;
-- protéger `main` dans GitHub (merge par PR uniquement, CI et build Vercel verts requis). Possible seulement une fois le dépôt public (ou avec GitHub Pro). D'ici là, le hook `pre-push` fait office de garde-fou (voir §4) ;
+- protéger `main` dans GitHub (merge par PR uniquement, CI et build Vercel verts requis), possible depuis le passage en public. Ça empêche aussi Pages CMS d'écrire directement sur `main`. Tant que ce n'est pas fait, le hook `pre-push` fait office de garde-fou en local (voir §4) ;
 - tant que le domaine n'a pas basculé, toutes les pages portent `noindex`. À la bascule, définir `PUBLIC_INDEXABLE=true` dans les variables d'environnement Vercel (Production) ;
 - **rebuild quotidien** : le statut « à venir » / « passé » des actualités (accueil, liste, fiches) est calculé au build. Le workflow `.github/workflows/rebuild-quotidien.yml` redéploie la production chaque nuit (3 h 15 UTC) via un Deploy Hook Vercel, pour qu'un événement terminé ne reste pas plus de 24 h à la une. Configuration : créer le hook sur `main` (Settings > Git > Deploy Hooks) et enregistrer son URL dans le secret GitHub `VERCEL_DEPLOY_HOOK`. Lancement manuel possible depuis l'onglet Actions. Sur un dépôt public, GitHub suspend les workflows programmés après 60 jours sans commit : le réactiver si besoin.
 
@@ -397,7 +398,7 @@ Une ligne par page : la correspondance `wp_id` → slug est dans le front matter
   - PR : action directe sur la branche de la PR ;
   - modèle `sonnet`, rapport d'exécution dans le résumé du run (`display_report`) ;
   - garde-fous : `--max-turns`, `timeout-minutes` sur le job ;
-  - dépôt privé : les minutes GitHub Actions sont prises sur le quota gratuit mensuel, à surveiller.
+  - dépôt public : les minutes GitHub Actions ne sont pas décomptées.
 - **Modèle d'issue** « Demande de modification » : page concernée, modification souhaitée, pièces jointes, date de mise en ligne. Son texte d'aide explique le circuit « @claude » → recette → lien de relecture dans l'issue.
 
 ---
@@ -483,7 +484,7 @@ Astuce : chaque étape peut être confiée à Claude Code dans le terminal VS Co
 - [ ] Charte graphique : couleurs, typographies, logo (le CDPS en a-t-il un ?). En cours dans le canevas Claude
 - [ ] Nouvelle structuration des pages et du menu. En cours dans le canevas Claude (les redirections suivront via `npm run redirects`)
 - [ ] Contenu de la page d'accueil et chiffres clés à afficher
-- [ ] Date du passage du dépôt en public (préalable à Pages CMS pour les bénévoles et à `@claude`, voir §4)
+- [x] Passage du dépôt en public : fait le 25/10/2026 (voir §4)
 - [ ] URL du groupe Facebook « Les arbres de l'Étang la Ville » (`src/data/site.yml`) et URL publique de la carte Google My Maps
 - [ ] Registrar du domaine et personne qui y a accès
 - [ ] Qui, au bureau, valide les PR (accès en écriture GitHub)
