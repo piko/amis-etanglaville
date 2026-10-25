@@ -43,6 +43,12 @@ if [ "$REF" = "$BASE" ]; then
       echo "Main fusionnée dans recette." ;;
     (*) echo "Recette déjà à jour avec main ($etat)." ;;
   esac
+  # Le push fait avec le GITHUB_TOKEN ne déclenche pas le déploiement de secours de la recette.
+  case "$etat" in
+    (ahead | diverged)
+      gh workflow run deploiement-secours.yml --ref "$RECETTE" ||
+        echo "::warning::Déploiement de secours de la recette non lancé." ;;
+  esac
 fi
 
 # 2. PR « Mise en production »

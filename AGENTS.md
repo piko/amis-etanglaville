@@ -38,7 +38,7 @@ src/components/           Header, Menu, MenuList, Footer…
 src/pages/                Routes : index, [...slug] (pages fixes), bulletins, actualites, cartes-postales-historiques, recherche, plan-du-site, 404
 public/medias/AAAA/MM/    Images et PDF (mêmes chemins que WordPress), servis en /medias/…
 scripts/                  Import WordPress, redirections, garde-fou contenu (verifier-contenu.mjs)
-.github/workflows/        CI, @claude (claude.yml : réalisation, fusion dans recette, lien dans l'issue), rebuild quotidien
+.github/workflows/        CI, @claude (claude.yml : réalisation, fusion dans recette, lien dans l'issue), rebuild quotidien, déploiement de secours (Deploy Hook si Vercel bloque un commit)
 _import/                  Export brut de l'ancien site (source de la migration, ne pas modifier)
 .pages.yml                Configuration Pages CMS
 vercel.json               Redirections 301

@@ -1,0 +1,38 @@
+# Déploiement de secours : si Vercel bloque le déploiement d'un commit de main ou de recette (auteur
+# sans compte sur l'équipe Vercel), le Deploy Hook de la branche le déploie quand même
+# (.github/scripts/deploiement-secours.sh).
+# Prérequis : un Deploy Hook Vercel par branche (Settings > Git > Deploy Hooks), dont l'URL est
+# enregistrée dans les secrets GitHub VERCEL_DEPLOY_HOOK (main) et VERCEL_DEPLOY_HOOK_RECETTE (recette).
+name: Déploiement de secours
+
+on:
+  push:
+    branches: [main, recette]
+  # Lancée par mise-en-production.sh après la resynchronisation de la recette : un push fait avec le
+  # GITHUB_TOKEN ne déclenche pas « push », seul workflow_dispatch est permis.
+  workflow_dispatch:
+
+concurrency:
+  group: deploiement-secours-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deployer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      statuses: read # lire le statut de commit « Vercel »
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          sparse-checkout: .github/scripts
+      - name: Déployer par le Deploy Hook si Vercel a bloqué le commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          REF: ${{ github.ref_name }}
+          SHA: ${{ github.sha }}
+          HOOK_MAIN: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+          HOOK_RECETTE: ${{ secrets.VERCEL_DEPLOY_HOOK_RECETTE }}
+        run: bash .github/scripts/deploiement-secours.sh
