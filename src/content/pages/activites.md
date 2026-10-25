@@ -1,12 +1,14 @@
 ---
 title: Activités
-description: "Défense de l’environnement, bulletins, Portes ouvertes d’artistes, Salon des arts et Salon des créateurs : les activités de l’association et ses partenaires associatifs."
+description: "Défense de l’environnement, bulletins, Portes ouvertes d’artistes,
+  Salon des arts et Salon des créateurs : les activités de l’association et ses
+  partenaires associatifs."
 parent: lassociation
 order: 2
-wp_id: 3328
 updated: 2026-10-08
+draft: false
+wp_id: 3328
 ---
-
 ## Défense de l’environnement
 
 Depuis sa création en juillet 1960, l’association a consacré son énergie et ses ressources à protéger le cadre de vie, l’environnement et le patrimoine de L’Étang-la-Ville.
@@ -51,6 +53,7 @@ Tout d’abord, nous sommes associés et partenaires d’autres associations de 
 - **CADEB** (Collectif d’Associations pour la Défense de l’Environnement dans les Boucles de Seine / Saint-Germain-en-Laye), dont le périmètre est celui de la Communauté d’agglomération Saint-Germain Boucles de Seine (CASGBS) ;
 - **ASCM** (Association Sauvons les Coteaux de Mareil) ;
 - **AAFSG** (Association des Amis de la Forêt de Saint-Germain).
+- TEST : Nouvelle association
 
 Grâce à une collaboration fructueuse, nous bénéficions d’un forum d’échanges qui enrichit notre réflexion.
 
